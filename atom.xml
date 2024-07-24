@@ -6,7 +6,7 @@
   <link href="http://ucm14.github.io/atom.xml" rel="self"/>
   
   <link href="http://ucm14.github.io/"/>
-  <updated>2024-07-23T14:41:50.888Z</updated>
+  <updated>2024-07-24T06:07:38.527Z</updated>
   <id>http://ucm14.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>test</title>
+    <link href="http://ucm14.github.io/2024/07/24/test/"/>
+    <id>http://ucm14.github.io/2024/07/24/test/</id>
+    <published>2024-07-24T06:06:21.000Z</published>
+    <updated>2024-07-24T06:07:38.527Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script src="/assets/js/DPlayer.min.js"> </script><p><img src="https://drive.google.com/file/d/1eNTlwxlC0BIOX19cMBx91a28gveROFRL/view?usp=drive_link" alt="monet"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;&#92;assets&#92;css&#92;APlayer.min.css&quot;&gt;&lt;script src=&quot;&#92;assets&#92;js&#92;APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Trip in Nanjing</title>
