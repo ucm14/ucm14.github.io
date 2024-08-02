@@ -1,1377 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- title -->
+<!-- keywords -->
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 7.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"ucm14.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta property="og:type" content="website">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Mason Yu">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Mason Yu">
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    <meta name="description" content="">
+    <meta property="og:type" content="website">
 <meta property="og:title" content="MASON&#39;S RADIO">
 <meta property="og:url" content="http://ucm14.github.io/index.html">
 <meta property="og:site_name" content="MASON&#39;S RADIO">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Mason Yu">
 <meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/maocai.ico">
+    <title>MASON&#39;S RADIO</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
 
-<link rel="canonical" href="http://ucm14.github.io/">
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
 
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
 </script>
 
-  <title>MASON'S RADIO</title>
-  
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
 
+    body {
+        margin: 0;
+    }
 
+    header,
+    footer,
+    .footer-fixed-btn,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
 
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
 
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(
+            -45deg,
+            #444 0,
+            #444 80px,
+            #333 80px,
+            #333 160px
+        );
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
 
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <link id="stylesheet-fancybox" rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link id="stylesheet-base" rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link id="stylesheet-mobile" rel="preload" href="/css/mobile.css" as="style" onload="this.onload=null;this.rel='stylesheet';this.media='screen and (max-width: 960px)'">
+    <link id="stylesheet-theme-dark" rel="preload" href="/css/dark.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    <!-- 百度统计  -->
+    <!-- 谷歌统计  -->
+    <!-- Google tag (gtag.js) -->
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="MASON'S RADIO" type="application/atom+xml">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MASON'S RADIO" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+  <link rel="stylesheet" href="/css/custom.css">
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+        <body class="home-body">
+        <!-- header -->
+        <header class="header header-mobile index-header">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
     </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">MASON'S RADIO</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">GRIND GRIND GRIND</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        <div class="header-sidebar-menu">
+            <div style="padding-left: 1px;">&#xe775;</div>
+        </div>
     </div>
-  </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href="/">MASON'S RADIO</a>
+        </span>
+    </div>
+    <!-- toggle banner -->
+    <div class="banner">
+        <div class="blog-title header-element">
+            <a href="/">MASON&#39;S RADIO</a>
+        </div>
+        <div class="post-title header-element">
+            <a href="#" class="post-name"></a>
+        </div>
+    </div>
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed index-footer-fixed">
+    <!-- donate button -->
+
+    <!-- back to top button -->
+    <div class="footer-fixed-btn footer-fixed-btn--hidden back-top">
+        <div>&#xe639;</div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="    height:50vh;
+">
+    <!-- 主页  -->
+    <!-- 文章页  -->
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/cole.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+                MASON'S RADIO
+            <!-- 文章页  -->
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+                    If they don't know your dream then they can't shoot them down.
+            <!-- 文章页  -->
+        </p>
+        <!-- 文章页 meta -->
+    </div>
 </div>
 
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ucm14.github.io/2024/08/01/Transition-Probability-Matrix/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mason Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MASON'S RADIO">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/08/01/Transition-Probability-Matrix/" class="post-title-link" itemprop="url">1. Transition Probability Matrix and value iteration</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-08-01 14:08:19" itemprop="dateCreated datePublished" datetime="2024-08-01T14:08:19+08:00">2024-08-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-08-02 12:22:39" itemprop="dateModified" datetime="2024-08-02T12:22:39+08:00">2024-08-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-learning/" itemprop="url" rel="index"><span itemprop="name">Machine learning</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <script src="/assets/js/DPlayer.min.js"> </script><h1 id="What-is-Markov-chains-and-transition-probability-matrix"><a href="#What-is-Markov-chains-and-transition-probability-matrix" class="headerlink" title="What is Markov chains and transition probability matrix?"></a>What is Markov chains and transition probability matrix?</h1><h2 id="Markov-chains"><a href="#Markov-chains" class="headerlink" title="Markov chains"></a>Markov chains</h2><p>In machine learning algorithms, <em><strong>Markov chains</strong></em> are widely applied in time series models. The main idea is that regardless of the initial state, as long as the state transition matrix remains unchanged, the final state will always converge to a fixed value. This memory-lessness is called the Markov property. The equation is as below:<br>$$<br>P(x_{t+1}∣…,x_{t−2},x_{t−1},x_{t})&#x3D;P(x_{t+1}∣x_{t})\tag{1}<br>$$</p>
-<h2 id="Transition-probability-matrix"><a href="#Transition-probability-matrix" class="headerlink" title="Transition probability matrix"></a>Transition probability matrix</h2><p>Each element of the matrix is represented by a probability. The values are non-negative, and the sum of the elements in each row equals 1. Under certain conditions, they can transition between each other, hence it is called a <em><strong>transition probability matrix</strong></em>. The two-step transition probability matrix is exactly the square of the one-step transition probability matrix. The <strong>𝑘</strong> step transition probability matrix is the <strong>𝑘<sup>th</sup></strong> power of the one-step transition probability matrix. In the <strong>𝑘</strong> step transition probability matrix, the sum of the elements in each row is also 1.</p>
-<p>For example, the value of $P(i,j)$ in matrix is $P(j|i)$, which is the probability of from state $i$ to state $j$. The transition probability matrix is as below：<br>$$<br>\begin{bmatrix} 0.9 &amp; 0.075 &amp; 0.025 \ 0.15 &amp; 0.8 &amp; 0.05 \ 0.25 &amp; 0.25 &amp; 0.5 \end{bmatrix}\tag{2}<br>$$</p>
-<h2 id="How-Markov-chain-generates"><a href="#How-Markov-chain-generates" class="headerlink" title="How Markov chain generates?"></a>How Markov chain generates?</h2><p>Giving an initial state $P_{01}&#x3D;[0.5, 0.2, 0.3]$ and $P_{02}&#x3D;[0.1,0.4,0.5]$, the <strong>𝑘</strong> step transition is $P_0&#x3D;P_0*P_k$. $P_0$ can reach a stable value after multiple iterations. </p>
-<p>If $k&#x3D;30$, please calculate the eventual result.</p>
-<h3 id="Code-and-figure"><a href="#Code-and-figure" class="headerlink" title="Code and figure"></a>Code and figure</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pylab <span class="keyword">as</span> pl</span><br><span class="line"></span><br><span class="line">p01 = np.array([<span class="number">0.5</span>, <span class="number">0.2</span>, <span class="number">0.3</span>]) </span><br><span class="line">p02 = np.array([<span class="number">0.1</span>,<span class="number">0.4</span>,<span class="number">0.5</span>]) </span><br><span class="line">p = np.array([[<span class="number">0.9</span>, <span class="number">0.075</span>, <span class="number">0.025</span>], [<span class="number">0.15</span>, <span class="number">0.8</span>, <span class="number">0.05</span>],[<span class="number">0.25</span>, <span class="number">0.25</span>, <span class="number">0.5</span>]])</span><br><span class="line">n = <span class="number">30</span></span><br><span class="line">c = np.array([<span class="string">&#x27;r&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;b&#x27;</span>])       </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calanddraw</span>(<span class="params">p0,p </span>):</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">     p0 = np.mat(p0) * np.mat(p)       </span><br><span class="line">     <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(np.array(p0)[<span class="number">0</span>])):</span><br><span class="line">          pl.scatter(i,p0[<span class="number">0</span>,j], c = c[j], s=<span class="number">.5</span>)</span><br><span class="line">pl.subplot(<span class="number">121</span>)</span><br><span class="line">calanddraw(p01,p)</span><br><span class="line">pl.subplot(<span class="number">122</span>)</span><br><span class="line">calanddraw(p02,p)</span><br><span class="line">pl.show()</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://s2.loli.net/2024/08/01/I9NQp4icfJaZ52h.png" alt="result1.png"></p>
-<center>Plot of iteration</center>
-
-<h3 id="Value-of-P-01-in-each-transition"><a href="#Value-of-P-01-in-each-transition" class="headerlink" title="Value of $P_{01}$ in each transition"></a>Value of $P_{01}$ in each transition</h3><table>
-<thead>
-<tr>
-<th align="center">Iteration</th>
-<th align="left">$$i&#x3D;1$$</th>
-<th align="center">$$i&#x3D;2$$</th>
-<th align="right">$$i&#x3D;3$$</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="left">[0.555</td>
-<td align="center">0.2725</td>
-<td align="right">0.1725]</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="left">[0.5835</td>
-<td align="center">0.30275</td>
-<td align="right">0.11375]</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="left">[0.599</td>
-<td align="center">0.3144</td>
-<td align="right">0.0866]</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="left">[0.60791</td>
-<td align="center">0.318095</td>
-<td align="right">0.073995]</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td align="left">[0.613332</td>
-<td align="center">0.318568</td>
-<td align="right">0.0681]</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td align="left">[0.616809</td>
-<td align="center">0.3178793</td>
-<td align="right">0.0653117]</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td align="left">[0.61913792</td>
-<td align="center">0.31689204</td>
-<td align="right">0.06397004]</td>
-</tr>
-<tr>
-<td align="center">8</td>
-<td align="left">[0.62075044</td>
-<td align="center">0.31594149</td>
-<td align="right">0.06330807]</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="left">[0.62189364</td>
-<td align="center">0.31513649</td>
-<td align="right">0.06296987]</td>
-</tr>
-<tr>
-<td align="center">10</td>
-<td align="left">[0.62271722</td>
-<td align="center">0.31449368</td>
-<td align="right">0.0627891]</td>
-</tr>
-<tr>
-<td align="center">11</td>
-<td align="left">[0.62331682</td>
-<td align="center">0.31399601</td>
-<td align="right">0.06268716]</td>
-</tr>
-<tr>
-<td align="center">12</td>
-<td align="left">[0.62375633</td>
-<td align="center">0.31361736</td>
-<td align="right">0.0626263]</td>
-</tr>
-<tr>
-<td align="center">13</td>
-<td align="left">[0.62407988</td>
-<td align="center">0.31333219</td>
-<td align="right">0.06258793]</td>
-</tr>
-<tr>
-<td align="center">14</td>
-<td align="left">[0.6243187</td>
-<td align="center">0.31311873</td>
-<td align="right">0.06256257]</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="left">[0.62449528</td>
-<td align="center">0.31295953</td>
-<td align="right">0.06254519]</td>
-</tr>
-<tr>
-<td align="center">16</td>
-<td align="left">[0.62462598</td>
-<td align="center">0.31284106</td>
-<td align="right">0.06253295]</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="left">[0.62472278</td>
-<td align="center">0.31275304</td>
-<td align="right">0.06252418]</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="left">[0.6247945</td>
-<td align="center">0.31268768</td>
-<td align="right">0.06251781]</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="left">[0.62484766</td>
-<td align="center">0.31263919</td>
-<td align="right">0.06251315]</td>
-</tr>
-<tr>
-<td align="center">20</td>
-<td align="left">[0.62488706</td>
-<td align="center">0.31260321</td>
-<td align="right">0.06250973]</td>
-</tr>
-<tr>
-<td align="center">21</td>
-<td align="left">[0.62491627</td>
-<td align="center">0.31257653</td>
-<td align="right">0.0625072]</td>
-</tr>
-<tr>
-<td align="center">22</td>
-<td align="left">[0.62493792</td>
-<td align="center">0.31255675</td>
-<td align="right">0.06250533]</td>
-</tr>
-<tr>
-<td align="center">23</td>
-<td align="left">[0.62495397</td>
-<td align="center">0.31254207</td>
-<td align="right">0.06250395]</td>
-</tr>
-<tr>
-<td align="center">24</td>
-<td align="left">[0.62496588</td>
-<td align="center">0.3125312</td>
-<td align="right">0.06250293]</td>
-</tr>
-<tr>
-<td align="center">25</td>
-<td align="left">[0.6249747</td>
-<td align="center">0.31252313</td>
-<td align="right">0.06250217]</td>
-</tr>
-<tr>
-<td align="center">26</td>
-<td align="left">[0.62498124</td>
-<td align="center">0.31251715</td>
-<td align="right">0.06250161]</td>
-</tr>
-<tr>
-<td align="center">27</td>
-<td align="left">[0.62498609</td>
-<td align="center">0.31251271</td>
-<td align="right">0.06250119]</td>
-</tr>
-<tr>
-<td align="center">28</td>
-<td align="left">[0.62498969</td>
-<td align="center">0.31250943</td>
-<td align="right">0.06250088]</td>
-</tr>
-<tr>
-<td align="center">29</td>
-<td align="left">[0.62499235</td>
-<td align="center">0.31250699</td>
-<td align="right">0.06250066]</td>
-</tr>
-<tr>
-<td align="center">30</td>
-<td align="left">[0.62499433</td>
-<td align="center">0.31250518</td>
-<td align="right">0.06250049]</td>
-</tr>
-</tbody></table>
-<h3 id="Value-of-P-02-in-each-transition"><a href="#Value-of-P-02-in-each-transition" class="headerlink" title="Value of $P_{02}$ in each transition"></a>Value of $P_{02}$ in each transition</h3><table>
-<thead>
-<tr>
-<th align="center">Iteration</th>
-<th align="left">$$i&#x3D;1$$</th>
-<th align="center">$$i&#x3D;2$$</th>
-<th align="right">$$i&#x3D;3$$</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="left">[0.275</td>
-<td align="center">0.4525</td>
-<td align="right">0.2725]</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="left">[0.3835</td>
-<td align="center">0.45075</td>
-<td align="right">0.16575]</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="left">[0.4542</td>
-<td align="center">0.4308</td>
-<td align="right">0.115]</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="left">[0.50215</td>
-<td align="center">0.407455</td>
-<td align="right">0.090395]</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td align="left">[0.535652</td>
-<td align="center">0.386224</td>
-<td align="right">0.078124]</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td align="left">[0.5595514</td>
-<td align="center">0.3686841</td>
-<td align="right">0.0717645]</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td align="left">[0.57684</td>
-<td align="center">0.35485476</td>
-<td align="right">0.06830524]</td>
-</tr>
-<tr>
-<td align="center">8</td>
-<td align="left">[0.58946052</td>
-<td align="center">0.34422312</td>
-<td align="right">0.06631636]</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="left">[0.59872703</td>
-<td align="center">0.33616712</td>
-<td align="right">0.06510585]</td>
-</tr>
-<tr>
-<td align="center">10</td>
-<td align="left">[0.60555586</td>
-<td align="center">0.33011469</td>
-<td align="right">0.06432946]</td>
-</tr>
-<tr>
-<td align="center">11</td>
-<td align="left">[0.61059984</td>
-<td align="center">0.3255908</td>
-<td align="right">0.06380936]</td>
-</tr>
-<tr>
-<td align="center">12</td>
-<td align="left">[0.61433081</td>
-<td align="center">0.32221997</td>
-<td align="right">0.06344922]</td>
-</tr>
-<tr>
-<td align="center">13</td>
-<td align="left">[0.61709303</td>
-<td align="center">0.31971309</td>
-<td align="right">0.06319388]</td>
-</tr>
-<tr>
-<td align="center">14</td>
-<td align="left">[0.61913916</td>
-<td align="center">0.31785092</td>
-<td align="right">0.06300992]</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="left">[0.62065536</td>
-<td align="center">0.31646865</td>
-<td align="right">0.06287598]</td>
-</tr>
-<tr>
-<td align="center">16</td>
-<td align="left">[0.62177912</td>
-<td align="center">0.31544307</td>
-<td align="right">0.06277781]</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="left">[0.62261212</td>
-<td align="center">0.31468234</td>
-<td align="right">0.06270554]</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="left">[0.62322964</td>
-<td align="center">0.31411817</td>
-<td align="right">0.06265219]</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="left">[0.62368745</td>
-<td align="center">0.3136998</td>
-<td align="right">0.06261274]</td>
-</tr>
-<tr>
-<td align="center">20</td>
-<td align="left">[0.62402686</td>
-<td align="center">0.31338959</td>
-<td align="right">0.06258355]</td>
-</tr>
-<tr>
-<td align="center">21</td>
-<td align="left">[0.6242785</td>
-<td align="center">0.31315957</td>
-<td align="right">0.06256193]</td>
-</tr>
-<tr>
-<td align="center">22</td>
-<td align="left">[0.62446507</td>
-<td align="center">0.31298903</td>
-<td align="right">0.0625459]</td>
-</tr>
-<tr>
-<td align="center">23</td>
-<td align="left">[0.62460339</td>
-<td align="center">0.31286258</td>
-<td align="right">0.06253403]</td>
-</tr>
-<tr>
-<td align="center">24</td>
-<td align="left">[0.62470595</td>
-<td align="center">0.31276882</td>
-<td align="right">0.06252523]</td>
-</tr>
-<tr>
-<td align="center">25</td>
-<td align="left">[0.62478198</td>
-<td align="center">0.31269931</td>
-<td align="right">0.0625187]</td>
-</tr>
-<tr>
-<td align="center">26</td>
-<td align="left">[0.62483836</td>
-<td align="center">0.31264777</td>
-<td align="right">0.06251387]</td>
-</tr>
-<tr>
-<td align="center">27</td>
-<td align="left">[0.62488016</td>
-<td align="center">0.31260956</td>
-<td align="right">0.06251028]</td>
-</tr>
-<tr>
-<td align="center">28</td>
-<td align="left">[0.62491114</td>
-<td align="center">0.31258123</td>
-<td align="right">0.06250762]</td>
-</tr>
-<tr>
-<td align="center">29</td>
-<td align="left">[0.62493412</td>
-<td align="center">0.31256023</td>
-<td align="right">0.06250565]</td>
-</tr>
-<tr>
-<td align="center">30</td>
-<td align="left">[0.62495116</td>
-<td align="center">0.31254465</td>
-<td align="right">0.06250419]</td>
-</tr>
-</tbody></table>
-<p>${P_{01}}^{30}&#x3D;[0.62499433, 0.31250518, 0.06250049]$, ${P_{02}}^{30}&#x3D;[0.62495116  0.31254465  0.06250419]$. From the tables and figure we can reach the conclusion that both states converge eventually and their value are close to each other.</p>
-<h1 id="Value-iteration-a-model-based-algo"><a href="#Value-iteration-a-model-based-algo" class="headerlink" title="Value iteration: a model-based algo"></a>Value iteration: a model-based algo</h1><p>Unlike simply times initial state with transition probability matrix multiple times, <em><strong>value iteration</strong></em> is a commonly used <strong>dynamic planning (DP)</strong> method (<em>DP methods assume that we have a <strong>perfect model</strong> of the environment’s MDP. That’s usually not the case in practice, but it’s important to study DP anyway</em>), which is mainly used to solve the optimal strategy problem in Markov Decision Process (MDP). The core idea of the Value Iteration algorithm is to update the value function of the state iteratively, gradually approaching the optimal value function, so as to obtain the optimal policy. The main advantage of the value iteration algorithm is that it is simple and easy to implement, and it is applicable to various types of MDP problems. However, the main disadvantage of the value iteration algorithm is its <strong>high time complexity</strong>, especially when the state space is large. Therefore, in practical applications, the value iteration algorithm usually needs to be combined with other optimization techniques, such as dynamic programming optimization and parallel computing, to improve the computational efficiency. The equation of algorithm is as below.</p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>$$<br>V^{(k+1)}(s) &#x3D; max_a [R(s, a) + γ Σ_{s’ ∈ S} P(s’ | s, a) V^k(s’)]\tag{3}<br>$$</p>
-<p>First, we start with a random value function $V(s)$. At each step, we update it. Hence, we look ahead one step and go over all possible actions at each iteration to find the maximum. Moreover, the only difference is that in the value iteration algorithm, we take the maximum number of possible actions. Instead of evaluating and then improving, the value iteration algorithm updates the state value function in a single step. In particular, this is possible by calculating all possible rewards by looking ahead. Finally, the value iteration algorithm is guaranteed to converge to the optimal values.</p>
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>This is the entire code of value iteration implementation. I will break down every line and explain.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">value_iteration</span>(<span class="params">states, actions, transition_prob, reward, discount_factor=<span class="number">0.9</span>, theta=<span class="number">1e-6</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Performs value iteration for a given MDP.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param states: List of states</span></span><br><span class="line"><span class="string">    :param actions: List of actions</span></span><br><span class="line"><span class="string">    :param transition_prob: A dictionary that maps (state, action, next_state) to the transition probability</span></span><br><span class="line"><span class="string">    :param reward: A dictionary that maps (state, action, next_state) to a reward</span></span><br><span class="line"><span class="string">    :param discount_factor: Discount factor (gamma)</span></span><br><span class="line"><span class="string">    :param theta: A threshold for convergence</span></span><br><span class="line"><span class="string">    :return: A tuple (policy, value_function)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    value_function = np.zeros(<span class="built_in">len</span>(states))</span><br><span class="line">    <span class="comment">#value function is used to store each value of corresponding state</span></span><br><span class="line">    <span class="comment">#np.zeros(len(states)): create a array which length is equals to the length of states</span></span><br><span class="line"></span><br><span class="line">    policy = np.zeros(<span class="built_in">len</span>(states), dtype=<span class="built_in">int</span>)</span><br><span class="line">    <span class="comment"># same to value_function---for storage</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        delta = <span class="number">0</span></span><br><span class="line">        <span class="comment"># a variabale used to record the variation of value funtion in a iteration</span></span><br><span class="line">        <span class="comment"># can judge whether the iteration is converging</span></span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">        <span class="comment"># go through every state</span></span><br><span class="line">            v = value_function[s]</span><br><span class="line">            <span class="comment"># store s of value function in v</span></span><br><span class="line">            action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">            <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">            <span class="comment"># go through every possible action</span></span><br><span class="line">                action_value = <span class="number">0</span></span><br><span class="line">            <span class="comment"># initialize action value</span></span><br><span class="line">                <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">                <span class="comment"># go through every possible next state</span></span><br><span class="line">                    prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">                <span class="comment"># achieve transition probability (0 if not exist)</span></span><br><span class="line">                    action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">                <span class="comment"># cumulative action value based on bellman function</span></span><br><span class="line">                action_values[a] = action_value</span><br><span class="line">                <span class="comment"># store result in array of action value</span></span><br><span class="line">            value_function[s] = <span class="built_in">max</span>(action_values)</span><br><span class="line">            <span class="comment"># update value fuction and obtain maximum value among all the possible action value</span></span><br><span class="line">            delta = <span class="built_in">max</span>(delta, <span class="built_in">abs</span>(v - value_function[s]))</span><br><span class="line">            <span class="comment"># update delta and record maximum variation</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> delta &lt; theta:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">    <span class="comment"># go through every state</span></span><br><span class="line">        action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">        <span class="comment"># initialize array</span></span><br><span class="line">        <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">        <span class="comment"># go through every possible action</span></span><br><span class="line">            action_value = <span class="number">0</span></span><br><span class="line">            <span class="comment"># initialize current action value</span></span><br><span class="line">            <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">                prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">                action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">                <span class="comment"># obtain current state, reward of taking action to next state &amp; calculate discounted future value</span></span><br><span class="line">            action_values[a] = action_value</span><br><span class="line">        policy[s] = np.argmax(action_values)</span><br><span class="line">        <span class="comment"># return optimal policy</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> policy, value_function</span><br><span class="line"></span><br><span class="line"><span class="comment"># Example usage</span></span><br><span class="line">states = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">actions = [<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">transition_prob = &#123;</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">0.5</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>): <span class="number">0.5</span>,</span><br><span class="line">    (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>): <span class="number">0.2</span>, (<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.8</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">0.7</span>, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">0.3</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.6</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0.4</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">1.0</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.5</span>, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0.5</span>,</span><br><span class="line">&#125;</span><br><span class="line">reward = &#123;</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">1</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>): <span class="number">1</span>,</span><br><span class="line">    (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>): <span class="number">0</span>, (<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">1</span>, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">2</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">3</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">0</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">policy, value_function = value_iteration(states, actions, transition_prob, reward)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Optimal Policy:&quot;</span>, policy)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Value Function:&quot;</span>, value_function)</span><br></pre></td></tr></table></figure>
-
-<p>It will be much easier to understand the algorithm with a practice. So we can try to explain value iteration well by a simple implementation. We first import NumPy, of course. Then definite a function, which is the main character of this section: value_iteration. This function requires several input values including states, actions, transition probability, reward, discount factor and theta. In this implementation, $γ$ &#x3D; 0.9, $θ$ &#x3D; $$1^{-6}$$.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">value_iteration</span>(<span class="params">states, actions, transition_prob, reward, discount_factor=<span class="number">0.9</span>, theta=<span class="number">1e-6</span></span>):</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Performs value iteration for a given MDP.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param states: List of states</span></span><br><span class="line"><span class="string">    :param actions: List of actions</span></span><br><span class="line"><span class="string">    :param transition_prob: A dictionary that maps (state, action, next_state) to the transition probability</span></span><br><span class="line"><span class="string">    :param reward: A dictionary that maps (state, action, next_state) to a reward</span></span><br><span class="line"><span class="string">    :param discount_factor: Discount factor (gamma)</span></span><br><span class="line"><span class="string">    :param theta: A threshold for convergence</span></span><br><span class="line"><span class="string">    :return: A tuple (policy, value_function)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>In this function, we need to create two arrays for the storage of possible state and policy. State is easy to understand, but what is “policy”? </p>
-<p>A policy is a strategy that an agent uses in pursuit of goals. The policy dictates the actions that the agent takes as a function of the agent’s state and the environment. In reinforcement learning, a policy is a strategy used by an agent to determine its actions at any given state. Formally, a policy is a mapping from states of the environment to actions to be taken when in those states. It can be deterministic or stochastic. </p>
-<hr>
-<p><strong>Deterministic Policy</strong>: This type of policy maps each state to a specific action. If $π$ is a deterministic policy and $s$ is a state, then $π(s)$ is the action taken when in state $s$.</p>
-<p><strong>Stochastic Policy</strong>: This type of policy provides a probability distribution over actions for each state. If $π$ is a stochastic policy and $s$ is a state, then $π(a|s)$ represents the probability of taking action $a$ when in state $s$.</p>
-<hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">value_function = np.zeros(<span class="built_in">len</span>(states))</span><br><span class="line">   policy = np.zeros(<span class="built_in">len</span>(states), dtype=<span class="built_in">int</span>)</span><br></pre></td></tr></table></figure>
-
-<p>Then we enter the iteration of value function. Before start iteration, we have to define a variable called Δ. It is a variable used to record the variation of value function in a iteration and can judge whether the iteration is converging. <code>for s in states</code> is a order asking agent to go through every state, <code>v = value_function[s]</code> is to store all the result of $s$ in $v$. These are the pre-moves of iteration. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    delta = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">        v = value_function[s]</span><br><span class="line">        action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br></pre></td></tr></table></figure>
-
-<p>The result of value function comes from the maximum value of action values. We create an empty array for the storage of action values. Firstly initialize action value, then for each action, we go through every possible next state. After cumulating action value based on bellman function and store them as an array, we can obtain the maximum action value and take it as the value function value of current state.</p>
-<p>In order to judge the convergency, update delta (Δ) at the end of value function calculation. <code>abs(v - value_function[s])</code> is the variation of value function. We determine the value of delta by comparing the value between previous Δ and new Δ and taking the maximum value. Cycle will ceased  if the update range smaller than θ.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">   <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">        <span class="comment"># go through every possible action</span></span><br><span class="line">               action_value = <span class="number">0</span></span><br><span class="line">           <span class="comment"># initialize action value</span></span><br><span class="line">               <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">               <span class="comment"># go through every possible next state</span></span><br><span class="line">                   prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">               <span class="comment"># achieve transition probability (0 if not exist)</span></span><br><span class="line">                   action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">               <span class="comment"># cumulative action value based on bellman function</span></span><br><span class="line">               action_values[a] = action_value</span><br><span class="line">               <span class="comment"># store result in array of action value</span></span><br><span class="line">           value_function[s] = <span class="built_in">max</span>(action_values)</span><br><span class="line">           <span class="comment"># update value fuction and obtain maximum value among all the possible action value</span></span><br><span class="line">           delta = <span class="built_in">max</span>(delta, <span class="built_in">abs</span>(v - value_function[s]))</span><br><span class="line">           <span class="comment"># update delta and record maximum variation</span></span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> delta &lt; theta:</span><br><span class="line">           <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
-
-<p>Simultaneously, we try to find the optimal policy. Basically trying to find the action which can bring maximum action value in each state then form a sequence by combining these actions.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">   <span class="comment"># go through every state</span></span><br><span class="line">       action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">       <span class="comment"># initialize array</span></span><br><span class="line">       <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">       <span class="comment"># go through every possible action</span></span><br><span class="line">           action_value = <span class="number">0</span></span><br><span class="line">           <span class="comment"># initialize current action value</span></span><br><span class="line">           <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">               prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">               action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">               <span class="comment"># obtain current state, reward of taking action to next state &amp; calculate discounted future value</span></span><br><span class="line">           action_values[a] = action_value</span><br><span class="line">       policy[s] = np.argmax(action_values)</span><br><span class="line">       <span class="comment"># return optimal policy</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> policy, value_function</span><br></pre></td></tr></table></figure>
-
-<p>Here is the exercise. In this virtual environment, we can observe three states: 0, 1, 2 and two actions: 0 and 1. The corresponding transition probability and reward table is as below. In this exercise, transition probability means the state have the probability of remaining at the same state. For example, if we are at state 0 and take action 0, we have 50% probability stay at the same state. In addition, <code>(1, 0, 0): 0.7</code> means if we at state 1 and take action 0, we can have 70% probability return to state 0 ; <code>(2, 1, 1): 0.5</code> means if we at state 2 and take action 1, we can have 50% probability return to state 1.</p>
-<table>
-<thead>
-<tr>
-<th>scenario</th>
-<th>state</th>
-<th>action</th>
-<th>next state</th>
-<th>transition probability</th>
-<th>reward</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>a11</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0.5</td>
-<td>1</td>
-</tr>
-<tr>
-<td>a12</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0.5</td>
-<td>1</td>
-</tr>
-<tr>
-<td>a21</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0.2</td>
-<td>0</td>
-</tr>
-<tr>
-<td>a22</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0.8</td>
-<td>1</td>
-</tr>
-<tr>
-<td>b11</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0.7</td>
-<td>1</td>
-</tr>
-<tr>
-<td>b12</td>
-<td>1</td>
-<td>0</td>
-<td>2</td>
-<td>0.3</td>
-<td>2</td>
-</tr>
-<tr>
-<td>b21</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0.6</td>
-<td>0</td>
-</tr>
-<tr>
-<td>b22</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>0.4</td>
-<td>3</td>
-</tr>
-<tr>
-<td>c11</td>
-<td>2</td>
-<td>0</td>
-<td>2</td>
-<td>1.0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>c21</td>
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>0.5</td>
-<td>1</td>
-</tr>
-<tr>
-<td>c22</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>0.5</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<p><img src="https://s2.loli.net/2024/08/02/hm2qLdJyUbg6ZN3.png" alt="image.png"></p>
-<center>Diagram of state, action and transition</center>
-
-<p>Since we have complete all the requisite, we can run the code and get the result.</p>
-<p><strong>Optimal Policy: 0→0→1</strong><br><strong>Value Function: [10.16927311, 10.20689125, 9.26018305]</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">states = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">actions = [<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">transition_prob = &#123;</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">0.5</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>): <span class="number">0.5</span>,</span><br><span class="line">    (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>): <span class="number">0.2</span>, (<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.8</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">0.7</span>, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">0.3</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.6</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0.4</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">1.0</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.5</span>, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0.5</span>,</span><br><span class="line">&#125;</span><br><span class="line">reward = &#123;</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">1</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>): <span class="number">1</span>,</span><br><span class="line">    (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>): <span class="number">0</span>, (<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">1</span>, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">2</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">3</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">0</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">policy, value_function = value_iteration(states, actions, transition_prob, reward)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Optimal Policy:&quot;</span>, policy)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Value Function:&quot;</span>, value_function)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ucm14.github.io/2024/07/26/Weekly-thought/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mason Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MASON'S RADIO">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/26/Weekly-thought/" class="post-title-link" itemprop="url">Weekly thought</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-07-26 13:35:33" itemprop="dateCreated datePublished" datetime="2024-07-26T13:35:33+08:00">2024-07-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-07-28 01:05:27" itemprop="dateModified" datetime="2024-07-28T01:05:27+08:00">2024-07-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Academic/" itemprop="url" rel="index"><span itemprop="name">Academic</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <script src="/assets/js/DPlayer.min.js"> </script><p>This is kind of like a record of my postgraduate life. I feel it is necessary to take note of my transitions in recognition of my future and what I have done in a regular intervals (1-2 weeks). From now to August, I have to finish a couple of issues listed in the table below.</p>
-<table>
-<thead>
-<tr>
-<th align="left">Issue</th>
-<th align="left">Content</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1. Paper submission</td>
-<td align="left">Submit manuscript to PSEP. 100% the editor will mail it back and ask me to add more citations from C-RISE and PSEP. However, the submission should be accomplished before August.</td>
-</tr>
-<tr>
-<td align="left">2. TOEFL practice</td>
-<td align="left">The result of reading test is horrible. 21 definitely not a satisfying mark for a Chinese who has shortcomings in oral English expression and writing. For listening test, I think I have to train how to concentrate on current audio and not to think useless things.</td>
-</tr>
-<tr>
-<td align="left">3. Find a university</td>
-<td align="left">Purdue, to me, is the optimal option. The most important thing is I can’t tell which kind of university be a safe base.</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ucm14.github.io/2024/07/20/trip-in-Nanjing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mason Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MASON'S RADIO">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/20/trip-in-Nanjing/" class="post-title-link" itemprop="url">Trip in Nanjing</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-07-20 20:45:17" itemprop="dateCreated datePublished" datetime="2024-07-20T20:45:17+08:00">2024-07-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-07-28 01:05:09" itemprop="dateModified" datetime="2024-07-28T01:05:09+08:00">2024-07-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Travel/" itemprop="url" rel="index"><span itemprop="name">Travel</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <script src="/assets/js/DPlayer.min.js"> </script><h1 id="What-we-did-in-the-weekend"><a href="#What-we-did-in-the-weekend" class="headerlink" title="What we did in the weekend?"></a>What we did in the weekend?</h1><p>Basically, we didn’t decide to take outdoor activities at daytime (even at nighttime) due to the extreme hot climate. Thus, we turned out vision to indoor activities. And, to me, Nanjing is a city which has enormous delicious food, so I took my friends to have those splendid dishes, mainly.</p>
-<h2 id="1-Noodle"><a href="#1-Noodle" class="headerlink" title="1. Noodle"></a>1. Noodle</h2><p>Recently, Nanjing’s noodle is very popular not only for the astonishing appearance (a huge pot-stewed meat) but also for its complex and amazing taste. We  went to a noodle  shop near Nanjing University (actually, Southeast University and Nanjing University both at same street) which is famous due to the large meatball where a salted yolk hide in it. </p>
-<p><img src="https://s2.loli.net/2024/07/24/Xj7D6MQvGOxU2aR.jpg" alt="noodle.jpg"></p>
-<p>You can see from the picture, this costed me 46 yuan, which is quite expensive. However, the taste matched its price. It is too delicious that I have difficulty finding proper words to precisely describe it.</p>
-<h2 id="2-Duck"><a href="#2-Duck" class="headerlink" title="2. Duck"></a>2. Duck</h2><p>There’s a saying that roasted duck in Nanjing is the origin of Beijing roasted duck. I am 100% willing to believe that be a truth. The reason is simple: I don’t like the roasted duck being too greasy, and Nanjing roasted duck just at the balance point of fatty and dry. The soul of duck is the sweet- and-salty sauce. Dipping a piece of duck in the sauce can improve the taste and make the duck meat becomes much more tender. Sadly, my friends seemed not a fan of it. They preferred steamed rice roll.</p>
-<p><img src="https://s2.loli.net/2024/07/24/iMSc1ePq7JtpF2j.jpg" alt="duck.jpg"></p>
-<h2 id="3-Dishes"><a href="#3-Dishes" class="headerlink" title="3. Dishes"></a>3. Dishes</h2><p>We went to the top restaurant in Nanjing. Cuisines here are more sweeter than other places. The restaurant become crowded at 11 am which is truly scare to see.</p>
-<p><img src="https://s2.loli.net/2024/07/24/s8kUStXnAyr2Jlx.jpg" alt="dish1.jpg"></p>
-<p>This is my fav.</p>
-<p><img src="https://s2.loli.net/2024/07/24/cpa2XKnUtI8CsL9.jpg" alt="dish2.jpg"></p>
-<p>Who can image pig’s kidney can be a dish?</p>
-<h2 id="4-Gallery"><a href="#4-Gallery" class="headerlink" title="4. Gallery"></a>4. Gallery</h2><p>Can’t understand the mind of artists.</p>
-<p><img src="https://s2.loli.net/2024/07/24/SvKekuE7HwVMXb2.jpg" alt="paint1.jpg"><br><img src="https://s2.loli.net/2024/07/24/MAdLV4sDCnr1gKB.jpg" alt="monet.jpg"><br><img src="https://s2.loli.net/2024/07/24/AZQKlELVirC8FyP.jpg" alt="paint7.jpg"><br><img src="https://s2.loli.net/2024/07/24/Qn57kr1tvqcmVyS.jpg" alt="paint6.jpg"><br><img src="https://s2.loli.net/2024/07/24/h8gwjuBcSxn9rJQ.jpg" alt="paint4.jpg"><br><img src="https://s2.loli.net/2024/07/24/ayEXodOelfRxb4W.jpg" alt="paint2.jpg"><br><img src="https://s2.loli.net/2024/07/24/TlPONFkELMB8jn5.jpg" alt="paint3.jpg"><br><img src="https://s2.loli.net/2024/07/24/4T7MzONKx6bh3Cp.jpg" alt="paint5.jpg"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ucm14.github.io/2024/07/10/Music-recommendation-review-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mason Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MASON'S RADIO">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/10/Music-recommendation-review-1/" class="post-title-link" itemprop="url">MASON'S RADIO#1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-07-10 21:53:22" itemprop="dateCreated datePublished" datetime="2024-07-10T21:53:22+08:00">2024-07-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-07-28 22:09:06" itemprop="dateModified" datetime="2024-07-28T22:09:06+08:00">2024-07-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Music/" itemprop="url" rel="index"><span itemprop="name">Music</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <script src="/assets/js/DPlayer.min.js"> </script><h1 id="A-shooting-star-in-pop-music-industry"><a href="#A-shooting-star-in-pop-music-industry" class="headerlink" title=" A shooting star in pop music industry"></a></i> A shooting star in pop music industry</h1><p><a target="_blank" rel="noopener" href="https://xgalx.com/"><strong>XG</strong></a> (acronym for Xtraordinary Girls) is a  Japanese hip-hop &amp; RnB girl group belongs to AVEX but based in South Korea, which has 7 members (the eldest is born in 2002 and the youngest born in 2005). Names sorted by age from oldest to youngest are as follow: Chisa, Hinata, Jurin, Harvey, Julia, Maya, Cocona.  They made their debut on March 18, 2022, with the release of the digital single <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=xl1Ms2VnaYM"><em>“Tippy Toes”</em></a>. </p>
-<p><img src="https://s2.loli.net/2024/07/24/5W4ULmw2ioue9BD.png" alt="New Dance XG.png"></p>
-<center>XG (From left to right, they are Hinata, Jurin, Julia, Cocona, Maya, Chisa, Harvey)</center>
-
-<hr>
-<h3 id="Career-2022-Present"><a href="#Career-2022-Present" class="headerlink" title="Career (2022 - Present)"></a></i>Career (2022 - Present)</h3><table>
-<thead>
-<tr>
-<th align="left">Name</th>
-<th>Date</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Tippy Toes</td>
-<td>2022.5.18</td>
-<td>Single</td>
-</tr>
-<tr>
-<td align="left">Mascara</td>
-<td>2022.6.29</td>
-<td>Single</td>
-</tr>
-<tr>
-<td align="left">Shooting Star</td>
-<td>2023.1.25</td>
-<td>Single</td>
-</tr>
-<tr>
-<td align="left">New DNA</td>
-<td>2023.6.30</td>
-<td>Mini album</td>
-</tr>
-<tr>
-<td align="left"><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=EIilZl_iuIo">Winter Without You</a></td>
-<td>2023.12.8</td>
-<td>Single</td>
-</tr>
-<tr>
-<td align="left"><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=5sT20edl02I">Woke Up</a></td>
-<td>2024.5.21</td>
-<td>Single</td>
-</tr>
-</tbody></table>
-<hr>
-<p>On March 18, 2022, XG made their debut with the release of their all English-language digital single  <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=xl1Ms2VnaYM"><em>“Tippy Toes”</em></a>. On June 29, they released their second all English-language single titled <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=aVatpxBTfZs"><em>“Mascara”</em></a>, followed by their first television appearance on South Korean Mnet’s M Countdown performing the single. On November 17, XG released a rap cypher video entitled <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=-L4Visli9sA"><em>Galz Xypher (Galz Xypher#2)</em></a>. The video became viral on a TikTok through an XG fan account, gaining over 15 million views on the platform.</p>
-<p>On January 25, 2023, XG released their third all English-language single, <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L7spCJxloLY"><em>“Shooting Star”</em> </a>along with its music video and an additional track, <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=T6YVgEpRU6Q"><em>“Left Right”</em></a>. On March 6, XG entered the Media base US Radio Top 40, becoming the first female Japanese artist and the first Japanese group to do so. On June 30, XG released <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Xiai4BRzZpU"><em>“Grl Gvng”</em></a> accompanied by its music video, as a pre-release single preceding their debut EP New DNA. On August 4, XG released <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=IPxDgf-g9Kw"><em>“TGIF”</em></a> accompanied by its music video, as the second pre-release single to their debut EP New DNA.  On August 23, XG released <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cQTo9O85Zro"><em>“New Dance”</em></a> accompanied by its music video, as the third and final pre-release single to their debut EP New DNA. On September 27, XG’s debut EP New DNA was released alongside its lead single <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VFeRPM7Sm6c">“<em>Puppet Show</em>“</a>, accompanied by its music video. The EP was certified gold by the Recording Industry Association of Japan (RIAJ) for shipments of over 100,000 copies.</p>
-<p>XG’s first surge in popularity was due to “Shooting Star” and “Left Right”. Even though they already posted 2 singles, their make-ups and concepts were similar to other KPOP groups. In other words, they had not discovered their own unique characteristics. However, in “Shooting Star” and “Left Right”, the music perfectly struck a chord with the audience’s hearts while embracing the millennial retro trend.  To me, another reason that can’t ignore is there lyrics are English, which is more easier for audience to listen, remember and perform. Personally, I prefer left right to shooting star, the former one is a typical RnB which fits my bias really well.</p>
-<p><img src="https://s2.loli.net/2024/07/24/UgvPnX3RyduBHNb.png" alt="left right.png"></p>
-<center>A Cut of "Left Right"</center>
-
-<p>The lyrics in “Shooting Star” vividly depicted their trainee experience: <em><strong>“Always lookin’ fresh, got that green in my diet”, “Everything I do, I do it A1, flawless”</strong></em> sang by Jurin; <em><strong>“Babe, if I give it my all, will it pay off? Workin’ overtime, no days off”</strong></em> by Chisa; <em><strong>“Now I’m goin’ up, headin’ to the stars. Wouldn’t trade it out for another life”</strong></em> by Julia. These lyrics also perfectly  showcase the team’s efforts to achieve their dreams and their pride of being one of the team. In past 7 years, they devoted countless effort in practice, encountered with  numerous psychological and life challenges, as well as a brutal elimination process. Now, these seven wolves can stand on the spotlighted stage and calmly yet proudly singing:<em><strong>“It’s a big move, every day’s like a dream, Makin’ big moves, yeah, we do it for our team, Ooh, ah, I’m lookin’ so lavish, Ooh, ah, yeah, I bet you can’t imagine.”</strong></em> What’s more, the dance performance can kill every KPOP girl group. Since I know a little about dance, I recommend this <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ym4y1q7BK/?spm_id_from=333.999.0.0&vd_source=7b6a83a00a8654c305239e13e72ae6ff">video</a> for better understanding of their dance and why they outperform other peers.</p>
-<hr>
-<p><em><strong>“New DNA”</strong></em>  was a bold and successful endeavor on the integration of concept and musicality together with visual performance. Before this, the continuity of the concept and the diversity of the music in this album were unimaginable. I am going to explain this point of view from the storyline and soundtracks.</p>
-<p><img src="https://s2.loli.net/2024/07/24/xrSBwhYflcIK1aW.png" alt="grl gvng.png"></p>
-<center>Concept photo of Girl Gang</center>
-
-<p>We have to start with the intro, <em><strong>“Hesonoo”</strong></em>. In Japanese, it means “umbilical cord”. It is also the slogan of the group, representing their their closely connected lives and emotions. Next up is the song <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RhDnRE7nciw"><em><strong>“x-gene”</strong></em></a>, the two songs symbolize the awakening of extraterrestrial beings and the closely-knit team relationship; <em><strong>“Puppet Show”</strong></em> tells the story of them breaking free from their restraints;  <em><strong>“Grl Gvng”</strong></em> is more like a superhero movie. This song intends to express their own incomparable strength and issue a severe warning to their enemies;  <em><strong>“TGIF”</strong></em>  and <em><strong>“New Dance”</strong></em> tells the story of the experiences and encounters of seven extraterrestrials after landing on Earth. Overall, it revolves around the theme of female self-awareness awakening, while blending in the typical hard-edged style of hip-hop. Truly, those girl groups, IVE, LE SSERAFIM, GIDLE are all playing such thing. However, it seems lack of credibility when those girls dressed in revealing outfits, with altered faces, performing lackluster dances, sing songs telling women not to care about others’ gazes, all I know is they are playing with females’ trust and trying to make genuine money by relying on these hollow elements. Their music production and choreography are outstanding as well. We can hear drill hi-hat clicking in the embryo, we can feel the drum shaking from the puppet world, we can dance to the bass blended in new dance. I deeply believe many  people who were new to XG became fans of them through the “POP POP POP” section made by Harvey and I am one of them. New Dance gives me a totally different feel when comparing to other music in the album. I can find chill and relax in this song, I can rest my body but move my heartbeat with their dance steps.  A cool and sweet soda definitely be much more popular than Jack Daniels in a hot summer. </p>
-<hr>
-<p><img src="https://s2.loli.net/2024/07/24/y4VCoKe9UJHpzDR.png" alt="woke up cocona.png"></p>
-<center>The sickest shot I've ever seen in my life</center>
-
-<p><strong>“Woke Up”</strong> is A true revolution in the history of girl group. It is so hard to imagine that an entire rap song performed by a girl group and the visionary is so fierce, strong, and impressing. overlook the astonishing details and seamless scene transitions hidden in the MV but focus on what these girls doing because it is impossible for me to find and explain every one of them. We can ignore Jurin rapping in fire and the “Tokyo drift” bar, we can brush off Maya’s machinegun-like flow, we can pass over Harvey drop from outer space and reveal her true self in the midst of the flames, we can overlook the sick eye and catchy flow made by Hinata and Julia, we can set aside Chisa’s captivating melodic rap. But, we can not take no notice off what Cocona does, To me, that is the soul of this song. You can say she shaved her hair in music video is for attention and clout, you also can blame the producer for asking her give up her black hair and scoff at the announcement that she wanted to do it herself. Nevertheless, this has already become A FACT. SHE ACTUALLY DID THIS AND NOT JUST MAKE IT EXISTS IN TALKS. She has left many people shocked and in awe of what she has done. </p>
-<hr>
-<p>After all, it is their 100% dedication to practice, musical diversity, and perfect teamwork that garnered them much attention and love around the globe. The XG MOVE, XG VOX or XG XYPHER all showcased their professionalism, hard work, and talent in performance, as well as their ease in mastering various genres. Tippy toes and Mascara both too Korean and can not help them  establish a solid foothold in the music market which full of competence. Luckily, they find out the optimal method to express themselves and continuously striving forward on this path. Therefore, their success is well-deserved. But to me, I believe they still have not touched the ceiling.  Such a valuable team deserves to enjoy larger stages, sharing their musical vision, stories and charm with a broader audience.</p>
-<hr>
-<h1 id="Weekly-music-radio"><a href="#Weekly-music-radio" class="headerlink" title="&gt; Weekly music radio"></a>&gt;</i> Weekly music radio</h1><p>The pre-song of XG’s second album <em><strong>“Something ain’t right”</strong></em> is going to online on July 26. I’ve heard the full song when writing this. I’d like make some descriptions for this song: It is not right but excellent. I admit that I view their works through “fan filter”, but try to listen and compare with other peers then judge whether I’m being fair if feeling curious or skeptical. </p>
-<p><img src="https://s2.loli.net/2024/07/25/eG321UbKQOM5nLP.png" alt="SAR.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ucm14.github.io/2024/06/29/academic-discussion-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Mason Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MASON'S RADIO">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/29/academic-discussion-2/" class="post-title-link" itemprop="url">Academic discussion#1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-06-29 02:07:27" itemprop="dateCreated datePublished" datetime="2024-06-29T02:07:27+08:00">2024-06-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-07-28 01:04:24" itemprop="dateModified" datetime="2024-07-28T01:04:24+08:00">2024-07-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/TOEFL/" itemprop="url" rel="index"><span itemprop="name">TOEFL</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <script src="/assets/js/DPlayer.min.js"> </script><p>I totally agree with Paul’s idea that government should not set automobile-free zone in city center , not only for the concern of businesses but also for the convenience of individuals. Since the center of a city is the core of local economy, politics and culture, it has to be capable of handling large quantity of people who come here for business  efficiently. For Claire’s opinion, it is true that we have to work together to decrease the emit of carbon dioxide. However, automobile-free zone is not the only choice since we already found and invented the alternative of conventional petrol. What’s more, only pedestrian could turn city center becoming crowded and then increasing the risk of the occurrence of  severe accidents. A street full of people can have negative influence on those who try to enjoy the shopping. </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
     }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
   }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
 </script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" alt="loading">
+            <div class="container container-unloaded">
+                <main class="main index-page">
+        <article class="index-post">
+            <a class="abstract-title" href="/2024/08/01/Transition-Probability-Matrix/">
+                <span class="abstract-title-text">1. Transition Probability Matrix and value iteration</span>
+            </a>
+            <div class="abstract-content">
+                The fundamental of reinforcement learning
+            </div>
+            <!-- read more -->
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2024/08/02">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/08/01</span>
+                </div>
+                <!-- tags -->
+                    <div class="abstract-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="Reinforcement learning">Reinforcement learning</a>
+</div>
+
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+        <article class="index-post">
+            <a class="abstract-title" href="/2024/07/26/Weekly-thought/">
+                <span class="abstract-title-text">Weekly thought</span>
+            </a>
+            <div class="abstract-content">
+                What should I do in next few weeks ?
+            </div>
+            <!-- read more -->
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2024/07/28">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/07/26</span>
+                </div>
+                <!-- tags -->
+                    <div class="abstract-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="memo">memo</a>
+</div>
+
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+        <article class="index-post">
+            <a class="abstract-title" href="/2024/07/20/trip-in-Nanjing/">
+                <span class="abstract-title-text">Trip in Nanjing</span>
+            </a>
+            <div class="abstract-content">
+                i was feeling the sunlight is burning my skin
+            </div>
+            <!-- read more -->
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2024/07/28">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/07/20</span>
+                </div>
+                <!-- tags -->
+                    <div class="abstract-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="Nanjing">Nanjing</a>
+</div>
+
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+        <article class="index-post">
+            <a class="abstract-title" href="/2024/07/10/Music-recommendation-review-1/">
+                <span class="abstract-title-text">MASON&#39;S RADIO#1</span>
+            </a>
+            <div class="abstract-content">
+                XG freaking world Domination
+            </div>
+            <!-- read more -->
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2024/07/28">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/07/10</span>
+                </div>
+                <!-- tags -->
+                    <div class="abstract-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="XG">XG</a>
+</div>
+
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+        <article class="index-post">
+            <a class="abstract-title" href="/2024/06/29/academic-discussion-2/">
+                <span class="abstract-title-text">Academic discussion#1</span>
+            </a>
+            <div class="abstract-content">
+                Automobile-free zone?
+            </div>
+            <!-- read more -->
+            <div class="abstract-post-meta">
+                <!-- date -->
+                <div class="abstract-date" title="Last updated: 2024/07/28">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/06/29</span>
+                </div>
+                <!-- tags -->
+                    <div class="abstract-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="Academic discussion">Academic discussion</a>
+</div>
+
+            </div>
+        </article>
+        <div class="index-post-divider"></div>
+    <!-- paginator  -->
+</main>
+
+                <!-- profile -->
+                    <div class="profile">
+    <img class="profile-avatar" alt="avatar" src="/avatar/curry.jpg" >
+    <div class="profile-name">Mason Yu</div>
+        <div class="profile-signature">
+            Grind Grind Grind
+        </div>
+        <div class="profile-social">
+                            <a href="mailto:ymf1999@163.com" class="iconfont-archer email" title="email" ></a>
+                <a href="//github.com/ucm14" class="iconfont-archer github" target="_blank" title="github"></a>
+                <span class="iconfont-archer wechat" title="wechat">
+                    <img class="profile-qr" src="/assets/wechat.jpg" />
+                </span>
+                <a href="/assets/telegram.jpg" class="iconfont-archer telegram" target="_blank" title="telegram"></a>
+                <a href="https://x.com/readyfortrail" class="iconfont-archer twitter" target="_blank" title="twitter"></a>
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Mason Yu</p>
-  <div class="site-description" itemprop="description"></div>
+        <div class="profile-link-item">
+            <a href="/about" class="about-me">
+                ABOUT ME
+            </a>
+        </div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+        <div class="social">
+                            <a href="mailto:ymf1999@163.com" class="iconfont-archer email" title="email" ></a>
+                <a href="//github.com/ucm14" class="iconfont-archer github" target="_blank" title="github"></a>
+                <span class="iconfont-archer wechat" title="wechat">
+                    <img class="profile-qr" src="/assets/wechat.jpg" />
+                </span>
+                <a href="/assets/telegram.jpg" class="iconfont-archer telegram" target="_blank" title="telegram"></a>
+                <a href="https://x.com/readyfortrail" class="iconfont-archer twitter" target="_blank" title="twitter"></a>
+
+        </div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    <!-- 不蒜子  -->
+        <div class="busuanzi-container">
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        </div>
+</footer>
+
+        </div>
+        <!-- toc -->
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
         
-          <span class="site-state-item-count">5</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
+        
+        
+        
+        
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 5
+        </div>
+        <!-- search  -->
+    </div>
+    <div class="post-archive">
+            <div class="archive-year"> 2024 </div>
+            <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/01</span>
+            <a class="archive-post-title" href="/2024/08/01/Transition-Probability-Matrix/">1. Transition Probability Matrix and value iteration</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span>
+            <a class="archive-post-title" href="/2024/07/26/Weekly-thought/">Weekly thought</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/20</span>
+            <a class="archive-post-title" href="/2024/07/20/trip-in-Nanjing/">Trip in Nanjing</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span>
+            <a class="archive-post-title" href="/2024/07/10/Music-recommendation-review-1/">MASON'S RADIO#1</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span>
+            <a class="archive-post-title" href="/2024/06/29/academic-discussion-2/">Academic discussion#1</a>
+        </li>
+            </ul>
+    </div>
 </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/ucm14" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ucm14" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:upprcav@gmail.com" title="E-Mail → mailto:upprcav@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://twitter.com/readyfortrail" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;readyfortrail" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
-      </span>
-  </div>
 
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+            <span class="sidebar-tag-name" data-tags="XG">
+                <span class="iconfont-archer">&#xe606;</span>
+                XG
+            </span>
+            <span class="sidebar-tag-name" data-tags="Reinforcement learning">
+                <span class="iconfont-archer">&#xe606;</span>
+                Reinforcement learning
+            </span>
+            <span class="sidebar-tag-name" data-tags="memo">
+                <span class="iconfont-archer">&#xe606;</span>
+                memo
+            </span>
+            <span class="sidebar-tag-name" data-tags="Academic discussion">
+                <span class="iconfont-archer">&#xe606;</span>
+                Academic discussion
+            </span>
+            <span class="sidebar-tag-name" data-tags="Nanjing">
+                <span class="iconfont-archer">&#xe606;</span>
+                Nanjing
+            </span>
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
 
-
-      </div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+        <span class="sidebar-category-name" data-categories="Music">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Music
+        </span>
+        <span class="sidebar-category-name" data-categories="Machine learning">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Machine learning
+        </span>
+        <span class="sidebar-category-name" data-categories="Academic">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Academic
+        </span>
+        <span class="sidebar-category-name" data-categories="TOEFL">
+            <span class="iconfont-archer">&#xe60a;</span>
+            TOEFL
+        </span>
+        <span class="sidebar-category-name" data-categories="Travel">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Travel
+        </span>
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
 
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Mason Yu</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
-  </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-          load: ['[tex]/mhchem'],
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-          packages: {'[+]': ['mhchem']},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "http://ucm14.github.io",
+        root: siteMetaRoot,
+        author: "Mason Yu"
+    }
 </script>
 
-    
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
 
-  
-
-</body>
+        <!-- main func -->
+        <script src="/scripts/main.js"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" onload="window.Fancybox.bind('[data-fancybox]')" defer></script>
+        <!-- algolia -->
+        <!-- busuanzi -->
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        <!-- async load share.js -->
+        <!-- mermaid -->
+    </body>
 </html>
