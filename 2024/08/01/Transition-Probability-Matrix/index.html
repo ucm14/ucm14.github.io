@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://s2.loli.net/2024/08/01/I9NQp4icfJaZ52h.png">
 <meta property="og:image" content="https://s2.loli.net/2024/08/02/hm2qLdJyUbg6ZN3.png">
 <meta property="article:published_time" content="2024-08-01T06:08:19.000Z">
-<meta property="article:modified_time" content="2024-08-02T13:58:50.421Z">
+<meta property="article:modified_time" content="2024-08-02T14:01:37.787Z">
 <meta property="article:author" content="Mason Yu">
 <meta property="article:tag" content="Reinforcement learning">
 <meta name="twitter:card" content="summary">
@@ -844,7 +844,7 @@
 <td align="right">0.06250419]</td>
 </tr>
 </tbody></table>
-<p>${P^{30}<em>{01}}&#x3D;[0.62499433, 0.31250518, 0.06250049]$, ${P^{30}</em>{02}}&#x3D;[0.62495116  0.31254465  0.06250419]$. From the tables and figure we can reach the conclusion that both states converge eventually and their value are close to each other.</p>
+<p>$P^{30}<em>{01}&#x3D;[0.62499433, 0.31250518, 0.06250049]$, $P^{30}</em>{02}&#x3D;[0.62495116  0.31254465  0.06250419]$. From the tables and figure we can reach the conclusion that both states converge eventually and their value are close to each other.</p>
 <hr>
 <h1 id="Model-based-algorithms"><a href="#Model-based-algorithms" class="headerlink" title="Model-based algorithms"></a>Model-based algorithms</h1><h2 id="Value-iteration"><a href="#Value-iteration" class="headerlink" title="Value iteration"></a>Value iteration</h2><p>Unlike simply times initial state with transition probability matrix multiple times, <em><strong>value iteration</strong></em> is a commonly used <strong>dynamic planning (DP)</strong> method (<em>DP methods assume that we have a <strong>perfect model</strong> of the environment’s MDP. That’s usually not the case in practice, but it’s important to study DP anyway</em>), which is mainly used to solve the optimal strategy problem in Markov Decision Process (MDP). The core idea of the Value Iteration algorithm is to update the value function of the state iteratively, gradually approaching the optimal value function, so as to obtain the optimal policy. The main advantage of the value iteration algorithm is that it is simple and easy to implement, and it is applicable to various types of MDP problems. However, the main disadvantage of the value iteration algorithm is its <strong>high time complexity</strong>, especially when the state space is large. Therefore, in practical applications, the value iteration algorithm usually needs to be combined with other optimization techniques, such as dynamic programming optimization and parallel computing, to improve the computational efficiency. The equation of algorithm is as below.</p>
 <h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>$$<br>V^{(k+1)}(s) &#x3D; max_a [R(s, a) + γ Σ_{s’ ∈ S} P(s’ | s, a) V^k(s’)]\tag{3}<br>$$</p>
