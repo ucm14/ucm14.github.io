@@ -10,22 +10,24 @@
     <meta name="copyright" content="Mason Yu">
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     <meta name="description" content="">
-    <meta name="description" content="I totally agree with Paul’s idea that government should not set automobile-free zone in city center , not only for the concern of businesses but also for the convenience of individuals. Since the cen">
+    <meta name="description" content="Model-based &#x2F; Model-free RLEverybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Academic discussion#1">
-<meta property="og:url" content="http://ucm14.github.io/2024/06/29/academic-discussion-2/index.html">
+<meta property="og:title" content="2. Q Learning">
+<meta property="og:url" content="http://ucm14.github.io/2024/08/03/Q-Learning/index.html">
 <meta property="og:site_name" content="MASON&#39;S RADIO">
-<meta property="og:description" content="I totally agree with Paul’s idea that government should not set automobile-free zone in city center , not only for the concern of businesses but also for the convenience of individuals. Since the cen">
+<meta property="og:description" content="Model-based &#x2F; Model-free RLEverybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environm">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-06-28T18:07:27.000Z">
-<meta property="article:modified_time" content="2024-07-27T17:04:24.833Z">
+<meta property="og:image" content="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png">
+<meta property="article:published_time" content="2024-08-02T18:05:36.000Z">
+<meta property="article:modified_time" content="2024-08-02T19:05:31.593Z">
 <meta property="article:author" content="Mason Yu">
-<meta property="article:tag" content="Academic discussion">
+<meta property="article:tag" content="Reinforcement learning">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/maocai.ico">
-    <title>Academic discussion#1 · MASON&#39;S RADIO</title>
+    <title>2. Q Learning · MASON&#39;S RADIO</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -251,7 +253,7 @@
             <a href="/">MASON&#39;S RADIO</a>
         </div>
         <div class="post-title header-element">
-            <a href="#" class="post-name">Academic discussion#1</a>
+            <a href="#" class="post-name">2. Q Learning</a>
         </div>
     </div>
 </header>
@@ -278,7 +280,7 @@
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-                Academic discussion#1
+                2. Q Learning
             <!-- 404 -->
         </h1>
         <!-- 副标题 -->
@@ -290,14 +292,14 @@
             <div class="post-intros">
                 <!-- 文章页标签  -->
                     <div class="post-intro-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="Academic discussion">Academic discussion</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="Reinforcement learning">Reinforcement learning</a>
 </div>
 
                 <!-- 文章字数统计 -->
                 <div class="post-intro-meta">
                     <!-- 撰写日期 -->
                     <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2024/06/29</span>
+                    <span class="post-intro-time">2024/08/03</span>
                     <!-- busuanzi -->
                         <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                             <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
@@ -449,19 +451,39 @@
             <div class="container container-unloaded">
                 <main class="main post-page">
     <article class="article-entry">
-        <script src="/assets/js/DPlayer.min.js"> </script><p>I totally agree with Paul’s idea that government should not set automobile-free zone in city center , not only for the concern of businesses but also for the convenience of individuals. Since the center of a city is the core of local economy, politics and culture, it has to be capable of handling large quantity of people who come here for business  efficiently. For Claire’s opinion, it is true that we have to work together to decrease the emit of carbon dioxide. However, automobile-free zone is not the only choice since we already found and invented the alternative of conventional petrol. What’s more, only pedestrian could turn city center becoming crowded and then increasing the risk of the occurrence of  severe accidents. A street full of people can have negative influence on those who try to enjoy the shopping. </p>
+        <script src="/assets/js/DPlayer.min.js"> </script><h1 id="Model-based-Model-free-RL"><a href="#Model-based-Model-free-RL" class="headerlink" title="Model-based &#x2F; Model-free RL"></a>Model-based &#x2F; Model-free RL</h1><p>Everybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment and maximize cumulative reward. Before starting this passage, we have to understand what is model-free and what is model-based?</p>
+<p><img src="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png" alt="RL family.png"></p>
+<p>In previous passage, we know value iteration and policy iteration (a branch of <strong>Dynamic Programming</strong>) are both model-based: they have determined transition, determined transition probability and of course, determined reward. In other words, model-based RLs completely rely on environment model (the transition probability matrix and reward function). So, when solving a problem by a model-based RL, we better pray the model is 100% correct, otherwise the agent can learn many nonsense. But model-based RLs can be efficient if we have a highly precise model.</p>
+<p>In contrary, model-free RLs do not rely on environment model. They can straightly make interactions with environment, achieve experience and learn from it. They do not need to know the transition probability and reward function of environment. In that, model-free RLs are suitable for solving sophisticated problems in real-life aspects, such as engineering and financial analysis. However, the learning process of model-free RL is quite long, which means their operation requires a  powerful process unit.</p>
+<h1 id="Q-learning-the-first-step-of-model-free-RL"><a href="#Q-learning-the-first-step-of-model-free-RL" class="headerlink" title="Q learning: the first step of model-free RL"></a>Q learning: the first step of model-free RL</h1><h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Q learning is a value-based RL algorithm. Thus, Q value is the fundamental variable in this algorithm, and this is the reason why this algorithm called “Q learning”. Assuming we already know what is agent, what is environment, what are the states, the actions have to be discrete and the reward function, let us cut to the point and introduce the learning method of agent in Q learning.<br>$$<br>Q(s,a)⬅Q(s,a)+\alpha (r + \gamma max_{a’}Q(s’,a’)-Q(s,a))\tag{1}<br>$$<br>Equation (1) is the update method of Q value. $\alpha$ is learning rate (basically learning rate defines the pace of updating), $\gamma$ is discount factor. $Q(s,a)$ is the action value of current state; $Q(s’,a’)$ is the action value of next state; $max_{a’}Q(s’,a’)$ means choosing the maximum $Q(s’,a’)$ among all the possible actions.</p>
+<p> The Q learning is quite similar to value iteration. We are going to explain the differences between Q learning and value iteration in detail through a simple implementation.</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grid_size = <span class="number">4</span></span><br><span class="line">goal_state = (<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">start_state = (<span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 
+<h3 id="Hyperparameters"><a href="#Hyperparameters" class="headerlink" title="Hyperparameters"></a>Hyperparameters</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alpha = <span class="number">0.1</span></span><br><span class="line">gamma = <span class="number">0.9</span></span><br><span class="line">epsilon = <span class="number">0.1</span></span><br><span class="line">num_episodes = <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="State-s"><a href="#State-s" class="headerlink" title="State(s)"></a>State(s)</h3><p>The state is just all the points in the 4x4 girds. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_next_state</span>(<span class="params">state, action</span>):</span><br><span class="line">    x, y = state</span><br><span class="line">    <span class="keyword">if</span> action == <span class="string">&#x27;up&#x27;</span> <span class="keyword">and</span> x &gt; <span class="number">0</span>:</span><br><span class="line">        x -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> action == <span class="string">&#x27;down&#x27;</span> <span class="keyword">and</span> x &lt; grid_size - <span class="number">1</span>:</span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> action == <span class="string">&#x27;left&#x27;</span> <span class="keyword">and</span> y &gt; <span class="number">0</span>:</span><br><span class="line">        y -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> action == <span class="string">&#x27;right&#x27;</span> <span class="keyword">and</span> y &lt; grid_size - <span class="number">1</span>:</span><br><span class="line">        y += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> (x, y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Action-s"><a href="#Action-s" class="headerlink" title="Action(s)"></a>Action(s)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">actions = [<span class="string">&#x27;up&#x27;</span>, <span class="string">&#x27;down&#x27;</span>, <span class="string">&#x27;left&#x27;</span>, <span class="string">&#x27;right&#x27;</span>]</span><br><span class="line">num_actions = <span class="built_in">len</span>(actions)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choose_action</span>(<span class="params">state</span>):</span><br><span class="line">    <span class="keyword">if</span> np.random.uniform(<span class="number">0</span>, <span class="number">1</span>) &lt; epsilon:</span><br><span class="line">        <span class="keyword">return</span> np.random.choice(num_actions)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> np.argmax(Q_table[state[<span class="number">0</span>], state[<span class="number">1</span>], :])</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reward-function"><a href="#Reward-function" class="headerlink" title="Reward function"></a>Reward function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_reward</span>(<span class="params">state</span>):</span><br><span class="line">    <span class="keyword">if</span> state == goal_state:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Q-value-function"><a href="#Q-value-function" class="headerlink" title="Q value function"></a>Q value function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> episode <span class="keyword">in</span> <span class="built_in">range</span>(num_episodes):</span><br><span class="line">    state = start_state</span><br><span class="line">    <span class="keyword">while</span> state != goal_state:</span><br><span class="line">        action_index = choose_action(state)</span><br><span class="line">        action = actions[action_index]</span><br><span class="line">        next_state = get_next_state(state, action)</span><br><span class="line">        reward = get_reward(next_state)</span><br><span class="line"></span><br><span class="line">        Q_table[state[<span class="number">0</span>], state[<span class="number">1</span>], action_index] += alpha * (</span><br><span class="line">                reward + gamma * np.<span class="built_in">max</span>(Q_table[next_state[<span class="number">0</span>], next_state[<span class="number">1</span>], :]) - Q_table[</span><br><span class="line">            state[<span class="number">0</span>], state[<span class="number">1</span>], action_index]</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        state = next_state</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Final Q-Table:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(Q_table)</span><br><span class="line"></span><br><span class="line">state = start_state</span><br><span class="line">path = [state]</span><br><span class="line"><span class="keyword">while</span> state != goal_state:</span><br><span class="line">    action_index = np.argmax(Q_table[state[<span class="number">0</span>], state[<span class="number">1</span>], :])</span><br><span class="line">    action = actions[action_index]</span><br><span class="line">    state = get_next_state(state, action)</span><br><span class="line">    path.append(state)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Path from start to goal:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(path)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3>
     </article>
     <!-- license -->
     <!-- paginator -->
     <ul class="post-paginator">
         <li class="next">
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2024/07/10/Music-recommendation-review-1/" title="MASON'S RADIO#1">
-                    <div class="nextTitle">MASON'S RADIO#1</div>
-                </a>
         </li>
         <li class="previous">
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2024/08/01/Transition-Probability-Matrix/" title="1. Value iteration vs Policy iteration">
+                    <div class="prevTitle">1. Value iteration vs Policy iteration</div>
+                </a>
         </li>
     </ul>
     <!-- comment -->
@@ -483,6 +505,18 @@
     <!-- timeliness note -->
     <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
     <!-- Mathjax -->
+            <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
 </main>
 
                 <!-- profile -->
@@ -517,7 +551,7 @@
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-based-Model-free-RL"><span class="toc-number">1.</span> <span class="toc-text">Model-based &#x2F; Model-free RL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q-learning-the-first-step-of-model-free-RL"><span class="toc-number">2.</span> <span class="toc-text">Q learning: the first step of model-free RL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm"><span class="toc-number">2.1.</span> <span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation"><span class="toc-number">2.2.</span> <span class="toc-text">Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment"><span class="toc-number">2.2.1.</span> <span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperparameters"><span class="toc-number">2.2.2.</span> <span class="toc-text">Hyperparameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#State-s"><span class="toc-number">2.2.3.</span> <span class="toc-text">State(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Action-s"><span class="toc-number">2.2.4.</span> <span class="toc-text">Action(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reward-function"><span class="toc-number">2.2.5.</span> <span class="toc-text">Reward function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-value-function"><span class="toc-number">2.2.6.</span> <span class="toc-text">Q value function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Results"><span class="toc-number">2.2.7.</span> <span class="toc-text">Results</span></a></li></ol></li></ol></li></ol>
             </div>
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">
