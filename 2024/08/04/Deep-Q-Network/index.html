@@ -10,17 +10,22 @@
     <meta name="copyright" content="Mason Yu">
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="MASON&#39;S RADIO">
-<meta property="og:url" content="http://ucm14.github.io/index.html">
+    <meta name="description" content="Value function approximationDQN &#x3D; Deep network + Q learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Q Network">
+<meta property="og:url" content="http://ucm14.github.io/2024/08/04/Deep-Q-Network/index.html">
 <meta property="og:site_name" content="MASON&#39;S RADIO">
+<meta property="og:description" content="Value function approximationDQN &#x3D; Deep network + Q learning">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-04T05:00:57.000Z">
+<meta property="article:modified_time" content="2024-08-05T01:52:37.239Z">
 <meta property="article:author" content="Mason Yu">
+<meta property="article:tag" content="Reinforcement learning">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/maocai.ico">
-    <title>MASON&#39;S RADIO</title>
+    <title>Deep Q Network · MASON&#39;S RADIO</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -216,9 +221,9 @@
             document.write('<script src="/lib/jquery.min.js" />')
         }
     </script>
-        <body class="home-body">
+        <body class="post-body">
         <!-- header -->
-        <header class="header header-mobile index-header">
+        <header class="header header-mobile">
     <!-- top read progress line -->
     <div class="header-element">
         <div class="read-progress"></div>
@@ -246,13 +251,13 @@
             <a href="/">MASON&#39;S RADIO</a>
         </div>
         <div class="post-title header-element">
-            <a href="#" class="post-name"></a>
+            <a href="#" class="post-name">Deep Q Network</a>
         </div>
     </div>
 </header>
 
         <!-- fixed footer -->
-        <footer class="footer-fixed index-footer-fixed">
+        <footer class="footer-fixed">
     <!-- donate button -->
 
     <!-- back to top button -->
@@ -266,23 +271,54 @@
             <div class="site-intro" style="    height:50vh;
 ">
     <!-- 主页  -->
-    <!-- 文章页  -->
+    <!-- 404页  -->
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/cole.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/flower.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-                MASON'S RADIO
-            <!-- 文章页  -->
+                Deep Q Network
+            <!-- 404 -->
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-                    If they don't know your dream then they can't shoot them down.
-            <!-- 文章页  -->
+            <!-- 404 -->
         </p>
         <!-- 文章页 meta -->
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                    <div class="post-intro-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="Reinforcement learning">Reinforcement learning</a>
+</div>
+
+                <!-- 文章字数统计 -->
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2024/08/04</span>
+                    <!-- busuanzi -->
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
     </div>
 </div>
 
@@ -411,182 +447,56 @@
 
             <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" alt="loading">
             <div class="container container-unloaded">
-                <main class="main index-page">
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/08/04/Deep-Q-Network/">
-                <span class="abstract-title-text">Deep Q Network</span>
-            </a>
-            <div class="abstract-content">
-                Integration of RL and Deep network
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/08/05">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/08/04</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="Reinforcement learning">Reinforcement learning</a>
-</div>
+                <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Value-function-approximation"><a href="#Value-function-approximation" class="headerlink" title="Value function approximation"></a>Value function approximation</h1><h1 id="DQN-Deep-network-Q-learning"><a href="#DQN-Deep-network-Q-learning" class="headerlink" title="DQN &#x3D; Deep network + Q learning"></a>DQN &#x3D; Deep network + Q learning</h1>
+    </article>
+    <!-- license -->
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+        </li>
+        <li class="previous">
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2024/08/03/Q-Learning/" title="2. Begin with model-free algorithms">
+                    <div class="prevTitle">2. Begin with model-free algorithms</div>
+                </a>
+        </li>
+    </ul>
+    <!-- comment -->
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
 
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
             
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/08/03/Q-Learning/">
-                <span class="abstract-title-text">2. Begin with model-free algorithms</span>
-            </a>
-            <div class="abstract-content">
-                Model-based &#x2F; Model-free RLEverybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment and maximize cumulative reward. Before starting this passage, we have to understand what is mo...
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/08/04">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/08/03</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="Reinforcement learning">Reinforcement learning</a>
-</div>
+            
+            
+            <!-- utteranc评论 -->
 
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/08/01/Transition-Probability-Matrix/">
-                <span class="abstract-title-text">1. Value iteration vs Policy iteration</span>
-            </a>
-            <div class="abstract-content">
-                The fundamental of reinforcement learning
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/08/03">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/08/01</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="Reinforcement learning">Reinforcement learning</a>
-</div>
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
 
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/07/26/Weekly-thought/">
-                <span class="abstract-title-text">Weekly thought</span>
-            </a>
-            <div class="abstract-content">
-                What should I do in next few weeks ?
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/07/28">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/07/26</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="memo">memo</a>
-</div>
+            
+            
+            
+        </div>
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    <!-- Mathjax -->
+            <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
 
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/07/20/trip-in-Nanjing/">
-                <span class="abstract-title-text">Trip in Nanjing</span>
-            </a>
-            <div class="abstract-content">
-                i was feeling the sunlight is burning my skin
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/07/28">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/07/20</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="Nanjing">Nanjing</a>
-</div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
 
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/07/10/Music-recommendation-review-1/">
-                <span class="abstract-title-text">MASON&#39;S RADIO#1</span>
-            </a>
-            <div class="abstract-content">
-                XG freaking world Domination
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/07/28">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/07/10</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="XG">XG</a>
-</div>
-
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-        <article class="index-post">
-            <a class="abstract-title" href="/2024/06/29/academic-discussion-2/">
-                <span class="abstract-title-text">Academic discussion#1</span>
-            </a>
-            <div class="abstract-content">
-                Automobile-free zone?
-            </div>
-            <!-- read more -->
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2024/07/28">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/06/29</span>
-                </div>
-                <!-- tags -->
-                    <div class="abstract-tags" >
-        <a class="post-tag" href="javascript:void(0);" data-tags="Academic discussion">Academic discussion</a>
-</div>
-
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    <!-- paginator  -->
 </main>
 
                 <!-- profile -->
-                    <div class="profile">
-    <img class="profile-avatar" alt="avatar" src="/avatar/curry.jpg" >
-    <div class="profile-name">Mason Yu</div>
-        <div class="profile-signature">
-            Grind Grind Grind
-        </div>
-        <div class="profile-social">
-                            <a href="mailto:ymf1999@163.com" class="iconfont-archer email" title="email" ></a>
-                <a href="//github.com/ucm14" class="iconfont-archer github" target="_blank" title="github"></a>
-                <span class="iconfont-archer wechat" title="wechat">
-                    <img class="profile-qr" src="/assets/wechat.jpg" />
-                </span>
-                <a href="/assets/telegram.jpg" class="iconfont-archer telegram" target="_blank" title="telegram"></a>
-                <a href="https://x.com/readyfortrail" class="iconfont-archer twitter" target="_blank" title="twitter"></a>
-
-        </div>
-        <div class="profile-link-item">
-            <a href="/about" class="about-me">
-                ABOUT ME
-            </a>
-        </div>
-</div>
-
             </div>
             <footer class="footer footer-unloaded">
     <!-- social  -->
@@ -613,6 +523,13 @@
 
         </div>
         <!-- toc -->
+            <div class="toc-wrapper toc-wrapper-loding" style=    top:50vh;
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Value-function-approximation"><span class="toc-number">1.</span> <span class="toc-text">Value function approximation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DQN-Deep-network-Q-learning"><span class="toc-number">2.</span> <span class="toc-text">DQN &#x3D; Deep network + Q learning</span></a></li></ol>
+            </div>
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">
     <ul class="sidebar-tabs sidebar-tabs-active-0">
@@ -755,6 +672,7 @@
         <!-- busuanzi -->
             <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
         <!-- async load share.js -->
+            <script src="/scripts/share.js" async></script>
         <!-- mermaid -->
     </body>
 </html>
