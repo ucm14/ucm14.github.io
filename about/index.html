@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>About Me | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Mason&#39;s Radio</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Mason&#39;s Radio</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    <article class="post-wrap page">
+        
+        <h2 class="post-title">About Me</h2>
+        
+        <section class="post-content">
+            <hr>
+<p><span style="font-size: 1.2em; font-weight: bold;">Minfeng Yu</span></p>
+<ul>
+<li>TEL: (+86) 153-1213-5268</li>
+<li>Mail:  <a href="mailto:&#117;&#x70;&#x70;&#114;&#x63;&#97;&#x76;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#117;&#x70;&#x70;&#114;&#x63;&#97;&#x76;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;</a></li>
+</ul>
+<hr>
+<h2 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h2><p><strong>Nanjing Tech University</strong>, Nanjing, Jiangsu</p>
+<ul>
+<li><p>M.S. in Safety Science Engineering, 09&#x2F;2022 - 07&#x2F;2025</p>
+</li>
+<li><p>B.Eng. in Safety Engineering, 09&#x2F;2018 - 07&#x2F;2022</p>
+</li>
+</ul>
+<h2 id="Research-Experience"><a href="#Research-Experience" class="headerlink" title="Research Experience"></a>Research Experience</h2><ul>
+<li>Focused on developing a state-of-art control framework aimed at enhancing the safety and resilience performance of chemical reactors by integrating deep reinforcement learning (Proximal Policy Optimization, PPO) with principles of resilience engineering</li>
+<li>Developed an advanced numerical model based on proportional hazard  model (PHM) to evaluate the resilience performance of a chemical reactor, incorporating continuous action spaces for comprehensive analysis and optimization</li>
+</ul>
+<h2 id="Publication"><a href="#Publication" class="headerlink" title="Publication"></a>Publication</h2><p><strong>PPO-based resilient control framework for safer operation of exothermic CSTR</strong> (Under Review)</p>
+<p>  <u>Yu, M.</u>, Li, B., Zhao, S., Nitin, R., Zhang, B.</p>
+<p>  <em>Process Safety and Environmental Protection (PSEP), 2024</em></p>
+<h2 id="Skills-Coursework"><a href="#Skills-Coursework" class="headerlink" title="Skills &amp; Coursework"></a>Skills &amp; Coursework</h2><p><strong>Programming Languages:</strong> Python, MATLAB</p>
+<p><strong>Tools and Frameworks:</strong>  pandas, NumPy, torch, SymPy, gekko, Django, $\LaTeX$</p>
+<p><strong>Languages:</strong> Chinese (native), English (proficient), Korean(beginner)</p>
+<p><strong>Applied Math:</strong> Operation research, Linear algebra, Matrix theory</p>
+<p><strong>Machine Learning:</strong> Deep learning, Reinforcement learning</p>
+<p><strong>Chemical Engineering:</strong> Chemical Process Safety, Elements of chemical engineering, Chemical Hazard Engineering Fundamentals(CHEF)</p>
+<p><strong>Safety Assessment:</strong> Quantitative Risk Assessment, Resilience Engineering</p>
+<h2 id="Projects-Internship"><a href="#Projects-Internship" class="headerlink" title="Projects &amp; Internship"></a>Projects &amp; Internship</h2><p><strong>Design of Safety Performance Indicators</strong><br>  ~ Chambroad Petrochemicals<br>  ~ 03&#x2F;2024 - 08&#x2F;2024</p>
+<ul>
+<li>Participated in the design of performance indicators by conducting on-site visits, interviewing employees at various levels, and reviewing historical data.</li>
+</ul>
+<p><strong>Program Development</strong><br>  ~ Process Safety Lab<br>  ~ 05&#x2F;2023 - 09&#x2F;2024</p>
+<ul>
+<li><p>Developed a calculation tool for predicting mass leakage from chemical equipment across various scenarios.</p>
+</li>
+<li><p>Designed a quantitative risk assessment tool for assessing the impact of<br>domino accidents in chemical plants.</p>
+</li>
+</ul>
+<p><strong>Team Member Internship</strong><br>  ~ Nanjing Refinery Co., Ltd<br>  ~ 11&#x2F;2021 - 01&#x2F;2022</p>
+<ul>
+<li>Gained a clearer understanding of the petroleum refining process and the on-site environment of the equipment.</li>
+</ul>
+<p><strong>Cognitive Internship</strong><br>  ~ Nanjing Fire Protection Technology Co.,Ltd<br>  ~ 10&#x2F;2021 - 11&#x2F;2021</p>
+<ul>
+<li>Gained a basic understanding of various firefighting equipments and the water sprinkler systems.</li>
+</ul>
+<h2 id="Activities"><a href="#Activities" class="headerlink" title="Activities"></a>Activities</h2><p><strong>Vice Minister</strong><br>  ~ University Organization Department<br>  ~ 09&#x2F;2019 - 09&#x2F;2020</p>
+<ul>
+<li>Organized several activities, including the university’s Freshman English Competition and the Exchange Student Welcome Meeting, among others.</li>
+</ul>
+<p><strong>Member</strong><br>  ~ College Sports Department<br>  ~ 10&#x2F;2018 - 06&#x2F;2019</p>
+<ul>
+<li>Participated in organizing college sports game and basketball game.</li>
+</ul>
+<h2 id="Awards-and-Honors"><a href="#Awards-and-Honors" class="headerlink" title="Awards and Honors"></a>Awards and Honors</h2><p><strong>Third Prize</strong>, Undergraduate Award<br>  ~ 2018</p>
+<p><strong>Gold</strong>, College of Safety Science and Engineering Debate Competition<br>  ~ 2018</p>
+<p><strong>5th-8th</strong>, University Basketball Tournament<br>  ~ 2022</p>
+<p><strong>Third Prize</strong>, Postgraduate Award<br>  ~ 2022</p>
+<p><strong>Special Prize</strong>, Postgraduate Award<br>  ~ 2023</p>
+
+        </section>
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
