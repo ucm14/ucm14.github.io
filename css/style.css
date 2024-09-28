@@ -150,7 +150,7 @@ template {
   font-display: swap;
 }
 html {
-  font-family: 'Microsoft Jhenghei', Lantinghei SC, 'lanting', PingFang SC, Seguo UI, Microsoft Yahei, Arial;
+  font-family: 'Microsoft Jhenghei', Lantinghei SC, 'lanting', PingFang SC, Seguo UI, Microsoft Yahei, 'Arial';
 }
 html::-webkit-scrollbar {
   width: 8px;
@@ -747,19 +747,25 @@ header label {
   margin-right: 1em !important;
   border-radius: 4px;
 }
+.card:nth-child(odd) {
+  float: left;
+}
+.card:nth-child(even) {
+  float: right;
+}
 .card .card-header {
   font-style: italic;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
 }
 .card .card-header a {
   font-style: normal;
-  color: #2bbc8a;
+  color: #002fa7;
   font-weight: bold;
   text-decoration: none;
 }
 .card .card-header a:hover {
-  color: #d480aa;
+  color: #0f4da8;
   text-decoration: none;
 }
 .card .card-header .info {
@@ -767,7 +773,7 @@ header label {
   color: #a3a3a3;
   font-size: 14px;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   white-space: nowrap;
 }
 @media (max-width: 768px) {
