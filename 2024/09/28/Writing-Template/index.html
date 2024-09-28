@@ -13,7 +13,7 @@
 
 
 
-<title>The very first blog | Mason&#39;s Radio</title>
+<title>Writing Template | Mason&#39;s Radio</title>
 
 
 
@@ -133,11 +133,76 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">The very first blog</h1>
+            <h1 class="post-title">Writing Template</h1>
             
                 <div class="post-meta">
                     
@@ -146,14 +211,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 28, 2024&nbsp;&nbsp;2:09:57</a>
+                        Date: <a href="#">September 28, 2024&nbsp;&nbsp;11:04:25</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Misc/">Misc</a>
+                                <a href="/categories/Language/">Language</a>
                             
                         </span>
                     
@@ -162,12 +227,28 @@
         </header>
 
         <div class="post-content">
-            <p>Dear readers:</p>
-<p>This is Minfeng here. My personal page has gone through many twists and turns, but it has finally been rebuilt for the third time. In the coming days, I will upload my previous personal learning records as soon as possible. Additionally, I will share other noteworthy experiences here.</p>
-<p>I plan to first upload my learning records on reinforcement learning and my experiences preparing for the TOEFL exam, then my scientific research.</p>
-<p>Of course, I will backup local files by uploading them to my GitHub repos :)</p>
-<p>Best regards,</p>
-<p>Minfeng</p>
+            <h1 id="Integrated-Writing-Templates"><a href="#Integrated-Writing-Templates" class="headerlink" title="Integrated Writing Templates"></a>Integrated Writing Templates</h1><h2 id="Template-1"><a href="#Template-1" class="headerlink" title="Template 1"></a><strong>Template 1</strong></h2><blockquote>
+<p>Already widely used</p>
+</blockquote>
+<p>The reading passage investigates the issue of…,  A, B, and C and the lecturer analyzes the same topic. However, he/she asserts all these three theories have flaws.</p>
+<p>First and foremost, although the author of the reading passage suggests that….( <strong>1-2 statements in reading</strong>）， the presenter in the listening material contends that… . This is because…, which means+the professor ……   Evidently,  <strong>the professor’s argument challenges its counterpart in the reading</strong>.</p>
+<p>Moreover, contrary to the statement in the reading that…, the professor indicates that… . Then he/she <strong>backs up this point with the fact that</strong>… . In other words, … .</p>
+<p>Last but not least, whereas the author of the reading insists that…, the lecturer <strong>proves that this claim is indefensible  by pointing out that</strong>… because…</p>
+<h2 id="Template-2"><a href="#Template-2" class="headerlink" title="Template 2"></a><strong>Template 2</strong></h2><blockquote>
+<p>Come from TPO 26</p>
+</blockquote>
+<p>The lecture opposes the reading’s opinion that（<strong>reading’s opinion</strong>）</p>
+<p>zebra mussel would severely threat the freshwater fish populations in North Ameria, <strong>contending that the arguments in the reading passage are not convincing</strong>.</p>
+<p>Initially, while the reading stated that（<strong>first statement</strong>）</p>
+<p>according to zebra mussel’s history, their spread could not be stopped, the professor held an opposite opinion. He（she） claimed that（<strong>first argument</strong>） in the past people could not stop mussel from spreading because they lack of knowledge. Nevertheless, now people could pour out the freshwater in the ballast water and refill with ocean water, which would kill mussel.</p>
+<p><strong>In addition, the professor casted doubt on the reading’s assumption that</strong>（<strong>second statement</strong>） mussels would dominate any new habitat, arguing that（<strong>second argument</strong>） they could only occupy the place at beginning. It would not take a long time before some kinds of birds realize that mussels are new available food. Since a bird could eat a lot of mussels, they would not dominate the habitat.</p>
+<p>Moreover, the reading <strong>maintained</strong> that（<strong>third statement</strong>） zebra mussels would give rise to a decline in the overall fish population, which is contradictory to what the professor said.Even if mussels could become dominant, he argued（<strong>third argument</strong>）, the overall population would increase, as the existence of mussels would benefits other kinds of fish. For example, their waste could provide nutrient to bottom-feed fish, whose population would therefore grow.</p>
+<h1 id="Academic-Discussion-Template"><a href="#Academic-Discussion-Template" class="headerlink" title="Academic Discussion Template"></a>Academic Discussion Template</h1><ol>
+<li>This is a controversial topic, but I …..(support) A’s idea that… (27 words)</li>
+<li>To be more specific …… (29 words)</li>
+<li>For example …… (29 words)</li>
+<li>In contrary, B’s opinion is …… (27 words)</li>
+</ol>
 
         </div>
 
@@ -186,7 +267,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Notes/"># Notes</a>
+                        <a href="/tags/TOEFL/"># TOEFL</a>
                     
                         
                 </span>
@@ -199,8 +280,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/09/28/TOEFL-Practice/">Vocab</a>
+                <a class="prev" rel="prev" href="/2024/09/28/speaking-test/">Speaking Test</a>
             
+            
+            <a class="next" rel="next" href="/2024/09/28/TOEFL-Practice/">Vocab</a>
             
         </section>
 

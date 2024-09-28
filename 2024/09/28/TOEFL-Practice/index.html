@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>Vocab | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/chat.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Mason&#39;s Radio</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Mason&#39;s Radio</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Vocab</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 28, 2024&nbsp;&nbsp;11:00:52</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Language/">Language</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Adjective"><a href="#Adjective" class="headerlink" title="Adjective"></a>Adjective</h1><p>贫穷的：poor, needy, impoverished, poverty, stricken</p>
+<p>富裕的：rich, wealthy, affluent, well-to-do, well-off</p>
+<p>优秀的：excellent, eminent, top, outstanding</p>
+<p>积极的，好的：good, conductive, beneficial, advantageous</p>
+<p>消极的，不良的：bad, detrimental, baleful, undesirable</p>
+<p>明显的：obvious, apparent, evident, manifest</p>
+<p>健康的：healthy, robust, sound, wholesome</p>
+<p>惊人的：surprising, amazing, extraordinary, miraculous</p>
+<p>美丽的：attractive, gorgeous, eye-catching</p>
+<p>有活力的：energetic, dynamic, vigorous, animated</p>
+<p>流行的：popular, prevailing, prevalent, pervasive</p>
+<h1 id="Verb"><a href="#Verb" class="headerlink" title="Verb"></a>Verb</h1><p>提高，加强：improve, enhance, promote, strengthen, optimize</p>
+<p>引起：trigger, endanger, cause</p>
+<p>解决：solve, resolve, address, tackle, cope with, deal with</p>
+<p>拆除：destroy, tear down, knock down, eradicate</p>
+<p>培养：develop, cultivate, foster, nurture</p>
+<p>激发，鼓励：encourage, motivate, stimulate, spur</p>
+<p>认为：think, assert, hold, claim, argue</p>
+<p>完成：complete, fulfill, accomplish, achieve</p>
+<p>保留：keep, preserve, retain, hold</p>
+<p>有害于：destroy, impair, undermine, jeopardize</p>
+<p>减轻：ease, alleviate, relieve, lighten</p>
+<h1 id="Noun"><a href="#Noun" class="headerlink" title="Noun"></a>Noun</h1><p>影响：influence, impact</p>
+<p>危险：danger, perils, hazard</p>
+<p>污染：pollution, contamination</p>
+<p>人类：human beings, mankind, human race</p>
+<p>老人：the old, old people, the elderly, the aged, senior citizens</p>
+<p>幸福：happiness, cheerfulness, well-beings</p>
+<p>老师：teacher, instructor, educator, lecturer</p>
+<p>青少年：youngster, adolescent</p>
+<p>教育：education, schooling, upbringing, family parenting</p>
+<p>优点：advantage, merits, superiority, virtue</p>
+<p>责任：responsibility, obligation, duty, liability</p>
+<p>能力：ability, capability, power, skill</p>
+<p>职业：job, career, profession, employment</p>
+<p>娱乐：entertainment, recreation, pastimes, enjoyment</p>
+<p>孩子：offspring, descendants</p>
+<p>刺激：stimulus</p>
+<h1 id="Phrase"><a href="#Phrase" class="headerlink" title="Phrase"></a>Phrase</h1><p>充满了：be filled with, be awash with, be inundate with, be saturated with</p>
+<p>努力：struggle for, aspire after, strive for, spare no efforts for</p>
+<p>从事：embark on, take up, set about, go in for</p>
+<p>在当代：in contemporary society, in present-day society, in this day and age</p>
+<p>大量的：a host of, a multitude of, a vast number of, a vast amount of</p>
+<h1 id="Sentence"><a href="#Sentence" class="headerlink" title="Sentence"></a>Sentence</h1><table>
+<thead>
+<tr>
+<th>English</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>It is a must for sb to do sth</td>
+<td>必须做</td>
+</tr>
+<tr>
+<td>Be bound to</td>
+<td>必然会</td>
+</tr>
+<tr>
+<td>Under the instruction of</td>
+<td>在。。。指导下</td>
+</tr>
+<tr>
+<td>the real looks of</td>
+<td>。。。的真面目</td>
+</tr>
+<tr>
+<td>A significant step toward</td>
+<td>向。。。迈出一大步</td>
+</tr>
+<tr>
+<td>Be paved with</td>
+<td>由。。。铺成</td>
+</tr>
+<tr>
+<td>Do one’s utmost to</td>
+<td>尽最大努力去做。。。</td>
+</tr>
+<tr>
+<td>Deprive…of…</td>
+<td>剥夺，使。。。丧失</td>
+</tr>
+<tr>
+<td>Be associated with</td>
+<td>与。。有关</td>
+</tr>
+<tr>
+<td>Bring…to the limelight</td>
+<td>使。。。成为注目的焦点</td>
+</tr>
+<tr>
+<td>Be blessed with</td>
+<td>享有</td>
+</tr>
+<tr>
+<td>Excessive obsession with</td>
+<td>过分沉迷于</td>
+</tr>
+<tr>
+<td>Well informed about</td>
+<td>对。。有深入的了解</td>
+</tr>
+<tr>
+<td>Keep a blind eye to</td>
+<td>对。。。视而不见</td>
+</tr>
+<tr>
+<td>Lay the foundation for</td>
+<td>为。。。打下基础</td>
+</tr>
+<tr>
+<td>Endeavor to</td>
+<td>尽力做</td>
+</tr>
+<tr>
+<td>held in the palm of one’s hand</td>
+<td>被掌握在某人手中</td>
+</tr>
+<tr>
+<td>immerse oneself to</td>
+<td>沉浸于。。。</td>
+</tr>
+<tr>
+<td>Be of top priority…</td>
+<td>。。。是最重要的</td>
+</tr>
+<tr>
+<td>Be obliged to</td>
+<td>有义务做</td>
+</tr>
+<tr>
+<td>Prerequisite</td>
+<td>前提，先决条件</td>
+</tr>
+<tr>
+<td>From all works of life</td>
+<td>来自各行各业</td>
+</tr>
+<tr>
+<td>Bring into full play</td>
+<td>充分发挥作用。</td>
+</tr>
+<tr>
+<td>Facilitate</td>
+<td>促进，帮助</td>
+</tr>
+<tr>
+<td>Exert…on…</td>
+<td>把。。。强加于。。。上</td>
+</tr>
+<tr>
+<td>Boast</td>
+<td>取得，拥有</td>
+</tr>
+<tr>
+<td>Ensue</td>
+<td>接着发生</td>
+</tr>
+<tr>
+<td>Steel</td>
+<td>使坚固</td>
+</tr>
+<tr>
+<td>Destructive</td>
+<td>破坏的， 有害的</td>
+</tr>
+<tr>
+<td>Marvel at</td>
+<td>惊叹于。。。</td>
+</tr>
+</tbody></table>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/TOEFL/"># TOEFL</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/09/28/Writing-Template/">Writing Template</a>
+            
+            
+            <a class="next" rel="next" href="/2024/09/28/The-very-first-blog/">The very first blog</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

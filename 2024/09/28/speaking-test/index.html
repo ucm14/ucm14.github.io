@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>Speaking Test | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/chat.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Mason&#39;s Radio</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Mason&#39;s Radio</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Speaking Test</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 28, 2024&nbsp;&nbsp;11:10:54</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Language/">Language</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="TOEFL口语总结"><a href="#TOEFL口语总结" class="headerlink" title="TOEFL口语总结"></a><strong>TOEFL口语总结</strong></h1><h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h2><ul>
+<li>考察标准<ol>
+<li>发音、语调和流畅度。使用连接词，<em>well, I think, what I am going to talk about is, to make it clear.</em> <strong>过多卡顿会扣分的</strong>。</li>
+<li>语言使用，包括词汇和语法能力。</li>
+<li>topic development，陈述话题的能力。</li>
+</ol>
+</li>
+<li>规定时间没说完也许并没有关系，但上面说的卡顿问题还是有影响的。</li>
+<li>还是得准备段子。</li>
+<li>张涵书里提到综合口语为体现综合，最好不要强调<em>In the reading/listening passage</em>这种话；但其实应该关系不大，参考知乎这个问题下的回答：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22102496">如何准备托福口语题</a>。总之就是这些都是细节，像我们还是尽量先抓big picture吧。</li>
+<li>网上看的经验大多是根据个人经历总结的（除了张涵是真正在ETS实习过……），可能他用方法A，效果好，但他经验分享里就写要坚决避免使用方法B，就可能没什么依据了。还是得自己甄别。</li>
+</ul>
+<h2 id="独立口语"><a href="#独立口语" class="headerlink" title="独立口语"></a><strong>独立口语</strong></h2><blockquote>
+<p>For both below:</p>
+<p>preparation time: 15 sec</p>
+<p>response time: 45 sec</p>
+</blockquote>
+<h3 id="第一题：个人偏好"><a href="#第一题：个人偏好" class="headerlink" title="第一题：个人偏好"></a><strong>第一题：个人偏好</strong></h3><blockquote>
+<p>Express and defend a personal choice from a given category.</p>
+</blockquote>
+<p>主要四类：<em>Person、Place、Object、Event/Activity</em>。</p>
+<p>也可能是三选一，从题目给出的三个选项中选出你认为最好的那一个，但出现概率更低。</p>
+<p><strong>解题方法</strong>：<em>Topic sentence - Supporting sentence - Examples/details</em>。</p>
+<p><strong>例子</strong>：</p>
+<blockquote>
+<p>题目：Talk about a person you admire a lot and explain why you admire him or her. Use details and examples in your response.</p>
+<p><strong>Topic Sentence 主题句</strong> (直接给出回答）: Allen Iverson, the NBA superstar, is definitely one of the people for whom I have a huge admiration.</p>
+<p><strong>Supporting Sentence 支持句</strong>（给出支持主题句的原因）: I admire him a lot because he is such a hard-working guy that you would feel like there’s nothing he cannot do.</p>
+<p><strong>Example/details 例子 / 细节</strong>（为前两个句子提供支撑） : Once I watched an interview of his coach in high school on NBC. He said that Allen was just super diligent. He was always the first person that arrived for the training, and always the last one to leave. He usually stayed for another 2 hours after all his teammates left for dinner. So it’s definitely his hard work that made him one of the most phenomenal players in the league.</p>
+</blockquote>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>supporting sentence里的观点最好只有一个。多了讲不完，讲不好。</li>
+<li>尽量使用熟悉表达。想求难可能反而说不好。</li>
+<li>时间控制在42-45s之间。少于42s可能对分数有影响。</li>
+</ol>
+<h3 id="第二题：选择"><a href="#第二题：选择" class="headerlink" title="第二题：选择"></a><strong>第二题：选择</strong></h3><blockquote>
+<p>Make and defend a personal choice between two contrasting behaviors or courses of action.</p>
+</blockquote>
+<p>题型为<strong>二选一</strong>或<strong>同意or反对</strong>。前者比例更高。</p>
+<p><strong>解题方法</strong>：与第一题相同，仍是<em>Topic sentence - Supporting sentence - Examples/details</em></p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>最好做明确选择。</li>
+<li>选更有话说的观点，而非你赞同的观点。</li>
+</ol>
+<h2 id="综合口语"><a href="#综合口语" class="headerlink" title="综合口语"></a><strong>综合口语</strong></h2><blockquote>
+<p>For the first two:</p>
+<p>preparation time: 30 sec</p>
+<p>response time: 60 sec</p>
+<p><strong>For the latter two</strong>:</p>
+<p>preparation time: 20 sec</p>
+<p>response time: 60 sec</p>
+</blockquote>
+<h3 id="第三题：校园场景，联系观点解释原因"><a href="#第三题：校园场景，联系观点解释原因" class="headerlink" title="第三题：校园场景，联系观点解释原因"></a><strong>第三题：校园场景，联系观点解释原因</strong></h3><blockquote>
+<p>a reading passage and a listening passage. Summarize the speaker’s opinion within the context of the reading passage.</p>
+</blockquote>
+<p>reading passage：</p>
+<ol>
+<li>学校声明，改变某种政策。</li>
+<li>学生来信，建议校方做出改变。</li>
+</ol>
+<p>listening passage: 学生对话讨论reading passage中的内容。</p>
+<p><strong>解题方法</strong>：</p>
+<p>找信息点</p>
+<ol>
+<li>学校计划做什么</li>
+<li>这么做的第一个原因</li>
+<li>这么做的第二个原因</li>
+<li>学生同意/反对</li>
+<li>同意/反对的第一个原因</li>
+<li>同意/反对的第二个原因</li>
+</ol>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>重点在listening，因此后者比重应该更大。这意味着我们不应该花太多时间描述学校为什么出台这样的政策。</li>
+<li>listening中有捧哏和逗哏的角色，仅逗哏者给出观点。</li>
+<li>不掺入任何个人观点。</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The school recently decide to (make a change about) XXX</span><br><span class="line">because</span><br><span class="line">1.they ... .</span><br><span class="line">2. And also ...</span><br><span class="line">The man/woman holds positive/negative attitudes towards it,</span><br><span class="line">(s)he thinks,</span><br><span class="line">1....</span><br><span class="line">2.Besides,...</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="第四题：学术课程，抽象-具体"><a href="#第四题：学术课程，抽象-具体" class="headerlink" title="第四题：学术课程，抽象/具体"></a><strong>第四题：学术课程，抽象/具体</strong></h3><blockquote>
+<p>a reading passage: broadly define a term, process, idea, etc.</p>
+<p>a lecture: provide examples and <strong>specific</strong> information</p>
+<p>Combine and convey important information from them.</p>
+</blockquote>
+<p>reading passage：定义一个学术概念，提供其背景知识、定义、特点等。</p>
+<p>lecture：通过例子，对抽象概念具体解释</p>
+<p><strong>解题方法</strong>：</p>
+<ol>
+<li>找出reading passage的定义句。</li>
+<li>找出lecture的例子。</li>
+</ol>
+<p><strong>例子</strong>：（具体见书）</p>
+<blockquote>
+<p>The professor is talking about a psychological concept called…（名字）</p>
+<p>which refers to ….(定义)</p>
+<p>And he gives us two examples to illustrate this concept.</p>
+<p>In the first case, ….</p>
+<p>In the second example,…</p>
+</blockquote>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>仍是刚才说的，听力部分更重要。</li>
+<li>定义句最好能记下。不用特地在说的时候换种说法以显示自己表达能力。</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The professor is talk about a XXX(the field) concept called ...,</span><br><span class="line">which refers to ...(the definition)</span><br><span class="line">And he gives us two examples to illustrate the concept.</span><br><span class="line">In the first case,...</span><br><span class="line">In the second example,...</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="第五题：校园场景，问题-解决方案"><a href="#第五题：校园场景，问题-解决方案" class="headerlink" title="第五题：校园场景，问题/解决方案"></a><strong>第五题：校园场景，问题/解决方案</strong></h3><blockquote>
+<p>a listening passage: conversation about a student-related problem and two possible solutions.</p>
+<p>Demonstrate an understanding of the problem and express an opinion about solving it.</p>
+</blockquote>
+<p>两个学生交流，其中一个提出自己的问题，另一个人给出两种方案，两人可能对方案有些评价。</p>
+<p><strong>解题方法</strong>：</p>
+<ul>
+<li>找信息点<ol>
+<li>什么问题</li>
+<li>解决方案1</li>
+<li>解决方案2</li>
+</ol>
+</li>
+<li>填充信息点<ol>
+<li>你的选择</li>
+<li>你的理由</li>
+</ol>
+</li>
+</ul>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>这是唯一一个需要个人观点的题目。《Speaking Tips》建议的时间分配是：10 sec for the problem, 17 sec for each solution, and 10 sec for your choice and why, and about 6 sec pausing <strong>throughout</strong> your answer.（注意不是说你最后留出整整6s）</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">The problem the man/woman encountered is ...</span><br><span class="line">The woman/man suggests that ...</span><br><span class="line">Or ...</span><br><span class="line">If I were the man/woman, I prefer the first/latter solution, because</span><br><span class="line">1. the disadvantage of the other one</span><br><span class="line">2. the advantage of the one you choose.</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="第六题：-学术课程，摘要"><a href="#第六题：-学术课程，摘要" class="headerlink" title="第六题： 学术课程，摘要"></a><strong>第六题： 学术课程，摘要</strong></h3><blockquote>
+<p>a lecture: explain a term or concept, together with some examples.</p>
+<p>Summarize the lecture and demonstrate an understanding of the relationship between the examples and the overall topic.</p>
+</blockquote>
+<p>一个学术概念的两个方面。</p>
+<p><strong>解题方法</strong>：</p>
+<p>找信息点</p>
+<ol>
+<li>教授谈论的主题</li>
+<li>主题的第一个方面</li>
+<li>第一个方面的例子</li>
+<li>主题的的第二个方面</li>
+<li>第二个方面的例子</li>
+</ol>
+<p><strong>注意</strong>：</p>
+<ol>
+<li><strong>例子比概念重要。</strong></li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/TOEFL/"># TOEFL</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/09/28/Writing-Template/">Writing Template</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
