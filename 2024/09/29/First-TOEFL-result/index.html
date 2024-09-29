@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>First TOEFL result | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">First TOEFL result</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 29, 2024&nbsp;&nbsp;14:05:13</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Language/">Language</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Assessment"><a href="#Assessment" class="headerlink" title="Assessment"></a>Assessment</h1><p><img src="https://s2.loli.net/2024/09/29/g9Li3zRQnyTdJwI.png" alt="TOEFL result.png"></p>
+<p>I checked the official website this morning and found my latest, actually my first TOEFL test result had published. The physical transcript hasn’t arrived so I put the screenshot of my result here. I got 29/30 in reading, 22/30 in listening, 23/30 in speaking and 20/30 in writing. Not bad but still a pity.</p>
+<h2 id="Reading-task"><a href="#Reading-task" class="headerlink" title="Reading task"></a>Reading task</h2><p>In reading task, the first passage talking about the features of some ethnic groups who feed on hunting. For example, most of them lived near river, which can provide them fish and other kind of aquatics. But still, they cultivate graves in case the lack of food in a long journey. The second passage is how astronomers research on moonquakes.  Both passages are simple to me, I can quickly locate the answers of the questions, let alone answering the synonyms. </p>
+<h2 id="Listening-task"><a href="#Listening-task" class="headerlink" title="Listening task"></a>Listening task</h2><p>I bring the confidence reading task gave me to listening task. It is no exaggeration that I can understand every words in the audio , and I practiced a lot and keep 100% concentrated on the audio during the test. However, I just can’t find the right answer. I felt appalling when seeing my listening task only got 22 points, which is far away from what I thought. Maybe I should practice more.</p>
+<h2 id="Speaking-task"><a href="#Speaking-task" class="headerlink" title="Speaking task"></a>Speaking task</h2><p>The result of speaking task surprised me a lot, more than listening task did because I didn’t prepare some templates for questions, and I was bothered by others during the test. No excuses, some of the ladies in the room talking like the Kardashians. I totally can’t understand why they prefer to be sound like Cali girls.</p>
+<h2 id="Writing-task"><a href="#Writing-task" class="headerlink" title="Writing task"></a>Writing task</h2><p>I searched for templates of integrated writing and academic discussion and try to memorize them before the test began. On the contrary, I used none of them when writing the essay. The integrated writing is to summarize a discussion about the decline of  Chinook salmon. The academic discussion is asking whether you support advertising based on private information or not. I tried to make my points clear in the essay but 20 points is lower than what I supposed to have. I wonder how to improve my writing skills, probably some complex-and-long sentences and advanced vocabularies which no one can recognize.</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th align="left">Level</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reading</td>
+<td align="left">Advanced (24–30) High-Intermediate (18–23) Low-Intermediate (4–17) Below Low-Intermediate (0–3)</td>
+</tr>
+<tr>
+<td>Listening</td>
+<td align="left">Advanced (22–30) High-Intermediate (17–21) Low-Intermediate (9–16) Below Low-Intermediate (0–8)</td>
+</tr>
+<tr>
+<td>Speaking</td>
+<td align="left">Advanced (25–30) High-Intermediate (20–24) Low-Intermediate (16–19) Basic (10–15) Below Basic (0–9)</td>
+</tr>
+<tr>
+<td>Writing</td>
+<td align="left">Advanced (24–30) High-Intermediate (17–23) Low-Intermediate (13–16) Basic (7–12) Below Basic (0–6)</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://www.ets.org/pdfs/toefl/toefl-ibt-performance-descriptors.pdf">https://www.ets.org/pdfs/toefl/toefl-ibt-performance-descriptors.pdf</a></p>
+<p>Based on the descriptors provided by IBT, my reading skill is advanced, then come with high-intermediate listening/speaking/writing skills. But I don’t admit that can reflect my true English capability.</p>
+<h1 id="Reflection"><a href="#Reflection" class="headerlink" title="Reflection"></a>Reflection</h1><p>After all, TOEFL is just a test. Of course it can reflect partial English ability of examinees, but we Chinese know hot to cope with test better than learn a language well. Those institutes teach students how to find shortcuts in exams. Nearly every kind of question has its corresponding answer template. I remembered a girl talked to his dad that she perfectly anticipated the writing task question. In addition, I found someone took a picture of the task shown in the screen and  uploaded to social media during the test with a  monitor hanging on everyone’s head. These made me wondering whether the test can identify people’s linguistic ability or only a certificate for study abroad. Also I found many examinees are born in 2007-2008, which means they decided to study in foreign universities. Do you think they will speak English more frequently? No, they won’t. Most of them still hanging with Chinese and only use English in email or shopping. The ultimate goal of the journey is for a foreign university certificate. Now back to the TOEFL test, do they really learn the English well? No one can give a determined answer. They probably can have a great marks in test, but be lame when talking in real-life.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/TOEFL/"># TOEFL</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/09/28/Mason-s-Radio-1/">Mason's Radio#1</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+<script src="/live2d-widgetlib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget","pluginJsPath":"lib/","pluginModelPath":"assets/","model":"epsilon2_1","display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false,"tagMode":false});</script></body>
+
+</html>
