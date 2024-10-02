@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>1. Value iteration vs Policy iteration | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">1. Value iteration vs Policy iteration</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 2, 2024&nbsp;&nbsp;10:06:43</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Machine-Learning/">Machine Learning</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Markov-chains-transition-probability-matrix"><a href="#Markov-chains-transition-probability-matrix" class="headerlink" title="Markov chains &amp; transition probability matrix"></a>Markov chains &amp; transition probability matrix</h1><h2 id="Markov-chains"><a href="#Markov-chains" class="headerlink" title="Markov chains"></a>Markov chains</h2><p>In machine learning algorithms, <em><strong>Markov chains</strong></em> are widely applied in time series models. The main idea is that regardless of the initial state, as long as the state transition matrix remains unchanged, the final state will always converge to a fixed value. This memory-lessness is called the Markov property. The equation is as below:<br>$$<br>P(x_{t+1}∣…,x_{t−2},x_{t−1},x_{t})=P(x_{t+1}∣x_{t})\tag{1}<br>$$</p>
+<h2 id="Transition-probability-matrix"><a href="#Transition-probability-matrix" class="headerlink" title="Transition probability matrix"></a>Transition probability matrix</h2><p>Each element of the matrix is represented by a probability. The values are non-negative, and the sum of the elements in each row equals 1. Under certain conditions, they can transition between each other, hence it is called a <em><strong>transition probability matrix</strong></em>. The two-step transition probability matrix is exactly the square of the one-step transition probability matrix. The <strong>$𝑘$</strong> step transition probability matrix is the <strong>$𝑘^{th}$</strong> power of the one-step transition probability matrix. In the <strong>$𝑘$</strong> step transition probability matrix, the sum of the elements in each row is also 1.</p>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>For example, the value of $P(i,j)$ in matrix is $P(j|i)$, which is the probability of from state $i$ to state $j$. The transition probability matrix is as below：<br>$$<br>\begin{bmatrix} 0.9 &amp; 0.075 &amp; 0.025 \\ 0.15 &amp; 0.8 &amp; 0.05 \\ 0.25 &amp; 0.25 &amp; 0.5 \end{bmatrix}\tag{2}<br>$$</p>
+<h3 id="Exercise"><a href="#Exercise" class="headerlink" title="Exercise"></a>Exercise</h3><p>Giving an initial state $P_{01}=[0.5,0.2,0.3]$ and $P_{02}=[0.1,0.4,0.5]$, the <strong>𝑘</strong> step transition is $P_0=P_0∗P_k$. $P_0$ can reach a stable value after multiple iterations. If k=30, please calculate the eventual result.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pylab <span class="keyword">as</span> pl</span><br><span class="line"></span><br><span class="line">p01 = np.array([<span class="number">0.5</span>, <span class="number">0.2</span>, <span class="number">0.3</span>]) </span><br><span class="line">p02 = np.array([<span class="number">0.1</span>,<span class="number">0.4</span>,<span class="number">0.5</span>]) </span><br><span class="line">p = np.array([[<span class="number">0.9</span>, <span class="number">0.075</span>, <span class="number">0.025</span>], [<span class="number">0.15</span>, <span class="number">0.8</span>, <span class="number">0.05</span>],[<span class="number">0.25</span>, <span class="number">0.25</span>, <span class="number">0.5</span>]])</span><br><span class="line">n = <span class="number">30</span></span><br><span class="line">c = np.array([<span class="string">'r'</span>,<span class="string">'g'</span>,<span class="string">'b'</span>])       </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calanddraw</span>(<span class="params">p0,p </span>):</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">     p0 = np.mat(p0) * np.mat(p)       </span><br><span class="line">     <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(np.array(p0)[<span class="number">0</span>])):</span><br><span class="line">          pl.scatter(i,p0[<span class="number">0</span>,j], c = c[j], s=<span class="number">.5</span>)</span><br><span class="line">pl.subplot(<span class="number">121</span>)</span><br><span class="line">calanddraw(p01,p)</span><br><span class="line">pl.subplot(<span class="number">122</span>)</span><br><span class="line">calanddraw(p02,p)</span><br><span class="line">pl.show()</span><br></pre></td></tr></tbody></table></figure>
+
+<p>From the figure below we can reach the conclusion that both states converge eventually and their value are close to each other.</p>
+<p><img src="https://s2.loli.net/2024/08/01/I9NQp4icfJaZ52h.png" alt="image.png"></p>
+<h1 id="Model-based-algorithms"><a href="#Model-based-algorithms" class="headerlink" title="Model-based algorithms"></a>Model-based algorithms</h1><h2 id="Value-iteration"><a href="#Value-iteration" class="headerlink" title="Value iteration"></a>Value iteration</h2><p>Unlike simply times initial state with transition probability matrix multiple times, <em><strong>value iteration</strong></em> is a commonly used <strong>dynamic planning (DP)</strong> method (<em>DP methods assume that we have a <strong>perfect model</strong> of the environment’s MDP. That’s usually not the case in practice, but it’s important to study DP anyway</em>), which is mainly used to solve the optimal strategy problem in Markov Decision Process (MDP). The core idea of the Value Iteration algorithm is to update the value function of the state iteratively, gradually approaching the optimal value function, so as to obtain the optimal policy. The main advantage of the value iteration algorithm is that it is simple and easy to implement, and it is applicable to various types of MDP problems. However, the main disadvantage of the value iteration algorithm is its <strong>high time complexity</strong>, especially when the state space is large. Therefore, in practical applications, the value iteration algorithm usually needs to be combined with other optimization techniques, such as dynamic programming optimization and parallel computing, to improve the computational efficiency. The equation of algorithm is as below.</p>
+<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>$$<br>V_{(k+1)}(s)=max_a[R(s,a)+γ_{Σs^′∈S}P(s^′|s,a)V^k(s^′)]\tag{3}<br>$$</p>
+<p>First, we start with a random value function $V(s)$. At each step, we update it. Hence, we look ahead one step and go over all possible actions at each iteration to find the maximum. Moreover, the only difference is that in the value iteration algorithm, we take the maximum number of possible actions. Instead of evaluating and then improving, the value iteration algorithm updates the state value function in a single step. In particular, this is possible by calculating all possible rewards by looking ahead. Finally, the value iteration algorithm is guaranteed to converge to the optimal values.</p>
+<h3 id="Implementation-1"><a href="#Implementation-1" class="headerlink" title="Implementation"></a>Implementation</h3><p>This is the entire code of value iteration implementation. I will break down every line and explain.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">value_iteration</span>(<span class="params">states, actions, transition_prob, reward, discount_factor=<span class="number">0.9</span>, theta=<span class="number">1e-6</span></span>):</span><br><span class="line"></span><br><span class="line">    value_function = np.zeros(<span class="built_in">len</span>(states))</span><br><span class="line"></span><br><span class="line">    policy = np.zeros(<span class="built_in">len</span>(states), dtype=<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        delta = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">            v = value_function[s]</span><br><span class="line">            action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">            <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">                action_value = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">                    prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">                    action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">                action_values[a] = action_value</span><br><span class="line">            value_function[s] = <span class="built_in">max</span>(action_values)</span><br><span class="line">            delta = <span class="built_in">max</span>(delta, <span class="built_in">abs</span>(v - value_function[s]))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> delta &lt; theta:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">        action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">        <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">            action_value = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">                prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">                action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line"></span><br><span class="line">            action_values[a] = action_value</span><br><span class="line">        policy[s] = np.argmax(action_values)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> policy, value_function</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">states = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">actions = [<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">transition_prob = {</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">0.5</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>): <span class="number">0.5</span>,</span><br><span class="line">    (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>): <span class="number">0.2</span>, (<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.8</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">0.7</span>, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">0.3</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.6</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0.4</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">1.0</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0.5</span>, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0.5</span>,</span><br><span class="line">}</span><br><span class="line">reward = {</span><br><span class="line">    (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">1</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>): <span class="number">1</span>,</span><br><span class="line">    (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>): <span class="number">0</span>, (<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>): <span class="number">1</span>, (<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">2</span>,</span><br><span class="line">    (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">3</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>): <span class="number">0</span>,</span><br><span class="line">    (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>): <span class="number">0</span>,</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">policy, value_function = value_iteration(states, actions, transition_prob, reward)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Optimal Policy:"</span>, policy)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Value Function:"</span>, value_function)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>It will be much easier to understand the algorithm with a practice. So we can try to explain value iteration well by a simple implementation. We first import NumPy, of course. Then definite a function, which is the main character of this section: value iteration. This function requires several input values including states, actions, transition probability, reward, discount factor and theta. In this implementation, $γ=0.9$,$$θ=1^{−6}$$.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">defvalue_iteration(states, actions, transition_prob, reward, discount_factor=<span class="number">0.9</span>, theta=<span class="number">1e-6</span>):</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">    Performs value iteration for a given MDP.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param states: List of states</span></span><br><span class="line"><span class="string">    :param actions: List of actions</span></span><br><span class="line"><span class="string">    :param transition_prob: A dictionary that maps (state, action, next_state) to the transition probability</span></span><br><span class="line"><span class="string">    :param reward: A dictionary that maps (state, action, next_state) to a reward</span></span><br><span class="line"><span class="string">    :param discount_factor: Discount factor (gamma)</span></span><br><span class="line"><span class="string">    :param theta: A threshold for convergence</span></span><br><span class="line"><span class="string">    :return: A tuple (policy, value_function)</span></span><br><span class="line"><span class="string">    """</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>In this function, we need to create two arrays for the storage of possible state and policy. State is easy to understand, but what is “policy”?</p>
+<p>A policy is a strategy that an agent uses in pursuit of goals. The policy dictates the actions that the agent takes as a function of the agent’s state and the environment. In reinforcement learning, a policy is a strategy used by an agent to determine its actions at any given state. Formally, a policy is a mapping from states of the environment to actions to be taken when in those states. It can be deterministic or stochastic.</p>
+<blockquote>
+<p>Deterministic Policy: This type of policy maps each state to a specific action. If π is a deterministic policy and s is a state, then π(s) is the action taken when in state s.</p>
+</blockquote>
+<blockquote>
+<p>Stochastic Policy: This type of policy provides a probability distribution over actions for each state. If π is a stochastic policy and s is a state, then π(a|s) represents the probability of taking action a when in state s.</p>
+</blockquote>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">value_function = np.zeros(<span class="built_in">len</span>(states))</span><br><span class="line">   policy = np.zeros(<span class="built_in">len</span>(states), dtype=<span class="built_in">int</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Then we enter the iteration of value function. Before start iteration, we have to define a variable called Δ. It is a variable used to record the variation of value function in a iteration and can judge whether the iteration is converging. <code>for s in states</code> is a order asking agent to go through every state, <code>v = value_function[s]</code> is to store all the result of s in v. These are the pre-moves of iteration.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    delta = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">        v = value_function[s]</span><br><span class="line">        action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>The result of value function comes from the maximum value of action values. We create an empty array for the storage of action values. Firstly initialize action value, then for each action, we go through every possible next state. After cumulating action value based on bellman function and store them as an array, we can obtain the maximum action value and take it as the value function value of current state.</p>
+<p>In order to judge the convergency, update delta (Δ) at the end of value function calculation. <code>abs(v - value_function[s])</code> is the variation of value function. We determine the value of delta by comparing the value between previous Δ and new Δ and taking the maximum value. Cycle will ceased if the update range smaller than θ.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">   <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">        <span class="comment"># go through every possible action</span></span><br><span class="line">               action_value = <span class="number">0</span></span><br><span class="line">           <span class="comment"># initialize action value</span></span><br><span class="line">               <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">               <span class="comment"># go through every possible next state</span></span><br><span class="line">                   prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">               <span class="comment"># achieve transition probability (0 if not exist)</span></span><br><span class="line">                   action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">               <span class="comment"># cumulative action value based on bellman function</span></span><br><span class="line">               action_values[a] = action_value</span><br><span class="line">               <span class="comment"># store result in array of action value</span></span><br><span class="line">           value_function[s] = <span class="built_in">max</span>(action_values)</span><br><span class="line">           <span class="comment"># update value fuction and obtain maximum value among all the possible action value</span></span><br><span class="line">           delta = <span class="built_in">max</span>(delta, <span class="built_in">abs</span>(v - value_function[s]))</span><br><span class="line">           <span class="comment"># update delta and record maximum variation</span></span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> delta &lt; theta:</span><br><span class="line">           <span class="keyword">break</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>Simultaneously, we try to find the optimal policy. Basically trying to find the action which can bring maximum action value in each state then form a sequence by combining these actions.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">   <span class="comment"># go through every state</span></span><br><span class="line">       action_values = np.zeros(<span class="built_in">len</span>(actions))</span><br><span class="line">       <span class="comment"># initialize array</span></span><br><span class="line">       <span class="keyword">for</span> a <span class="keyword">in</span> actions:</span><br><span class="line">       <span class="comment"># go through every possible action</span></span><br><span class="line">           action_value = <span class="number">0</span></span><br><span class="line">           <span class="comment"># initialize current action value</span></span><br><span class="line">           <span class="keyword">for</span> next_s <span class="keyword">in</span> states:</span><br><span class="line">               prob = transition_prob.get((s, a, next_s), <span class="number">0</span>)</span><br><span class="line">               action_value += prob * (reward.get((s, a, next_s), <span class="number">0</span>) + discount_factor * value_function[next_s])</span><br><span class="line">               <span class="comment"># obtain current state, reward of taking action to next state &amp; calculate discounted future value</span></span><br><span class="line">           action_values[a] = action_value</span><br><span class="line">       policy[s] = np.argmax(action_values)</span><br><span class="line">       <span class="comment"># return optimal policy</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> policy, value_function</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Here is the exercise. In this virtual environment, we can observe three states: 0, 1, 2 and two actions: 0 and 1. The corresponding transition probability and reward table is as below. In this exercise, transition probability means the state have the probability of remaining at the same state. For example, if we are at state 0 and take action 0, we have 50% probability stay at the same state. In addition, (1, 0, 0): 0.7 means if we at state 1 and take action 0, we can have 70% probability return to state 0 ; (2, 1, 1): 0.5 means if we at state 2 and take action 1, we can have 50% probability return to state 1.</p>
+<table>
+<thead>
+<tr>
+<th>scenario</th>
+<th>state</th>
+<th>action</th>
+<th>next state</th>
+<th>transition probability</th>
+<th>reward</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>a12</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>a21</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>a22</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0.8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>b11</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.7</td>
+<td>1</td>
+</tr>
+<tr>
+<td>b12</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>b21</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0.6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>b22</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>0.4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>c11</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1.0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>c21</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0.5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>c22</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>0.5</td>
+<td>0.5</td>
+</tr>
+</tbody></table>
+<p><img src="https://s2.loli.net/2024/08/02/hm2qLdJyUbg6ZN3.png" alt="image.png"></p>
+<center>Diagram of state, action and transition</center>
+
+<p>Since we have complete all the requisite, we can run the code and get the result.</p>
+<p><strong>Optimal Policy: 0→0→1</strong></p>
+<p><strong>Value Function: [10.16927311, 10.20689125, 9.26018305]</strong></p>
+<h2 id="Policy-iteration"><a href="#Policy-iteration" class="headerlink" title="Policy iteration"></a>Policy iteration</h2><p>The other common way that MDPs are solved is using <strong>policy iteration</strong> – an approach that is similar to value iteration. While value iteration iterates over value functions, policy iteration iterates over policies themselves, creating a strictly improved policy in each iteration (except if the iterated policy is already optimal).</p>
+<p>Policy iteration first starts with some (non-optimal) policy, such as a random policy, and then calculates the value of each state of the MDP given that policy — this step is called <strong>policy evaluation</strong>. It then updates the policy itself for every state by calculating the expected reward of each action applicable from that state.</p>
+<p>The basic idea here is that policy evaluation is easier to computer than value iteration because the set of actions to consider is fixed by the policy that we have so far.</p>
+<h3 id="Policy-evaluation"><a href="#Policy-evaluation" class="headerlink" title="Policy evaluation"></a>Policy evaluation</h3><p><strong>policy evaluation</strong> is an evaluation of the expected reward of a policy. Vπ(s), the expected reward of policy π from state s, is the weighted average of reward of the possible state sequences defined by that policy times their probability given π. Policy evaluation can be defined by the following equation:<br>$$<br> V^π(s)=∑P_{π(s)}(s^′|s)[r(s,a,s^′)+γV^π(s^′)]\tag{4}<br>$$<br>Where $V^π(s)=0$ is for terminal state. Note that this is very similar to the Bellman equation, except $V^π(s)$ is not the value of the best action, but instead just as the value for $π(s)$, the action that would be chosen in s by the policy $π$. Note the expression $P_{π(s)}(s^′∣s)$ instead of $P_a(s^′∣s)$, which means we only evaluate the action that the policy defines.</p>
+<h3 id="Policy-improvement"><a href="#Policy-improvement" class="headerlink" title="Policy improvement"></a>Policy improvement</h3><p>If we have a policy and we want to improve it, we can use <strong>policy improvement</strong> to change the policy (that is, change the actions recommended for states) by updating the actions it recommends based on $V(s)$ that we receive from the policy evaluation.</p>
+<p>Let Qπ(s,a) be the expected reward from s when doing a first and then following the policy π. Recall from the chapter on Markov Decision Processes that we define define this as:<br>$$<br>Q_π(s,a)=∑P_a(s^′|s)[r(s,a,s^′)+γV^π(s^′)\tag{5}<br>$$<br>If there is an action a make $Q_π(s,a)&gt;Q_π(s,π(s))$, then the policy π can be <strong>strictly improved</strong> by setting $π(s)←a$. This will improve the overall policy.</p>
+<h3 id="Implementation-2"><a href="#Implementation-2" class="headerlink" title="Implementation"></a>Implementation</h3><p>In this implementation, we have two states and 2 actions. reward during iteration can be 0 or 1. Discount factor $γ=0.9$.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">states = [<span class="string">'1'</span>, <span class="string">'2'</span>]</span><br><span class="line">actions = [<span class="string">'a'</span>, <span class="string">'b'</span>]</span><br><span class="line">rewards = [<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">discount_factor = <span class="number">0.9</span></span><br><span class="line"></span><br><span class="line">q_value = {states[<span class="number">0</span>]: {actions[<span class="number">0</span>]: <span class="number">0</span>, actions[<span class="number">1</span>]: <span class="number">0</span>}, states[<span class="number">1</span>]: {actions[<span class="number">0</span>]: <span class="number">0</span>, actions[<span class="number">1</span>]: <span class="number">0</span>}} </span><br><span class="line"></span><br><span class="line">pi = {states[<span class="number">0</span>]: {actions[<span class="number">0</span>]: <span class="number">0.5</span>, actions[<span class="number">1</span>]: <span class="number">0.5</span>}, states[<span class="number">1</span>]: {actions[<span class="number">0</span>]: <span class="number">0.5</span>, actions[<span class="number">1</span>]: <span class="number">0.5</span>}}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Code shown below is the transition probability and reward. We can visually obtain information through table below.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>next state</th>
+<th>transition probability</th>
+<th>reward</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1a1</td>
+<td>1</td>
+<td>1/3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1a2</td>
+<td>2</td>
+<td>2/3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1b1</td>
+<td>1</td>
+<td>2/3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1b2</td>
+<td>2</td>
+<td>1/3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2a1</td>
+<td>1</td>
+<td>1/3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2a2</td>
+<td>2</td>
+<td>2/3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2b1</td>
+<td>1</td>
+<td>2/3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2b2</td>
+<td>2</td>
+<td>1/3</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>It will be more clearer when explaining the meaning through one of the scenarios. For example, we are at state 1, if we take action $a$ , we have a $\frac{2}{3}$ probability of reaching the next state and receive reward = 0 or $\frac 1 3$ probability of staying at the same state and receive reward = 1.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">p_s_r</span>(<span class="params">state, action</span>):</span><br><span class="line">    <span class="keyword">if</span> state == <span class="string">"1"</span>:</span><br><span class="line">        <span class="keyword">if</span> action == <span class="string">"a"</span>:</span><br><span class="line">            <span class="keyword">return</span> ((<span class="number">1.0</span> / <span class="number">3</span>, <span class="string">"1"</span>, <span class="number">0</span>),</span><br><span class="line">                    (<span class="number">2.0</span> / <span class="number">3</span>, <span class="string">"2"</span>, <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> ((<span class="number">2.0</span> / <span class="number">3</span>, <span class="string">"1"</span>, <span class="number">0</span>),</span><br><span class="line">                    (<span class="number">1.0</span> / <span class="number">3</span>, <span class="string">"2"</span>, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">if</span> state == <span class="string">"2"</span>:</span><br><span class="line">        <span class="keyword">if</span> action == <span class="string">"a"</span>:</span><br><span class="line">            <span class="keyword">return</span> ((<span class="number">1.0</span> / <span class="number">3</span>, <span class="string">"1"</span>, <span class="number">0</span>),</span><br><span class="line">                    (<span class="number">2.0</span> / <span class="number">3</span>, <span class="string">"2"</span>, <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> ((<span class="number">2.0</span> / <span class="number">3</span>, <span class="string">"1"</span>, <span class="number">0</span>),</span><br><span class="line">                    (<span class="number">1.0</span> / <span class="number">3</span>, <span class="string">"2"</span>, <span class="number">1</span>))</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Next part is state evaluation function. In this function, we initialize the function and define the value of θ. <code>deepcopy</code> means to copy current V value to old V value for judgement of convergence. Then, assemble to value iteration, we go through every possible action in every state and obtain corresponding transition probability and reward. After that, we calculate Q value (action value) and V value. If the variation of V value smaller than θ, we can conclude that the function is converged and break the cycle.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">policy_evaluate</span>():</span><br><span class="line">    v_value = {states[<span class="number">0</span>]: <span class="number">0</span>, states[<span class="number">1</span>]: <span class="number">0</span>}</span><br><span class="line">    threshold = <span class="number">0.0001</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        v_value_old = copy.deepcopy(v_value)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">            temp_v = <span class="number">0</span></span><br><span class="line"><span class="comment"># temp_q = 0</span></span><br><span class="line">            <span class="keyword">for</span> a, p <span class="keyword">in</span> pi[s].items():</span><br><span class="line">                temp_q = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> t <span class="keyword">in</span> p_s_r(s, a):</span><br><span class="line">                    p_s_s1, s_, r = t[<span class="number">0</span>], t[<span class="number">1</span>], t[<span class="number">2</span>]</span><br><span class="line">                    temp_q += p_s_s1 * (r + discount_factor * v_value[s_])</span><br><span class="line">                q_value[s][a] = temp_q</span><br><span class="line">                temp_v += p * temp_q</span><br><span class="line">            v_value[s] = temp_v</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        delta = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(v_value)):</span><br><span class="line">             delta += np.<span class="built_in">abs</span>(v_value[states[i]] - v_value_old[states[i]])</span><br><span class="line">        <span class="keyword">if</span> delta &lt;= threshold:</span><br><span class="line">        	<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> v_value</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Next, we update policy based on the V value we got. Before we enter the cycle, we have to clarify what is <code>done = True</code> . <code>done = True</code> means cease the operation when the policy becomes stable.</p>
+<p>The function, <code>policy_improve</code> is used to find out the optimal action in current state and turn its probability of been selected to 1. Meanwhile, the probability of choosing other actions will be 0.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">policy_improve</span>(<span class="params">v</span>):</span><br><span class="line">    done = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> states:</span><br><span class="line">        action = <span class="built_in">max</span>(q_value[s],key=q_value[s].get)</span><br><span class="line">    <span class="comment"># print(action)</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> pi[s]:</span><br><span class="line">            <span class="keyword">if</span> k == action:</span><br><span class="line">                <span class="keyword">if</span> pi[s][k] != <span class="number">1.0</span>:</span><br><span class="line">                    pi[s][k] = <span class="number">1.0</span></span><br><span class="line">                    done = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                pi[s][k] = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">return</span> done</span><br></pre></td></tr></tbody></table></figure>
+
+<p>The iteration in this implementation is quite simple - only 2 times. Activate the code we can get the results shown as below:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V value</td>
+<td>6.666339540673712</td>
+<td>6.666353680224912</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Q value</th>
+<th>State 1</th>
+<th>State 2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>action a</td>
+<td>6.666339540673712</td>
+<td>6.666353680224912</td>
+</tr>
+<tr>
+<td>action b</td>
+<td>6.333001354313227</td>
+<td>6.333029633415626</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Policy</td>
+<td>a = 1, b = 0</td>
+<td>a = 1, b = 0</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ ==<span class="string">'__main__'</span>:</span><br><span class="line">    is_done =<span class="literal">False</span></span><br><span class="line">    i =<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> is_doneisFalse:</span><br><span class="line">        v = policy_evaluate()</span><br><span class="line">        is_done = policy_improve(v)</span><br><span class="line">        i +=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'Policy-Iteration converged at step %d.'</span> % i)</span><br><span class="line"><span class="built_in">print</span>(v)</span><br><span class="line"><span class="built_in">print</span>(q_value)</span><br><span class="line"><span class="built_in">print</span>(pi)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Difference-between-value-iteration-and-policy-iteration"><a href="#Difference-between-value-iteration-and-policy-iteration" class="headerlink" title="Difference between value iteration and policy iteration"></a>Difference between value iteration and policy iteration</h2><table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Value iteration</th>
+<th>Policy iteration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Methodology</td>
+<td>Iteratively updates value functions until convergence</td>
+<td>Alternates between policy evaluation and improvement</td>
+</tr>
+<tr>
+<td>Goal</td>
+<td>Converges to optimal value function</td>
+<td>Converges to the optimal policy</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td>Directly computes value functions</td>
+<td>Evaluate and improve policies sequentially</td>
+</tr>
+<tr>
+<td>Complexity</td>
+<td>Typically simpler to implement and understand</td>
+<td>Involves more steps and computations</td>
+</tr>
+<tr>
+<td>Convergence</td>
+<td>May converge faster in some scenarios</td>
+<td>Generally converges slower but yields better policies</td>
+</tr>
+</tbody></table>
+<p>In summary, both value iteration and policy iteration are effective methods for solving RL problems and deriving optimal policies. Value iteration directly computes optimal value functions iteratively, which can converge faster in some cases and is generally simpler to implement. On the other hand, policy iteration alternates between evaluating and improving policies, resulting in slower convergence but potentially yielding better policies overall. Understanding the differences between these approaches is crucial for selecting the most suitable algorithm based on the problem requirements and computational constraints.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Reinforcement-Learning/"># Reinforcement Learning</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/01/Mason-s-Radio-2/">Mason's Radio#2</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
