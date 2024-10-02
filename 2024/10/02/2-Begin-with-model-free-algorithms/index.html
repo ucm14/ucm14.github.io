@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>2.Begin with model-free algorithms | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2.Begin with model-free algorithms</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 2, 2024&nbsp;&nbsp;14:20:50</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Machine-Learning/">Machine Learning</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Model-based-Model-free-RL"><a href="#Model-based-Model-free-RL" class="headerlink" title="Model-based / Model-free RL"></a>Model-based / Model-free RL</h1><p>Everybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment and maximize cumulative reward. Before starting this passage, we have to understand what is model-free and what is model-based?</p>
+<p><img src="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png" alt="image.png"></p>
+<h1 id="Monte-Carlo-MC"><a href="#Monte-Carlo-MC" class="headerlink" title="Monte-Carlo (MC)"></a>Monte-Carlo (MC)</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>The Monte Carlo algorithm is a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. The core idea is to use randomness to solve problems that might be deterministic in principle. The key concepts of MC are: <strong>random sampling</strong>, <strong>estimation</strong> by taking the average of outcomes from random samples, applicability of <strong>high-dimensional spaces</strong>. It can be used in simulations, optimization, numerical integration, financial anticipation and statistical physics. Advantages and disadvantages of MC are shown in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Monte Carlo</th>
+<th>Advantages</th>
+<th>Disadvantages</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Simple to implement</td>
+<td>Can be computationally intensive</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Flexible and can handle a wide range of problems</td>
+<td>Convergence can be slow</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Suitable for high-dimensional integrals</td>
+<td>Results are probabilistic, not deterministic</td>
+</tr>
+</tbody></table>
+<p>Here is a classic example of MC application: Estimate the value of $π$.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">defestimate_pi(num_samples):</span><br><span class="line">    inside_circle =<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _inrange(num_samples):</span><br><span class="line">        x = random.uniform(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        y = random.uniform(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> x**<span class="number">2</span> + y**<span class="number">2</span> &lt;=<span class="number">1</span>:</span><br><span class="line">            inside_circle +=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (inside_circle / num_samples) *<span class="number">4</span></span><br><span class="line"></span><br><span class="line">pi_estimate = estimate_pi(<span class="number">100000</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f"Estimated value of π:<span class="subst">{pi_estimate}</span>"</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>The result is <code>π: 3.13544</code>.</p>
+<p>Assuming we have a state sequence under a policy π:<br>$$<br>[S_1,A_1,R_1,S_2,A_2,R_2,S_3,A_3,R_3,…,S_T,A_T,R_T]\tag{1}<br>$$<br>In MDP, the value function is:<br>$$<br>v_π(s)=E_π[G_t|S_t=s]G_t=R_{t+1}+γR_{t+2}+…+γ^{T−t−1}R_Tv_π(s)≈average(G_t)\tag{2}<br>$$<br>However, the average consumes so many storage. A better method is obtaining average value in iterations:<br>$$<br> μt=\frac 1 t ∑j=\frac 1 t x_j=\frac 1 t (x_t+\sum_{j=1}^{t−1}x_j)=μ_{t−1}+\frac 1 t (x_t−μ_{t−1})\tag{3}<br>$$</p>
+<h1 id="Q-Learning-the-first-step-of-model-free-RL"><a href="#Q-Learning-the-first-step-of-model-free-RL" class="headerlink" title="Q Learning: the first step of model-free RL"></a>Q Learning: the first step of model-free RL</h1><h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Q learning is a value-based RL algorithm. Thus, Q value is the fundamental variable in this algorithm, and this is the reason why this algorithm called “Q Learning”. Assuming we already know what is agent, what is environment, what are the states, the actions have to be discrete and the reward function, let us cut to the point and introduce the learning method of agent in Q Learning.<br>$$<br> Q(s,a)\leftarrow Q(s,a)+α(r+γmax_{a^′}Q(s^′,a^′)−Q(s,a))\tag{4}<br>$$<br>Equation above is the update method of Q value. α is learning rate (basically learning rate defines the pace of updating), γ is discount factor. $Q(s,a)$ is the action value of current state; $Q(s^′,a^′)$ is the action value of next state; $max_{a^′}Q(s^′,a^′)$ means choosing the maximum $Q(s^′,a^′)$ among all the possible actions.</p>
+<p>The Q learning is quite similar to value iteration. We are going to explain the differences between Q learning and value iteration in detail through a simple implementation.</p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>The environment is a 4x4 grid. Our target is to train the agent and let it successfully moves from (0, 0) to (3,3).</p>
+<p><img src="https://s2.loli.net/2024/08/03/qbufGrCwPdHk2oU.png" alt="image.png"></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grid_size = <span class="number">4</span></span><br><span class="line">goal_state = (<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">start_state = (<span class="number">0</span>,<span class="number">0</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Hyperparameters"><a href="#Hyperparameters" class="headerlink" title="Hyperparameters"></a>Hyperparameters</h3><p>$ϵ$ means the agent have probability equals to ϵ choosing a random action and $(1-ϵ)$ probability choosing the optimal action.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">alpha =<span class="number">0.1</span> <span class="comment">#learning rate</span></span><br><span class="line">gamma =<span class="number">0.9</span> <span class="comment">#discount factor</span></span><br><span class="line">epsilon =<span class="number">0.1</span> <span class="comment">#epsilon-greedy</span></span><br><span class="line">num_episodes = <span class="number">1000</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="State-s-and-action-s"><a href="#State-s-and-action-s" class="headerlink" title="State(s) and action(s)"></a>State(s) and action(s)</h3><p>The state is just all the points in the 4x4 girds. We create two functions for action selection and transition to next state.</p>
+<p>In function <code>get_next_state</code>, the current coordinates based on the action:</p>
+<ul>
+<li>If the action is <code>'up'</code> and <code>x</code> is greater than 0, it moves up by decrementing <code>x</code> by 1.</li>
+<li>If the action is <code>'down'</code> and <code>x</code> is less than <code>grid_size - 1</code>, it moves down by incrementing <code>x</code> by 1.</li>
+<li>If the action is <code>'left'</code> and <code>y</code> is greater than 0, it moves left by decrementing <code>y</code> by 1.</li>
+<li>If the action is <code>'right'</code> and <code>y</code> is less than <code>grid_size - 1</code>, it moves right by incrementing <code>y</code> by 1.</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_next_state</span>(<span class="params">state, action</span>):</span><br><span class="line">    x, y = state</span><br><span class="line">    <span class="keyword">if</span> action == <span class="string">'up'</span> <span class="keyword">and</span> x &gt; <span class="number">0</span>:</span><br><span class="line">        x -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> action == <span class="string">'down'</span> <span class="keyword">and</span> x &lt; grid_size - <span class="number">1</span>:</span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> action == <span class="string">'left'</span> <span class="keyword">and</span> y &gt; <span class="number">0</span>:</span><br><span class="line">        y -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> action == <span class="string">'right'</span> <span class="keyword">and</span> y &lt; grid_size - <span class="number">1</span>:</span><br><span class="line">        y += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> (x, y)</span><br><span class="line"></span><br><span class="line">actions = [<span class="string">'up'</span>,<span class="string">'down'</span>,<span class="string">'left'</span>,<span class="string">'right'</span>]</span><br><span class="line">num_actions =<span class="built_in">len</span>(actions)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choose_action</span>(<span class="params">state</span>):</span><br><span class="line">	<span class="keyword">if</span> np.random.uniform(<span class="number">0</span>,<span class="number">1</span>) &lt; epsilon:</span><br><span class="line">		<span class="keyword">return</span> np.random.choice(num_actions)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> np.argmax(Q_table[state[<span class="number">0</span>], state[<span class="number">1</span>], :])</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Reward-function"><a href="#Reward-function" class="headerlink" title="Reward function"></a>Reward function</h3><p>Agent will get reward = 100 if arriving at (3, 3), otherwise -1.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_reward</span>(<span class="params">state</span>):</span><br><span class="line">	<span class="keyword">if</span> state == goal_state:</span><br><span class="line">		<span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Q-value-function"><a href="#Q-value-function" class="headerlink" title="Q value function"></a>Q value function</h3><p>This part is the fundamental training loop of algorithm. <code>while state != goal_state</code> means continues iterations until the goal state is reached; <code>action_index = choose_action(state)</code> means select an action index based on policy which not shown; <code>action = actions[action_index]</code>is to convert the action index to an actual action; <code>next_state = get_next_state(state, action)</code> is used to determine the next state based on the current state and action; finally,<code>reward = get_reward(next_state)</code>can calculate the reward for transitioning to the next state.</p>
+<p>Then, we store Q value under current (s, a) pair in Q table, computes the maximum Q value for next state and updates Q value for current $(s,a)$ pair using Q learning update rule.</p>
+<p>Since we have the maximum Q value of each state stored in Q table, we can try to compute the optimal policy and turn it into the form of path.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> episodeinrange(num_episodes):</span><br><span class="line">    state = start_state</span><br><span class="line"><span class="keyword">while</span> state != goal_state:</span><br><span class="line">        action_index = choose_action(state)</span><br><span class="line">        action = actions[action_index]</span><br><span class="line">        next_state = get_next_state(state, action)</span><br><span class="line">        reward = get_reward(next_state)</span><br><span class="line"></span><br><span class="line">        Q_table[state[<span class="number">0</span>], state[<span class="number">1</span>], action_index] += alpha * (</span><br><span class="line">                reward + gamma * np.<span class="built_in">max</span>(Q_table[next_state[<span class="number">0</span>], next_state[<span class="number">1</span>], :]) - Q_table[</span><br><span class="line">            state[<span class="number">0</span>], state[<span class="number">1</span>], action_index]</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        state = next_state</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Final Q-Table:"</span>)</span><br><span class="line"><span class="built_in">print</span>(Q_table)</span><br><span class="line"></span><br><span class="line">state = start_state</span><br><span class="line">path = [state]</span><br><span class="line"><span class="keyword">while</span> state != goal_state:</span><br><span class="line">    action_index = np.argmax(Q_table[state[<span class="number">0</span>], state[<span class="number">1</span>], :])</span><br><span class="line">    action = actions[action_index]</span><br><span class="line">    state = get_next_state(state, action)</span><br><span class="line">    path.append(state)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Path from start to goal:"</span>)</span><br><span class="line"><span class="built_in">print</span>(path)</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p>The path after training is shown in the figure.</p>
+<p><img src="https://s2.loli.net/2024/08/03/kjtiXCEQDSoywsK.png" alt="image.png"></p>
+<h1 id="Sarsa-An-on-policy-RL-algorithm"><a href="#Sarsa-An-on-policy-RL-algorithm" class="headerlink" title="Sarsa: An on-policy RL algorithm"></a>Sarsa: An on-policy RL algorithm</h1><h2 id="Difference-between-on-policy-off-policy"><a href="#Difference-between-on-policy-off-policy" class="headerlink" title="Difference between on-policy &amp; off-policy"></a>Difference between on-policy &amp; off-policy</h2><p>In reinforcement learning, <strong>two different policies</strong> are also used for active agents: <strong>a behavior policy</strong> and <strong>a target policy</strong>. A behavior policy is used to decide actions in a given state (what behavior the agent is currently using to interact with its environment), while a target policy is used to learn about desired actions and what rewards are received (the ideal policy the agent seeks to use to interact with its environment).</p>
+<blockquote>
+<p>If an algorithm’s behavior policy matches its target policy, this means it is an on-policy algorithm. If these policies in an algorithm don’t match, then it is an off-policy algorithm.</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2024/08/03/D3tYshGI4uvSbdo.png" alt="image.png"></p>
+<p>Sarsa operates by choosing an action following the current epsilon-greedy policy and updates its Q values accordingly. On-policy algorithms like Sarsa select random actions where non-greedy actions have some probability of being selected, providing a balance between exploitation and exploration techniques. Since Sarsa Q values are generally learned using the same epsilon-greedy policy for behavior and target, it classifies as on-policy.</p>
+<p>Q learning, unlike Sarsa, tends to choose the greedy action in sequence. A greedy action is one that gives the maximum Q value for the state, that is, it follows an optimal policy. Off-policy algorithms like Q learning learn a target policy regardless of what actions are selected from exploration. Since Q learning uses greedy actions, and can evaluate one behavior policy while following a separate target policy, it classifies as off-policy.</p>
+<h2 id="Algorithm-1"><a href="#Algorithm-1" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>SARSA, unlike Q learning, is an on-policy algorithm, which means it updates the policy based on the actions taken. Quite like policy iteration. But in Sarsa, the update of policy will not be as “hard” as policy iteration since we have the influence of learning rate $α$.</p>
+<p>Still, the algorithm keeps updating Q value. One thing different is agent of Sarsa already come up with which action to choose and predict next state and next action. That is why the algorithm called SARSA - State, Action, Reward, State, Action.</p>
+<h2 id="Implementation-1"><a href="#Implementation-1" class="headerlink" title="Implementation"></a>Implementation</h2><h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Maze</span></span><br><span class="line">maze = np.array([</span><br><span class="line">    [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">    [<span class="number">0</span>, -<span class="number">1</span>,<span class="number">0</span>, -<span class="number">1</span>],</span><br><span class="line">    [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, -<span class="number">1</span>],</span><br><span class="line">    [-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start state and terminal state</span></span><br><span class="line">start_state = (<span class="number">3</span>,<span class="number">0</span>)</span><br><span class="line">goal_state = (<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># action space</span></span><br><span class="line">actions = [(<span class="number">0</span>,<span class="number">1</span>), (<span class="number">0</span>, -<span class="number">1</span>), (-<span class="number">1</span>,<span class="number">0</span>), (<span class="number">1</span>,<span class="number">0</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># initialize value function</span></span><br><span class="line">Q = np.zeros((<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># hyperparameters</span></span><br><span class="line">alpha = <span class="number">0.1</span></span><br><span class="line">gamma = <span class="number">0.9</span></span><br><span class="line">epsilon = <span class="number">0.1</span></span><br><span class="line">max_episodes = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SARSA</span></span><br><span class="line"><span class="keyword">for</span> episodeinrange(max_episodes):</span><br><span class="line">    state = start_state</span><br><span class="line">    action = np.random.choice(<span class="built_in">range</span>(<span class="number">4</span>))<span class="keyword">if</span> np.random.rand() &lt; epsilonelse np.argmax(Q[state])</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> state != goal_state:</span><br><span class="line"><span class="comment"># next_state = (state[0] + actions[action][0], state[1] + actions[action][1])</span></span><br><span class="line">        a = state[<span class="number">0</span>] + actions[action][<span class="number">0</span>]</span><br><span class="line">        b = state[<span class="number">1</span>] + actions[action][<span class="number">1</span>]</span><br><span class="line"><span class="keyword">if</span> a &gt;<span class="number">3</span>:</span><br><span class="line">            a-=<span class="number">1</span></span><br><span class="line"><span class="keyword">elif</span> b &gt;<span class="number">3</span>:</span><br><span class="line">            b-=<span class="number">1</span></span><br><span class="line"><span class="keyword">elif</span> a &lt; -<span class="number">4</span>:</span><br><span class="line">            a+=<span class="number">1</span></span><br><span class="line"><span class="keyword">elif</span> b &lt; -<span class="number">4</span>:</span><br><span class="line">            b+=<span class="number">1</span></span><br><span class="line">        next_state = (a,b)</span><br><span class="line">        reward = maze[next_state]</span><br><span class="line">        next_action = np.random.choice(<span class="built_in">range</span>(<span class="number">4</span>))<span class="keyword">if</span> np.random.rand() &lt; epsilonelse np.argmax(Q[next_state])</span><br><span class="line">        Q[state][action] += alpha * (reward + gamma * Q[next_state][next_action] - Q[state][action])</span><br><span class="line"></span><br><span class="line">        state = next_state</span><br><span class="line">        action = next_action</span><br><span class="line"></span><br><span class="line"><span class="comment"># print result</span></span><br><span class="line"><span class="keyword">for</span> iinrange(<span class="number">4</span>):</span><br><span class="line"><span class="keyword">for</span> jinrange(<span class="number">4</span>):</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"State:"</span>, (i, j))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Up:"</span>, Q[i][j][<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Down:"</span>, Q[i][j][<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Left:"</span>, Q[i][j][<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Right:"</span>, Q[i][j][<span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>()</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">State: (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">Up: -<span class="number">0.008042294056935573</span></span><br><span class="line">Down: -<span class="number">0.007868742418369764</span></span><br><span class="line">Left: -<span class="number">0.016173595452674966</span></span><br><span class="line">Right: <span class="number">0.006662566560762523</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">0.048576025675988774</span></span><br><span class="line">Down: -<span class="number">0.0035842473161881465</span></span><br><span class="line">Left: <span class="number">0.024420015715567546</span></span><br><span class="line">Right: -<span class="number">0.46168987981312615</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">Up: <span class="number">0.04523751845081987</span></span><br><span class="line">Down: <span class="number">0.04266319340558091</span></span><br><span class="line">Left: <span class="number">0.044949583791193154</span></span><br><span class="line">Right: <span class="number">0.026234839551098416</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">Up: <span class="number">0.01629652821649763</span></span><br><span class="line">Down: <span class="number">0.050272192325180515</span></span><br><span class="line">Left: -<span class="number">0.009916869922464355</span></span><br><span class="line">Right: -<span class="number">0.4681667868865369</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">Up: -<span class="number">0.09991342319696966</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.0</span></span><br><span class="line">Right: <span class="number">0.036699099068340166</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">0.008563965102313987</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.0</span></span><br><span class="line">Right: <span class="number">0.3883250678150607</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">Up: -<span class="number">0.3435187267522706</span></span><br><span class="line">Down: -<span class="number">0.2554776873673874</span></span><br><span class="line">Left: <span class="number">0.05651543121932354</span></span><br><span class="line">Right: <span class="number">0.004593450910446022</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">Up: -<span class="number">0.1</span></span><br><span class="line">Down: -<span class="number">0.013616634831997914</span></span><br><span class="line">Left: <span class="number">0.01298827764814053</span></span><br><span class="line">Right: <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line">Up: <span class="number">0.28092113053540924</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.0024286388798406364</span></span><br><span class="line">Right: <span class="number">0.06302299434701504</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">0.0</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: -<span class="number">0.16509175606504775</span></span><br><span class="line">Right: <span class="number">1.9146361697676122</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line">Up: -<span class="number">0.1</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.03399106390140035</span></span><br><span class="line">Right: <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">Up: -<span class="number">0.3438668479533914</span></span><br><span class="line">Down: <span class="number">0.004696957810272524</span></span><br><span class="line">Left: -<span class="number">0.19</span></span><br><span class="line">Right: <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">0</span>)</span><br><span class="line">Up: <span class="number">3.3060693607932445</span></span><br><span class="line">Down: <span class="number">0.8893977121867367</span></span><br><span class="line">Left: <span class="number">0.0</span></span><br><span class="line">Right: <span class="number">0.13715553550041798</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">4.825854511712306</span></span><br><span class="line">Down: -<span class="number">0.03438123168566812</span></span><br><span class="line">Left: <span class="number">0.10867882029322147</span></span><br><span class="line">Right: <span class="number">1.0015572397722665</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">Up: <span class="number">5.875704328143301</span></span><br><span class="line">Down: <span class="number">0.9315770230698863</span></span><br><span class="line">Left: <span class="number">0.0006851481810742227</span></span><br><span class="line">Right: <span class="number">0.47794799892127526</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">Up: <span class="number">5.4028951599661275</span></span><br><span class="line">Down: <span class="number">2.6989177956329757</span></span><br><span class="line">Left: -<span class="number">0.6454474033238188</span></span><br><span class="line">Right: <span class="number">0.018474082554518417</span></span><br></pre></td></tr></tbody></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Reinforcement-Learning/"># Reinforcement Learning</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/02/1-Value-iteration-vs-Policy-iteration/">1. Value iteration vs Policy iteration</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
