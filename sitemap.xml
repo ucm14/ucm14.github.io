@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ucm14.github.io/2024/10/09/Mason-s-Radio-4/</loc>
+    
+    <lastmod>2024-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://ucm14.github.io/2024/10/08/Determination-of-upper-steady-state/</loc>
     
     <lastmod>2024-10-09</lastmod>
@@ -251,6 +260,13 @@
   
   <url>
     <loc>http://ucm14.github.io/tags/Safety-Engineering/</loc>
+    <lastmod>2024-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ucm14.github.io/tags/Soundtrack/</loc>
     <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

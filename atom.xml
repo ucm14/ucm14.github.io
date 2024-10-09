@@ -6,7 +6,7 @@
   <link href="http://ucm14.github.io/atom.xml" rel="self"/>
   
   <link href="http://ucm14.github.io/"/>
-  <updated>2024-10-09T06:28:52.422Z</updated>
+  <updated>2024-10-09T13:04:44.441Z</updated>
   <id>http://ucm14.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mason&#39;s Radio#4</title>
+    <link href="http://ucm14.github.io/2024/10/09/Mason-s-Radio-4/"/>
+    <id>http://ucm14.github.io/2024/10/09/Mason-s-Radio-4/</id>
+    <published>2024-10-09T12:58:21.000Z</published>
+    <updated>2024-10-09T13:04:44.441Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/5guwC3kmxGHCqrmuRpfK4g?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe><p>There is nothing more fantastic than youth, a Pollock splashed with different colors.</p><iframe width="560" height="315" src="https://www.youtube.com/embed/JBeEpW8l-Mg?si=pjwNmu0wLZcHHH4n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;&#92;assets&#92;css&#92;APlayer.min.css&quot;&gt;&lt;script src=&quot;&#92;assets&#92;js&#92;APlayer.min.js&quot; cla</summary>
+      
+    
+    
+    
+    <category term="Music" scheme="http://ucm14.github.io/categories/Music/"/>
+    
+    
+    <category term="Soundtrack" scheme="http://ucm14.github.io/tags/Soundtrack/"/>
+    
+  </entry>
   
   <entry>
     <title>Determination of upper steady state in CSTR</title>
