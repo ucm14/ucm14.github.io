@@ -1,3 +1,4 @@
+http://ucm14.github.io/2024/10/08/Determination-of-upper-steady-state/
 http://ucm14.github.io/2024/10/04/Lost-in-the-vibe/
 http://ucm14.github.io/2024/10/05/Mason-s-Radio-3/
 http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/
@@ -25,7 +26,11 @@ http://ucm14.github.io/tags/J-POP/
 http://ucm14.github.io/tags/Daily-Life/
 http://ucm14.github.io/tags/Notes/
 http://ucm14.github.io/tags/Pop/
+http://ucm14.github.io/tags/Chemical-Engineering/
+http://ucm14.github.io/tags/CSTR/
+http://ucm14.github.io/tags/Safety-Engineering/
 http://ucm14.github.io/categories/Machine-Learning/
 http://ucm14.github.io/categories/Music/
 http://ucm14.github.io/categories/Language/
 http://ucm14.github.io/categories/Misc/
+http://ucm14.github.io/categories/Research/

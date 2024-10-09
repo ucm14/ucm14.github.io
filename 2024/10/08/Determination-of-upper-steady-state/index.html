@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>Determination of upper steady state in CSTR | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Mason's Radio" type="application/atom+xml">
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Determination of upper steady state in CSTR</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 8, 2024&nbsp;&nbsp;10:48:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Research/">Research</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>In this page we are going to consider a thermal runaway reaction in a CSTR and how to prevent it. Thermal runaway in CSTR is the reaction temperature goes into the upper steady state which is at an unacceptably high temperature. The transition to the upper steady state will occur when the point of tangency between R(T) and G(T) disappears and only the upper steady state exists.</p>
+<h1 id="Continuous-Stirred-Tank-Reactor"><a href="#Continuous-Stirred-Tank-Reactor" class="headerlink" title="Continuous Stirred Tank Reactor"></a>Continuous Stirred Tank Reactor</h1><p>A <strong>CSTR</strong> (Continuous Stirred-Tank Reactor) is a type of chemical reactor that operates under continuous flow conditions. It is one of the most common types of reactors used in chemical engineering, particularly for processes involving liquids. In a CSTR, the reactants are continuously fed into the reactor, and the products are continuously removed, ensuring a steady-state operation. The key characteristics of a CSTR include:</p>
+<h2 id="Key-Features"><a href="#Key-Features" class="headerlink" title="Key Features"></a>Key Features</h2><h3 id="Stirred-Tank"><a href="#Stirred-Tank" class="headerlink" title="Stirred Tank"></a>Stirred Tank</h3><p>The contents inside the reactor are continuously and uniformly stirred, ensuring that the concentration of reactants and temperature are evenly distributed throughout the tank.</p>
+<h3 id="Steady-State-Operation"><a href="#Steady-State-Operation" class="headerlink" title="Steady-State Operation"></a>Steady-State Operation</h3><p>The system reaches a steady state where the input of reactants and the output of products are constant over time.</p>
+<h3 id="Perfect-Mixing-Assumption"><a href="#Perfect-Mixing-Assumption" class="headerlink" title="Perfect Mixing Assumption"></a>Perfect Mixing Assumption</h3><p>It is assumed that the reactor is perfectly mixed, meaning that at any point within the reactor, the properties such as concentration and temperature are the same as at the exit. This simplifies the design and analysis of the reactor.</p>
+<h3 id="Continuous-Input-and-Output"><a href="#Continuous-Input-and-Output" class="headerlink" title="Continuous Input and Output"></a><strong>Continuous Input and Output</strong></h3><p>Reactants are added and products are removed continuously, unlike in batch reactors, where materials are added at the beginning and products are taken out after the reaction is completed.</p>
+<h2 id="Steady-states"><a href="#Steady-states" class="headerlink" title="Steady states"></a>Steady states</h2><blockquote>
+<p><strong>R(T):</strong> Heat removal rate of cooling jacket<br>$$<br>R(T)=C_P(1+k)(T-T_C)\tag{1}<br>$$<br><strong>G(T):</strong> Heat generation rate of reaction<br>$$<br>G(T)=(-ΔH)(\frac{-r_AV}{F_{A0}})\tag{2}<br>$$</p>
+</blockquote>
+<p>We are going to consider a CSTR which has a runaway reaction when it goes to the upper steady state which is at an unacceptably high temperature. This transition to the upper steady state will occur when the point of tangency between R(T) and G(T) disappears and only the upper steady state exists.</p>
+<p><img src="https://websites.umich.edu/~elements/08chap/html/runaway/pics/lec35a-03.gif" alt="img"></p>
+<p>When $\frac {dR}{dT}&lt;\frac {dG}{dT}$, the point of tangency will disappear and the system will be considered unstable because it moves to the upper steady state. We refer to this movement to the upper steady state as <strong>runaway</strong>. </p>
+<p><img src="https://websites.umich.edu/~elements/08chap/html/runaway/pics/lec35a54.gif" alt="img"></p>
+<h2 id="Maximum-Acceptable-Temperature"><a href="#Maximum-Acceptable-Temperature" class="headerlink" title="Maximum Acceptable Temperature"></a>Maximum Acceptable Temperature</h2><p>Maximum Acceptable Temperature (MAT) refers to the highest temperature at which a material or system can safely function without experiencing performance degradation or failure. It plays a critical role in ensuring both the safety and longevity of materials used in various industries, particularly in environments subjected to high temperatures, such as construction, aerospace, and electronics.</p>
+<h2 id="Differences-between-MAT-and-upper-steady-state"><a href="#Differences-between-MAT-and-upper-steady-state" class="headerlink" title="Differences between MAT and upper steady state"></a>Differences between MAT and upper steady state</h2><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>Maximum Acceptable Temperature (MAT)</strong></th>
+<th><strong>Upper Steady State</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Context</strong></td>
+<td>Material science, engineering, electronics</td>
+<td>Chemical engineering, reaction kinetics</td>
+</tr>
+<tr>
+<td><strong>Definition</strong></td>
+<td>The highest safe operational temperature for a material or system</td>
+<td>A stable operating condition with constant high temperature or concentration</td>
+</tr>
+<tr>
+<td><strong>Nature</strong></td>
+<td>A fixed temperature limit defined by material properties or system design</td>
+<td>A dynamic condition of stability in a process, usually one of several possible steady states</td>
+</tr>
+<tr>
+<td><strong>Behavior</strong></td>
+<td>Exceeding MAT results in damage or system failure</td>
+<td>Reaching the upper steady state can be stable or lead to dangerous conditions (e.g., thermal runaway)</td>
+</tr>
+<tr>
+<td><strong>Relevance</strong></td>
+<td>Used for safety limits and design specifications</td>
+<td>Used for analyzing process stability in chemical reactions or thermodynamic systems</td>
+</tr>
+</tbody></table>
+<p>In summary, <strong>MAT</strong> is a safety threshold to prevent system failure due to excessive temperature, while the <strong>upper steady state</strong> is a stable condition in a dynamic system that often involves higher temperatures or reaction rates, and can be part of process optimization or risk analysis in chemical engineering.</p>
+<h1 id="T-determination-procedure"><a href="#T-determination-procedure" class="headerlink" title="$T^*$ determination procedure"></a>$T^*$ determination procedure</h1><ol>
+<li><p>Specify $T_C$ and $τ$ </p>
+</li>
+<li><p>Use a non-linear equation to solve for $T^*$<br>$$<br>T^*=T_C+\frac{R}{E}(1+τAe^{-\frac{R}{E}T^*}){T^*}^2\tag{3}<br>$$</p>
+</li>
+<li><p>Calculate conversion rate $X$<br>$$<br>X^*=\frac{k^<em>τ}{k^</em>τ+1}\tag{4}<br>$$</p>
+</li>
+<li><p>Calculate $G(T^*)$</p>
+</li>
+<li><p>Calculate $S^*$<br>$$<br>S^*=\frac {EG(T^*)}{R(T^*)^2(1+τk^*)}\tag{5}<br>$$</p>
+</li>
+<li><p>Increment $T_C$ and carry out steps above to arrive at a figure as a function of  $T_C$</p>
+</li>
+</ol>
+<h1 id="Citations"><a href="#Citations" class="headerlink" title="Citations"></a>Citations</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://websites.umich.edu/~elements/08chap/html/runaway/index.htm#derive01">https://websites.umich.edu/~elements/08chap/html/runaway/index.htm#derive01</a></li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Chemical-Engineering/"># Chemical Engineering</a>
+                    
+                        <a href="/tags/CSTR/"># CSTR</a>
+                    
+                        <a href="/tags/Safety-Engineering/"># Safety Engineering</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/05/Mason-s-Radio-3/">Mason's Radio#3</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <span class="post-count">
+Words:
+    <a href="">703</a>
+    </span>
+
+
+    <span class="post-count">
+Time:
+    <a href="">4min</a>
+    </span>
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

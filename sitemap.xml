@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ucm14.github.io/2024/10/08/Determination-of-upper-steady-state/</loc>
+    
+    <lastmod>2024-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://ucm14.github.io/2024/10/04/Lost-in-the-vibe/</loc>
     
     <lastmod>2024-10-04</lastmod>
@@ -157,7 +166,7 @@
 
   <url>
     <loc>http://ucm14.github.io/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -165,63 +174,84 @@
   
   <url>
     <loc>http://ucm14.github.io/tags/Reinforcement-Learning/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/XG/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/R-B/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/TOEFL/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/Utada-Hikaru/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/J-POP/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/Daily-Life/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/Notes/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/tags/Pop/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ucm14.github.io/tags/Chemical-Engineering/</loc>
+    <lastmod>2024-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ucm14.github.io/tags/CSTR/</loc>
+    <lastmod>2024-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ucm14.github.io/tags/Safety-Engineering/</loc>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -230,28 +260,35 @@
   
   <url>
     <loc>http://ucm14.github.io/categories/Machine-Learning/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/categories/Music/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/categories/Language/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://ucm14.github.io/categories/Misc/</loc>
-    <lastmod>2024-10-04</lastmod>
+    <lastmod>2024-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ucm14.github.io/categories/Research/</loc>
+    <lastmod>2024-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
