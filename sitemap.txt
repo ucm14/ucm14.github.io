@@ -1,3 +1,4 @@
+http://ucm14.github.io/2024/10/22/Reinforcement-Learning-in-Reliability-Optimization/
 http://ucm14.github.io/2024/10/13/IYKYK-by-XG/
 http://ucm14.github.io/2024/10/09/Mason-s-Radio-4/
 http://ucm14.github.io/2024/10/08/Determination-of-upper-steady-state/
@@ -32,6 +33,7 @@ http://ucm14.github.io/tags/Chemical-Engineering/
 http://ucm14.github.io/tags/CSTR/
 http://ucm14.github.io/tags/Safety-Engineering/
 http://ucm14.github.io/tags/Soundtrack/
+http://ucm14.github.io/tags/Reliability-Engineering/
 http://ucm14.github.io/categories/Machine-Learning/
 http://ucm14.github.io/categories/Music/
 http://ucm14.github.io/categories/Language/

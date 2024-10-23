@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>Reinforcement Learning in Reliability Optimization | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Mason's Radio" type="application/atom+xml">
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Reinforcement Learning in Reliability Optimization</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 22, 2024&nbsp;&nbsp;19:18:35</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Research/">Research</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>This post is based on journal paper <em><strong><a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.ress.2024.110401">“Reinforcement Learning in Reliability and Maintenance Optimization: A Tutorial”</a></strong></em></p>
+</blockquote>
+<h1 id="Risk-of-system-degradation"><a href="#Risk-of-system-degradation" class="headerlink" title="Risk of system degradation"></a>Risk of system degradation</h1><p>Engineered systems inevitably experience degradation, leading to unexpected shutdowns and significant  adverse consequences.</p>
+<h1 id="Why-use-Reinforcement-learning-RL-to-enhance-system-reliability"><a href="#Why-use-Reinforcement-learning-RL-to-enhance-system-reliability" class="headerlink" title="Why use Reinforcement learning (RL) to enhance system reliability ?"></a>Why use Reinforcement learning (RL) to enhance system reliability ?</h1><p><strong>Markov decision process (MDP)</strong> provides an analytic framework for <strong>reliability and maintenance optimization</strong>, in which the system state degrades over operation and the optimal actions of each  state are identified. However, solving MDPs typically faces scalability and dimensionality issues. The computational burden associated with traditional algorithms (e.g., dynamic programming) significantly increases as the problem size grows, thus limiting their applicability in engineering instances.  <strong>Reinforcement learning (RL)</strong>, a critical paradigm in the field of machine learning, has emerged as a powerful and effective tool for solving MDPs. RL is an efficient framework that focuses on sequential decision-making problems to determine the optimal actions to maximize cumulative reward. <strong>RL utilizes a trial-and-error learning paradigm, gaining knowledge through interactions with environment and shaping behavior with rewards and punishments.</strong> Its powerful mechanism for learning optimal actions from interaction experiences enables it to operate in a model-free manner and eliminate the need for pre-labeled data. This attribute confers a high degree of adaptability and flexibility across various complicated engineering scenarios. The RL paradigm reflects advances in computational capabilities and algorithmic strategies that have overcome limitations related to scalability and dimensionality in MDPs. </p>
+<p>Additionally, the advances in deep learning have further enhanced RL, culminating in the transformative paradigm known as deep reinforcement learning (DRL). DRL leverages the efficient function approximation and generalization capabilities of deep neural networks to handle high-dimensional and continuous state spaces effectively. Furthermore, an additional advantage of integrating with deep neural networks is the  capability to process diverse types of input data, including images, text, and audio, thereby extending DRL’s applicability to a broader spectrum of engineering scenarios. The strong capabilities of RL and DRL in addressing complicated and large-scale problems has rendered them among the most prevalent tools to the reliability and maintainability community.</p>
+<h1 id="Markov-Decision-Process"><a href="#Markov-Decision-Process" class="headerlink" title="Markov Decision Process"></a>Markov Decision Process</h1><ol>
+<li>Identify all possible states of the system. These states can be determined based on historical performance data and expert knowledge</li>
+<li>Identify the actions that can influence the system’s state (system reconfiguration / mission abort / loading distribution)</li>
+<li>Define the probabilities of transitioning from one state to another given a specific action. These probabilities can be estimated using historical mission data, failure data or other relevant information</li>
+<li>Develop a reward function that quantifies the benefits for all state and action pairs. The function includes cost elements such as operation cost, mission profit and failure penalties.</li>
+</ol>
+<h1 id="Formation-for-mission-abort-problems"><a href="#Formation-for-mission-abort-problems" class="headerlink" title="Formation for mission abort problems"></a>Formation for mission abort problems</h1><p>Suppose a system is mean to perform a specific mission. The system state degrades over operation and  degraded states are denoted as ${1,…,n}$ distinguished by its performance capacity. State $1$ and state $n $ are the completely failed state and perfectly functioning state, respectively. The performance capacity of the system in state $i$ is denoted as $g_i (i\in 1, …, n)$ and one has $g_i &lt; g_j$, $\forall i&lt;j$. The system undergoes periodic inspection with equal time interval $\Delta t$, and the system state at the beginning of each time step can be  precisely observed. The state and performance capacity of the system at time step $t$ are represented as $X_t$  and $G_t$ , respectively. The degradation process of the system is characterized by a homogeneous discrete-time Markov chain with state transition matrix $P=[p_{i,j}]<em>{m \times n}$, where  $p</em>{i,j} (i,j\in 1, …, n)$ denotes the state transition probability from sate $i$ to state $j$ . $P$ is a <strong>lower triangular matrix</strong> that the state of the system cannot be restored. The state transition matrix can be evaluated by the system’s historical observation data. </p>
+<p>At each time $t$, the decision maker has the option to either abort the mission or continue it. The cost of mission failure and system failure (state 0) are denoted as $c_m$ and $c_f$, respectively. If the selected action is aborting the mission, denoted as $a_0$, then a mission failure cost $c_m$ is incurred. If the selected action is continuing the mission, denoted as $a_1$, the system will continue to execute the mission till the next inspection, and an operation cost $c_{op}$ is incurred. If the system fails during mission, then the  mission failure cost and system failure cost $m_f+m_c$ are incurred. The success of mission depends on the system cumulative performance and demand. The cumulative performance of the system at time step $t$ is  denoted as $\psi_t$, and one has $\psi <em>t=\sum^t</em>{t=1}G_t\Delta t$. </p>
+<p>If the cumulative performance of the system exceeds the pre-specified demand $D$ within mission duration $T$, i.e., $\psi_ t\geq D, \exists t \in [1,T]$, the mission succeeds and a profit $r_m$ is yielded. Conversely, if the system is in an operation state throughout the mission duration $T$ but the cumulative performance is less than the demand, i.e., $\psi _t &lt; D$, a mission failure cost $c_m$ will be incurred.</p>
+<h2 id="State-space"><a href="#State-space" class="headerlink" title="State space"></a>State space</h2><p>The state space consists of them system degraded state, system cumulative performance, and the remaining mission time, i.e., $s_t \in {(X_t,G_t,\delta_t)|0&lt;X_t\leq n, 0\leq G_t&lt;D,0\leq \delta_t&lt;T}\bigcup{\phi}$, where $\phi$ is the terminal state which contains four cases:</p>
+<blockquote>
+<ol>
+<li><strong>the system fails during mission</strong></li>
+<li><strong>the mission successes, i.e., the system cumulative performance exceeds the demand</strong></li>
+<li><strong>the time in the mission reach the maximum  allowable mission time</strong></li>
+<li><strong>the mission is aborted.</strong></li>
+</ol>
+</blockquote>
+<h2 id="Action-space"><a href="#Action-space" class="headerlink" title="Action space"></a>Action space</h2><p>The action space can be denoted as ${a_0,a_1}$, where $a_0$ and $a_1$ represents the actions to abort and continue the mission, respectively.</p>
+<h2 id="Reward"><a href="#Reward" class="headerlink" title="Reward"></a>Reward</h2><p>$$<br>r_t(s_t,a_t,s_{t+1})=\begin{cases}<br>-c_m &amp; a_t = a_0 \<br>r_m - c_{op} &amp; a_t=a_1, G_t \geq D \<br>-c_{op}-c_m-c_f &amp; a_t=a_1, G_{t+1}&lt;D,X_{t+1}=0 \<br>-c_{op}-c_m &amp; a_t=a_1, G_{t+1}&lt;D,X_{t+1}&gt;0,t=T-1 \<br>-c_{op} &amp; others<br>\end{cases}<br>$$</p>
+<p>It is noted that the reward function is related not only to recurrent state and the selected action, but also to the system’s degraded state and mission progress at the next time step. If the system fails at the next time step, the mission failure cost and system failure cost are incurred, and if the mission succeeds at the next time step, a profit is yielded.</p>
+<h1 id="Case-study"><a href="#Case-study" class="headerlink" title="Case study"></a>Case study</h1><h2 id="Gas-pipeline"><a href="#Gas-pipeline" class="headerlink" title="Gas pipeline"></a>Gas pipeline</h2><p>A gas pipeline system transmission mission abort example is given to exemplify the application of RL  algorithms in reliability optimization problems. The pipeline system possesses four possible discrete states,  namely, no damage (perfectly functioning state), rupture (completely failed state), and four flaw states with  different levels. </p>
+<p>The transmission capacity of pipeline system in different states is $0, 1, 2, 3, 4, 5, \times10^5:m^3/day$. The mission of the pipeline system is to transmit $D=2.5\times10^6:m^3$ gas within one week. The operation cost of the pipeline system is $c_{op}=2\times10^4$ US dollars/day. The successful completion of the transmission mission will lead to a profit of $r_m=6\times10^5$ US dollars, otherwise a loss of $c_m=4\times10^5$ US dollars. If the pipeline fails during the mission, in addition to the mission failure cm , a loss  of $c_f=1\times10^5$ US dollars related to gas leakage will be incurred. The degradation profile of the pipeline  system is characterized by a homogenous discrete-state Markov chain, and the transition probability matrix  of one day is:<br>$$<br>P= \begin{bmatrix}<br>   1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br>   0.2 &amp; 0.8 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br>   0.1 &amp; 0.1 &amp; 0.8 &amp; 0 &amp; 0 &amp; 0 \\<br>   0.02 &amp; 0.05 &amp; 0.08 &amp; 0.85 &amp; 0 &amp; 0 \\<br>   0 &amp; 0.02 &amp; 0.05 &amp; 0.08 &amp; 0.85 &amp; 0 \\<br>   0 &amp; 0 &amp; 0.02 &amp; 0.03 &amp; 0.05 &amp; 0.9 \\<br>  \end{bmatrix}<br>$$<br>Use different algorithms (Q-learning / DQN / Value iteration) to solve this problem and compare their results.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Reinforcement-Learning/"># Reinforcement Learning</a>
+                    
+                        <a href="/tags/Reliability-Engineering/"># Reliability Engineering</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/13/IYKYK-by-XG/">IYKYK by XG</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <span class="post-count">
+Words:
+    <a href="">1.4k</a>
+    </span>
+
+
+    <span class="post-count">
+Time:
+    <a href="">8min</a>
+    </span>
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
