@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
+
+
+
+
+
+<title>Reliability: An Overview | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Mason's Radio" type="application/atom+xml">
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Reliability: An Overview</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 28, 2024&nbsp;&nbsp;14:01:20</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Research/">Research</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Bayesian-inference"><a href="#Bayesian-inference" class="headerlink" title="Bayesian inference"></a>Bayesian inference</h1><p>先验概率：某个病人的患病概率是0.01</p>
+<p>检验准确性（条件概率）：检测在健康人群中有5%的假阳性率，在病人中有2%的假阴性率</p>
+<p>检测结果：我们得到一个阳性的检测结果</p>
+<p>我们希望计算病人实际患病的概率，即病人患病的后验概率。使用贝叶斯定理来计算：<br>$$<br>P(Disease|Positive)=\frac {P(Positive|Disease)·P(Disease)}{P(Positive)}<br>$$</p>
+<h1 id="Monte-Carlo-simulation"><a href="#Monte-Carlo-simulation" class="headerlink" title="Monte Carlo simulation"></a>Monte Carlo simulation</h1><p>生成随机数带入函数，检查结果是否在约束条件内。随机数生成次数越多，模拟结果越精确</p>
+<h1 id="Renewal-process"><a href="#Renewal-process" class="headerlink" title="Renewal process"></a>Renewal process</h1><p>是一种特殊类型的随机过程，它描述了一系列事件（或“更新”）发生的时间间隔，其中每个事件的发生时间与之前的事件独立，并且每次事件发生后，系统都被重置回初始状态。它广泛应用于可靠性工程、排队理论、库存管理等领域。</p>
+<h2 id="更新过程的核心特征"><a href="#更新过程的核心特征" class="headerlink" title="更新过程的核心特征"></a>更新过程的核心特征</h2><ul>
+<li><strong>独立性</strong>：每次事件发生的时间间隔（即两个事件之间的时间）是独立的，且通常服从某种已知的概率分布。</li>
+<li><strong>重置</strong>：每次事件发生后，系统被重置为初始状态，这意味着过程的未来行为与过去无关。</li>
+<li><strong>非负时间间隔</strong>：事件之间的时间间隔总是非负的。</li>
+</ul>
+<h2 id="更新过程的常见类型"><a href="#更新过程的常见类型" class="headerlink" title="更新过程的常见类型"></a>更新过程的常见类型</h2><p><strong>泊松过程</strong>：如果事件发生的时间间隔服从泊松分布，则更新过程为泊松过程</p>
+<p><strong>非泊松过程</strong>： 时间间隔服从其他分布（正态分布、gamma分布等）</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数设置</span></span><br><span class="line">lambda_fault = <span class="number">1</span> / <span class="number">10</span>  <span class="comment"># 故障间隔的平均时间（指数分布，平均每10小时发生一次故障）</span></span><br><span class="line">num_failures = <span class="number">10</span>  <span class="comment"># 模拟10次故障</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成故障间隔时间（指数分布）</span></span><br><span class="line">failures = np.random.exponential(scale=<span class="number">1</span>/lambda_fault, size=num_failures)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算故障发生的时间点</span></span><br><span class="line">failure_times = np.cumsum(failures)  <span class="comment"># 累加故障间隔，得到每次故障的发生时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制故障发生时间</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">plt.step(failure_times, np.arange(<span class="number">1</span>, num_failures + <span class="number">1</span>), where=<span class="string">'post'</span>, label=<span class="string">"Failure Times"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Time"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Number of Failures"</span>)</span><br><span class="line">plt.title(<span class="string">"Renewal Process: Failure Times of a System"</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="Bayesian-networks"><a href="#Bayesian-networks" class="headerlink" title="Bayesian networks"></a>Bayesian networks</h1><h1 id="Decision-analysis"><a href="#Decision-analysis" class="headerlink" title="Decision analysis"></a>Decision analysis</h1><h1 id="Machine-learning"><a href="#Machine-learning" class="headerlink" title="Machine learning"></a>Machine learning</h1><h1 id="Reliability-analysis"><a href="#Reliability-analysis" class="headerlink" title="Reliability analysis"></a>Reliability analysis</h1><h1 id="Risk-analysis"><a href="#Risk-analysis" class="headerlink" title="Risk analysis"></a>Risk analysis</h1><h1 id="Human-factors"><a href="#Human-factors" class="headerlink" title="Human factors"></a>Human factors</h1><h1 id="Global-sensitivity-analysis"><a href="#Global-sensitivity-analysis" class="headerlink" title="Global sensitivity analysis"></a>Global sensitivity analysis</h1>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Reliability-Engineering/"># Reliability Engineering</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/22/Reinforcement-Learning-in-Reliability-Optimization/">Reinforcement Learning in Reliability Optimization</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+    <span class="post-count">
+Words:
+    <a href="">576</a>
+    </span>
+
+
+    <span class="post-count">
+Time:
+    <a href="">2min</a>
+    </span>
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
