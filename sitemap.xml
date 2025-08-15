@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ucm14.github.io/2025/08/09/Scratch%20after%20graduation/</loc>
+    
+    <lastmod>2025-08-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://ucm14.github.io/Reinforcement-Learning-in-Reliability-Optimization.html</loc>
     
     <lastmod>2025-08-09</lastmod>
@@ -299,6 +308,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://ucm14.github.io/tags/Life/</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -331,6 +347,13 @@
   
   <url>
     <loc>http://ucm14.github.io/categories/Misc/</loc>
+    <lastmod>2025-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ucm14.github.io/categories/Essay/</loc>
     <lastmod>2025-08-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
