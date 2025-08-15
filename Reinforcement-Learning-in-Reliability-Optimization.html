@@ -171,102 +171,11 @@
 </script>
             <div class="main">
                 <div class="container">
-    
-    
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-    }
-
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
-            }
-        }
-        return target;
-    }
-</script>
-    
-
-    
-    <article class="post-wrap">
-        <header class="post-header">
-            <h1 class="post-title">Reinforcement Learning in Reliability Optimization</h1>
-            
-                <div class="post-meta">
-                    
-                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
-                    
-
-                    
-                        <span class="post-time">
-                        Date: <a href="#">October 22, 2024&nbsp;&nbsp;19:18:35</a>
-                        </span>
-                    
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/Research/">Research</a>
-                            
-                        </span>
-                    
-                </div>
-            
-        </header>
-
-        <div class="post-content">
+    <article class="post-wrap page">
+        
+        <h2 class="post-title">Reinforcement Learning in Reliability Optimization</h2>
+        
+        <section class="post-content">
             <blockquote>
 <p>This post is based on journal paper <em><strong><a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.ress.2024.110401">“Reinforcement Learning in Reliability and Maintenance Optimization: A Tutorial”</a></strong></em></p>
 </blockquote>
@@ -297,61 +206,9 @@
 <h1 id="Case-study"><a href="#Case-study" class="headerlink" title="Case study"></a>Case study</h1><h2 id="Gas-pipeline"><a href="#Gas-pipeline" class="headerlink" title="Gas pipeline"></a>Gas pipeline</h2><p>A gas pipeline system transmission mission abort example is given to exemplify the application of RL  algorithms in reliability optimization problems. The pipeline system possesses four possible discrete states,  namely, no damage (perfectly functioning state), rupture (completely failed state), and four flaw states with  different levels. </p>
 <p>The transmission capacity of pipeline system in different states is $0, 1, 2, 3, 4, 5, \times10^5:m^3/day$. The mission of the pipeline system is to transmit $D=2.5\times10^6:m^3$ gas within one week. The operation cost of the pipeline system is $c_{op}=2\times10^4$ US dollars/day. The successful completion of the transmission mission will lead to a profit of $r_m=6\times10^5$ US dollars, otherwise a loss of $c_m=4\times10^5$ US dollars. If the pipeline fails during the mission, in addition to the mission failure cm , a loss  of $c_f=1\times10^5$ US dollars related to gas leakage will be incurred. The degradation profile of the pipeline  system is characterized by a homogenous discrete-state Markov chain, and the transition probability matrix  of one day is:<br>$$<br>P= \begin{bmatrix}<br>   1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br>   0.2 &amp; 0.8 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br>   0.1 &amp; 0.1 &amp; 0.8 &amp; 0 &amp; 0 &amp; 0 \\<br>   0.02 &amp; 0.05 &amp; 0.08 &amp; 0.85 &amp; 0 &amp; 0 \\<br>   0 &amp; 0.02 &amp; 0.05 &amp; 0.08 &amp; 0.85 &amp; 0 \\<br>   0 &amp; 0 &amp; 0.02 &amp; 0.03 &amp; 0.05 &amp; 0.9 \\<br>  \end{bmatrix}<br>$$<br>Use different algorithms (Q-learning / DQN / Value iteration) to solve this problem and compare their results.</p>
 
-        </div>
-
-        
-            <section class="post-copyright">
-                
-                
-                
-                
-
-            </section>
-        
-        <section class="post-tags">
-            <div>
-                <span>Tag(s):</span>
-                <span class="tag">
-                    
-                    
-                        <a href="/tags/Reinforcement-Learning/"># Reinforcement Learning</a>
-                    
-                        <a href="/tags/Reliability-Engineering/"># Reliability Engineering</a>
-                    
-                        
-                </span>
-            </div>
-            <div>
-                <a href="javascript:window.history.back();">back</a>
-                <span>· </span>
-                <a href="/">home</a>
-            </div>
         </section>
-        <section class="post-nav">
-            
-                <a class="prev" rel="prev" href="/2024/11/28/Reliability-An-Overview/">Reliability: An Overview</a>
-            
-            
-            <a class="next" rel="next" href="/2024/10/13/IYKYK-by-XG/">IYKYK by XG</a>
-            
-        </section>
-
-
     </article>
 </div>
-
-
-    <span class="post-count">
-Words:
-    <a href="">1.4k</a>
-    </span>
-
-
-    <span class="post-count">
-Time:
-    <a href="">8min</a>
-    </span>
-
 
             </div>
             <footer id="footer" class="footer">

@@ -171,102 +171,11 @@
 </script>
             <div class="main">
                 <div class="container">
-    
-    
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-    }
-
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
-            }
-        }
-        return target;
-    }
-</script>
-    
-
-    
-    <article class="post-wrap">
-        <header class="post-header">
-            <h1 class="post-title">Reliability: An Overview</h1>
-            
-                <div class="post-meta">
-                    
-                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
-                    
-
-                    
-                        <span class="post-time">
-                        Date: <a href="#">November 28, 2024&nbsp;&nbsp;14:01:20</a>
-                        </span>
-                    
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/Research/">Research</a>
-                            
-                        </span>
-                    
-                </div>
-            
-        </header>
-
-        <div class="post-content">
+    <article class="post-wrap page">
+        
+        <h2 class="post-title">Reliability: An Overview</h2>
+        
+        <section class="post-content">
             <h1 id="Bayesian-inference"><a href="#Bayesian-inference" class="headerlink" title="Bayesian inference"></a>Bayesian inference</h1><p>先验概率：某个病人的患病概率是0.01</p>
 <p>检验准确性（条件概率）：检测在健康人群中有5%的假阳性率，在病人中有2%的假阴性率</p>
 <p>检测结果：我们得到一个阳性的检测结果</p>
@@ -283,57 +192,9 @@
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数设置</span></span><br><span class="line">lambda_fault = <span class="number">1</span> / <span class="number">10</span>  <span class="comment"># 故障间隔的平均时间（指数分布，平均每10小时发生一次故障）</span></span><br><span class="line">num_failures = <span class="number">10</span>  <span class="comment"># 模拟10次故障</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成故障间隔时间（指数分布）</span></span><br><span class="line">failures = np.random.exponential(scale=<span class="number">1</span>/lambda_fault, size=num_failures)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算故障发生的时间点</span></span><br><span class="line">failure_times = np.cumsum(failures)  <span class="comment"># 累加故障间隔，得到每次故障的发生时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制故障发生时间</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">plt.step(failure_times, np.arange(<span class="number">1</span>, num_failures + <span class="number">1</span>), where=<span class="string">'post'</span>, label=<span class="string">"Failure Times"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Time"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Number of Failures"</span>)</span><br><span class="line">plt.title(<span class="string">"Renewal Process: Failure Times of a System"</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <h1 id="Bayesian-networks"><a href="#Bayesian-networks" class="headerlink" title="Bayesian networks"></a>Bayesian networks</h1><h1 id="Decision-analysis"><a href="#Decision-analysis" class="headerlink" title="Decision analysis"></a>Decision analysis</h1><h1 id="Machine-learning"><a href="#Machine-learning" class="headerlink" title="Machine learning"></a>Machine learning</h1><h1 id="Reliability-analysis"><a href="#Reliability-analysis" class="headerlink" title="Reliability analysis"></a>Reliability analysis</h1><h1 id="Risk-analysis"><a href="#Risk-analysis" class="headerlink" title="Risk analysis"></a>Risk analysis</h1><h1 id="Human-factors"><a href="#Human-factors" class="headerlink" title="Human factors"></a>Human factors</h1><h1 id="Global-sensitivity-analysis"><a href="#Global-sensitivity-analysis" class="headerlink" title="Global sensitivity analysis"></a>Global sensitivity analysis</h1>
-        </div>
-
-        
-            <section class="post-copyright">
-                
-                
-                
-                
-
-            </section>
-        
-        <section class="post-tags">
-            <div>
-                <span>Tag(s):</span>
-                <span class="tag">
-                    
-                    
-                        <a href="/tags/Reliability-Engineering/"># Reliability Engineering</a>
-                    
-                        
-                </span>
-            </div>
-            <div>
-                <a href="javascript:window.history.back();">back</a>
-                <span>· </span>
-                <a href="/">home</a>
-            </div>
         </section>
-        <section class="post-nav">
-            
-            
-            <a class="next" rel="next" href="/2024/10/22/Reinforcement-Learning-in-Reliability-Optimization/">Reinforcement Learning in Reliability Optimization</a>
-            
-        </section>
-
-
     </article>
 </div>
-
-
-    <span class="post-count">
-Words:
-    <a href="">576</a>
-    </span>
-
-
-    <span class="post-count">
-Time:
-    <a href="">2min</a>
-    </span>
-
 
             </div>
             <footer id="footer" class="footer">
