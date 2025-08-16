@@ -232,11 +232,11 @@
     <category term="Music" scheme="http://ucm14.github.io/categories/Music/"/>
     
     
-    <category term="R&amp;B" scheme="http://ucm14.github.io/tags/R-B/"/>
-    
     <category term="Utada Hikaru" scheme="http://ucm14.github.io/tags/Utada-Hikaru/"/>
     
     <category term="J-POP" scheme="http://ucm14.github.io/tags/J-POP/"/>
+    
+    <category term="R&amp;B" scheme="http://ucm14.github.io/tags/R-B/"/>
     
   </entry>
   

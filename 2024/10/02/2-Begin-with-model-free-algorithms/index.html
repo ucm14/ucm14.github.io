@@ -1,179 +1,273 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang="en">
+
 <head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Model-based &#x2F; Model-free RLEverybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment an">
-<meta property="og:type" content="article">
-<meta property="og:title" content="2. Begin with model-free algorithms">
-<meta property="og:url" content="http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/index.html">
-<meta property="og:site_name" content="Mason&#39;s Radio">
-<meta property="og:description" content="Model-based &#x2F; Model-free RLEverybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment an">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png">
-<meta property="og:image" content="https://s2.loli.net/2024/08/03/qbufGrCwPdHk2oU.png">
-<meta property="og:image" content="https://s2.loli.net/2024/08/03/kjtiXCEQDSoywsK.png">
-<meta property="og:image" content="https://s2.loli.net/2024/08/03/D3tYshGI4uvSbdo.png">
-<meta property="article:published_time" content="2024-10-02T06:20:50.000Z">
-<meta property="article:modified_time" content="2024-10-02T14:40:39.484Z">
-<meta property="article:author" content="Minfeng &quot;Mason&quot; Yu">
-<meta property="article:tag" content="Reinforcement Learning">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>2. Begin with model-free algorithms</title>
-    <!-- async scripts -->
-    <!-- Google Analytics -->
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
 
 
-    <!-- Umami Analytics -->
 
 
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
 
-    <!-- persian styles -->
+<title>2. Begin with model-free algorithms | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
     
-    <!-- rss -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
     
     
-	<!-- mathjax -->
-	
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
 <meta name="generator" content="Hexo 7.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="Mason's Radio" type="application/atom+xml">
 </head>
 
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2024/10/04/Lost-in-the-vibe/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2024/10/02/1-Value-iteration-vs-Policy-iteration/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&text=2. Begin with model-free algorithms"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&is_video=false&description=2. Begin with model-free algorithms"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=2. Begin with model-free algorithms&body=Check out this article: http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&name=2. Begin with model-free algorithms&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&t=2. Begin with model-free algorithms"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
 
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
     </div>
-    
-    
-      <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-based-Model-free-RL"><span class="toc-number">1.</span> <span class="toc-text">Model-based &#x2F; Model-free RL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monte-Carlo-MC"><span class="toc-number">2.</span> <span class="toc-text">Monte-Carlo (MC)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overview"><span class="toc-number">2.1.</span> <span class="toc-text">Overview</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q-Learning-the-first-step-of-model-free-RL"><span class="toc-number">3.</span> <span class="toc-text">Q Learning: the first step of model-free RL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm"><span class="toc-number">3.1.</span> <span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation"><span class="toc-number">3.2.</span> <span class="toc-text">Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment"><span class="toc-number">3.2.1.</span> <span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperparameters"><span class="toc-number">3.2.2.</span> <span class="toc-text">Hyperparameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#State-s-and-action-s"><span class="toc-number">3.2.3.</span> <span class="toc-text">State(s) and action(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reward-function"><span class="toc-number">3.2.4.</span> <span class="toc-text">Reward function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-value-function"><span class="toc-number">3.2.5.</span> <span class="toc-text">Q value function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Results"><span class="toc-number">3.2.6.</span> <span class="toc-text">Results</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sarsa-An-on-policy-RL-algorithm"><span class="toc-number">4.</span> <span class="toc-text">Sarsa: An on-policy RL algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Difference-between-on-policy-off-policy"><span class="toc-number">4.1.</span> <span class="toc-text">Difference between on-policy &amp; off-policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm-1"><span class="toc-number">4.2.</span> <span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation-1"><span class="toc-number">4.3.</span> <span class="toc-text">Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#code"><span class="toc-number">4.3.1.</span> <span class="toc-text">code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Result"><span class="toc-number">4.3.2.</span> <span class="toc-text">Result</span></a></li></ol></li></ol></li></ol>
-      </div>
-    
-  </span>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
 </div>
 
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
     
-    <div class="content index py4 ">
-        
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
+
     
-    <h1 class="posttitle p-name" itemprop="name headline">
-        2. Begin with model-free algorithms
-    </h1>
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">2. Begin with model-free algorithms</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Minfeng "Mason" Yu</a>
+                    
 
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 2, 2024&nbsp;&nbsp;14:20:50</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Machine-Learning/">Machine Learning</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
 
-
-    <div class="meta">
-      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-name" itemprop="name">Minfeng "Mason" Yu</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2024-10-02T06:20:50.000Z" class="dt-published" itemprop="datePublished">2024-10-02</time>
-        
-      
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/Reinforcement-Learning/" rel="tag">Reinforcement Learning</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content e-content" itemprop="articleBody">
-    <h1 id="Model-based-Model-free-RL"><a href="#Model-based-Model-free-RL" class="headerlink" title="Model-based / Model-free RL"></a>Model-based / Model-free RL</h1><p>Everybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment and maximize cumulative reward. Before starting this passage, we have to understand what is model-free and what is model-based?</p>
+        <div class="post-content">
+            <h1 id="Model-based-Model-free-RL"><a href="#Model-based-Model-free-RL" class="headerlink" title="Model-based / Model-free RL"></a>Model-based / Model-free RL</h1><p>Everybody knows reinforcement learning is one of a machine learning methods aiming to make agent explore and find the optimal policy through interactions with environment and maximize cumulative reward. Before starting this passage, we have to understand what is model-free and what is model-based?</p>
 <p><img src="https://s2.loli.net/2024/08/03/4QSDOYacz9pHLAG.png" alt="image.png"></p>
 <h1 id="Monte-Carlo-MC"><a href="#Monte-Carlo-MC" class="headerlink" title="Monte-Carlo (MC)"></a>Monte-Carlo (MC)</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>The Monte Carlo algorithm is a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. The core idea is to use randomness to solve problems that might be deterministic in principle. The key concepts of MC are: <strong>random sampling</strong>, <strong>estimation</strong> by taking the average of outcomes from random samples, applicability of <strong>high-dimensional spaces</strong>. It can be used in simulations, optimization, numerical integration, financial anticipation and statistical physics. Advantages and disadvantages of MC are shown in the table below.</p>
 <table>
@@ -248,143 +342,68 @@
 <h3 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">State: (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">Up: -<span class="number">0.008042294056935573</span></span><br><span class="line">Down: -<span class="number">0.007868742418369764</span></span><br><span class="line">Left: -<span class="number">0.016173595452674966</span></span><br><span class="line">Right: <span class="number">0.006662566560762523</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">0.048576025675988774</span></span><br><span class="line">Down: -<span class="number">0.0035842473161881465</span></span><br><span class="line">Left: <span class="number">0.024420015715567546</span></span><br><span class="line">Right: -<span class="number">0.46168987981312615</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">Up: <span class="number">0.04523751845081987</span></span><br><span class="line">Down: <span class="number">0.04266319340558091</span></span><br><span class="line">Left: <span class="number">0.044949583791193154</span></span><br><span class="line">Right: <span class="number">0.026234839551098416</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line">Up: <span class="number">0.01629652821649763</span></span><br><span class="line">Down: <span class="number">0.050272192325180515</span></span><br><span class="line">Left: -<span class="number">0.009916869922464355</span></span><br><span class="line">Right: -<span class="number">0.4681667868865369</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">Up: -<span class="number">0.09991342319696966</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.0</span></span><br><span class="line">Right: <span class="number">0.036699099068340166</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">0.008563965102313987</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.0</span></span><br><span class="line">Right: <span class="number">0.3883250678150607</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">Up: -<span class="number">0.3435187267522706</span></span><br><span class="line">Down: -<span class="number">0.2554776873673874</span></span><br><span class="line">Left: <span class="number">0.05651543121932354</span></span><br><span class="line">Right: <span class="number">0.004593450910446022</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">Up: -<span class="number">0.1</span></span><br><span class="line">Down: -<span class="number">0.013616634831997914</span></span><br><span class="line">Left: <span class="number">0.01298827764814053</span></span><br><span class="line">Right: <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line">Up: <span class="number">0.28092113053540924</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.0024286388798406364</span></span><br><span class="line">Right: <span class="number">0.06302299434701504</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">0.0</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: -<span class="number">0.16509175606504775</span></span><br><span class="line">Right: <span class="number">1.9146361697676122</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line">Up: -<span class="number">0.1</span></span><br><span class="line">Down: <span class="number">0.0</span></span><br><span class="line">Left: <span class="number">0.03399106390140035</span></span><br><span class="line">Right: <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">Up: -<span class="number">0.3438668479533914</span></span><br><span class="line">Down: <span class="number">0.004696957810272524</span></span><br><span class="line">Left: -<span class="number">0.19</span></span><br><span class="line">Right: <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">0</span>)</span><br><span class="line">Up: <span class="number">3.3060693607932445</span></span><br><span class="line">Down: <span class="number">0.8893977121867367</span></span><br><span class="line">Left: <span class="number">0.0</span></span><br><span class="line">Right: <span class="number">0.13715553550041798</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">Up: <span class="number">4.825854511712306</span></span><br><span class="line">Down: -<span class="number">0.03438123168566812</span></span><br><span class="line">Left: <span class="number">0.10867882029322147</span></span><br><span class="line">Right: <span class="number">1.0015572397722665</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">Up: <span class="number">5.875704328143301</span></span><br><span class="line">Down: <span class="number">0.9315770230698863</span></span><br><span class="line">Left: <span class="number">0.0006851481810742227</span></span><br><span class="line">Right: <span class="number">0.47794799892127526</span></span><br><span class="line"></span><br><span class="line">State: (<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">Up: <span class="number">5.4028951599661275</span></span><br><span class="line">Down: <span class="number">2.6989177956329757</span></span><br><span class="line">Left: -<span class="number">0.6454474033238188</span></span><br><span class="line">Right: <span class="number">0.018474082554518417</span></span><br></pre></td></tr></tbody></table></figure>
 
 
-  </div>
-</article>
-
-
+        </div>
 
         
-          <div id="footer-post-container">
-  <div id="footer-post">
+            <section class="post-copyright">
+                
+                
+                
+                
 
-    <div id="nav-footer" style="display: none">
-      <ul>
+            </section>
         
-          <li><a href="/">Home</a></li>
-        
-          <li><a href="/about/">About</a></li>
-        
-          <li><a href="/archives/">Writing</a></li>
-        
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Reinforcement-Learning/"># Reinforcement Learning</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/10/04/Lost-in-the-vibe/">Lost in Vibe</a>
+            
+            
+            <a class="next" rel="next" href="/2024/10/02/1-Value-iteration-vs-Policy-iteration/">1. Value iteration vs Policy iteration</a>
+            
+        </section>
 
-    
-    
-      <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-based-Model-free-RL"><span class="toc-number">1.</span> <span class="toc-text">Model-based &#x2F; Model-free RL</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monte-Carlo-MC"><span class="toc-number">2.</span> <span class="toc-text">Monte-Carlo (MC)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overview"><span class="toc-number">2.1.</span> <span class="toc-text">Overview</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q-Learning-the-first-step-of-model-free-RL"><span class="toc-number">3.</span> <span class="toc-text">Q Learning: the first step of model-free RL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm"><span class="toc-number">3.1.</span> <span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation"><span class="toc-number">3.2.</span> <span class="toc-text">Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment"><span class="toc-number">3.2.1.</span> <span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperparameters"><span class="toc-number">3.2.2.</span> <span class="toc-text">Hyperparameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#State-s-and-action-s"><span class="toc-number">3.2.3.</span> <span class="toc-text">State(s) and action(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reward-function"><span class="toc-number">3.2.4.</span> <span class="toc-text">Reward function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-value-function"><span class="toc-number">3.2.5.</span> <span class="toc-text">Q value function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Results"><span class="toc-number">3.2.6.</span> <span class="toc-text">Results</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sarsa-An-on-policy-RL-algorithm"><span class="toc-number">4.</span> <span class="toc-text">Sarsa: An on-policy RL algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Difference-between-on-policy-off-policy"><span class="toc-number">4.1.</span> <span class="toc-text">Difference between on-policy &amp; off-policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm-1"><span class="toc-number">4.2.</span> <span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation-1"><span class="toc-number">4.3.</span> <span class="toc-text">Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#code"><span class="toc-number">4.3.1.</span> <span class="toc-text">code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Result"><span class="toc-number">4.3.2.</span> <span class="toc-text">Result</span></a></li></ol></li></ol></li></ol>
-      </div>
-    
 
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&text=2. Begin with model-free algorithms"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&is_video=false&description=2. Begin with model-free algorithms"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=2. Begin with model-free algorithms&body=Check out this article: http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&title=2. Begin with model-free algorithms"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&name=2. Begin with model-free algorithms&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://ucm14.github.io/2024/10/02/2-Begin-with-model-free-algorithms/&t=2. Begin with model-free algorithms"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
+    </article>
 </div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2025
-    Minfeng &#34;Mason&#34; Yu
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
+
+    <span class="post-count">
+Words:
+    <a href="">1.8k</a>
+    </span>
+
+
+    <span class="post-count">
+Time:
+    <a href="">11min</a>
+    </span>
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
 </footer>
 
     </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="fa-regular fa-clone"></i>';
-    btn += '</span>';
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
 </body>
+
 </html>

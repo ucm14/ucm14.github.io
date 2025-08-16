@@ -1,106 +1,182 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang="en">
+
 <head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Bayesian inference先验概率：某个病人的患病概率是0.01 检验准确性（条件概率）：检测在健康人群中有5%的假阳性率，在病人中有2%的假阴性率 检测结果：我们得到一个阳性的检测结果 我们希望计算病人实际患病的概率，即病人患病的后验概率。使用贝叶斯定理来计算：$$P(Disease|Positive)&#x3D;\frac {P(Positive|Disease)·P(Disease)}{P(">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Reliability: An Overview">
-<meta property="og:url" content="http://ucm14.github.io/Reliability-An-Overview.html">
-<meta property="og:site_name" content="Mason&#39;s Radio">
-<meta property="og:description" content="Bayesian inference先验概率：某个病人的患病概率是0.01 检验准确性（条件概率）：检测在健康人群中有5%的假阳性率，在病人中有2%的假阴性率 检测结果：我们得到一个阳性的检测结果 我们希望计算病人实际患病的概率，即病人患病的后验概率。使用贝叶斯定理来计算：$$P(Disease|Positive)&#x3D;\frac {P(Positive|Disease)·P(Disease)}{P(">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-11-28T06:01:20.000Z">
-<meta property="article:modified_time" content="2024-11-28T08:57:29.136Z">
-<meta property="article:author" content="Minfeng &quot;Mason&quot; Yu">
-<meta property="article:tag" content="Reliability Engineering">
-<meta name="twitter:card" content="summary">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>Reliability: An Overview</title>
-    <!-- async scripts -->
-    <!-- Google Analytics -->
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Minfeng "Mason" Yu">
 
 
-    <!-- Umami Analytics -->
 
 
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
 
-    <!-- persian styles -->
+<title>Reliability: An Overview | Mason&#39;s Radio</title>
+
+
+
+    <link rel="icon" href="/photo.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
     
-    <!-- rss -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
     
     
-	<!-- mathjax -->
-	
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
 <meta name="generator" content="Hexo 7.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="Mason's Radio" type="application/atom+xml">
 </head>
 
-<body class="max-width mx-auto px3 ltr">
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">formasonryverse</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
     
-    <div class="content index py4 ">
-        
-          <header id="header">
-  <a class="u-url u-uid" href="/">
-  
-    
-      <img id="logo" alt class="u-logo" src="/images/logo.png" />
-    
-  
-    <div id="title">
-      <h1 class="p-name">Mason&#39;s Radio</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-2x"></i></a>
-      </li>
-      <!--
-     --><li><a href="/">Home</a></li><!--
-   --><!--
-     --><li><a href="/about/">About</a></li><!--
-   --><!--
-     --><li><a href="/archives/">Writing</a></li><!--
-   --><!--
-     --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-   -->
-    </ul>
-  </div>
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">formasonryverse</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">📝Posts</a>
+                
+                    <a class="menu-item" href="/categories">📚Categories</a>
+                
+                    <a class="menu-item" href="/tags">🏷️Tags</a>
+                
+                    <a class="menu-item" href="/about">🤷🏻‍♂️About</a>
+                
+                    <a class="menu-item" href="/links">🔗Links</a>
+                
+            </div>
+        </div>
+    </nav>
+
 </header>
-
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    <article class="post-wrap page">
         
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-
-  <div class="content" itemprop="articleBody">
-      
-          <h1 id="Bayesian-inference"><a href="#Bayesian-inference" class="headerlink" title="Bayesian inference"></a>Bayesian inference</h1><p>先验概率：某个病人的患病概率是0.01</p>
+        <h2 class="post-title">Reliability: An Overview</h2>
+        
+        <section class="post-content">
+            <h1 id="Bayesian-inference"><a href="#Bayesian-inference" class="headerlink" title="Bayesian inference"></a>Bayesian inference</h1><p>先验概率：某个病人的患病概率是0.01</p>
 <p>检验准确性（条件概率）：检测在健康人群中有5%的假阳性率，在病人中有2%的假阴性率</p>
 <p>检测结果：我们得到一个阳性的检测结果</p>
 <p>我们希望计算病人实际患病的概率，即病人患病的后验概率。使用贝叶斯定理来计算：<br>$$<br>P(Disease|Positive)=\frac {P(Positive|Disease)·P(Disease)}{P(Positive)}<br>$$</p>
@@ -116,65 +192,18 @@
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数设置</span></span><br><span class="line">lambda_fault = <span class="number">1</span> / <span class="number">10</span>  <span class="comment"># 故障间隔的平均时间（指数分布，平均每10小时发生一次故障）</span></span><br><span class="line">num_failures = <span class="number">10</span>  <span class="comment"># 模拟10次故障</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成故障间隔时间（指数分布）</span></span><br><span class="line">failures = np.random.exponential(scale=<span class="number">1</span>/lambda_fault, size=num_failures)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算故障发生的时间点</span></span><br><span class="line">failure_times = np.cumsum(failures)  <span class="comment"># 累加故障间隔，得到每次故障的发生时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制故障发生时间</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">plt.step(failure_times, np.arange(<span class="number">1</span>, num_failures + <span class="number">1</span>), where=<span class="string">'post'</span>, label=<span class="string">"Failure Times"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Time"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Number of Failures"</span>)</span><br><span class="line">plt.title(<span class="string">"Renewal Process: Failure Times of a System"</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <h1 id="Bayesian-networks"><a href="#Bayesian-networks" class="headerlink" title="Bayesian networks"></a>Bayesian networks</h1><h1 id="Decision-analysis"><a href="#Decision-analysis" class="headerlink" title="Decision analysis"></a>Decision analysis</h1><h1 id="Machine-learning"><a href="#Machine-learning" class="headerlink" title="Machine learning"></a>Machine learning</h1><h1 id="Reliability-analysis"><a href="#Reliability-analysis" class="headerlink" title="Reliability analysis"></a>Reliability analysis</h1><h1 id="Risk-analysis"><a href="#Risk-analysis" class="headerlink" title="Risk analysis"></a>Risk analysis</h1><h1 id="Human-factors"><a href="#Human-factors" class="headerlink" title="Human factors"></a>Human factors</h1><h1 id="Global-sensitivity-analysis"><a href="#Global-sensitivity-analysis" class="headerlink" title="Global sensitivity analysis"></a>Global sensitivity analysis</h1>
-        
-  </div>
-</article>
+        </section>
+    </article>
+</div>
 
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2025
-    Minfeng &#34;Mason&#34; Yu
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Minfeng &#34;Mason&#34; Yu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
 </footer>
 
     </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-
-
-
-
-<!-- clipboard -->
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
 </body>
+
 </html>
